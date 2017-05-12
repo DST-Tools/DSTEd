@@ -1,0 +1,38 @@
+/* Buttons */
+button[name] {
+	position: relative;
+	background: #252526;
+	border: 1px solid #191919;
+    color: #FFFFFF;
+	cursor: pointer;
+	padding: 5px 10px;
+}
+
+button[name]:after {
+	position: absolute;
+	content: "";
+	display: block;
+	border: 1px solid #535353;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+button[name]:hover:after {
+	border-color: #ED5C2D;
+}
+
+/* Input */
+input[type="text"] {
+	background: #333337;
+	color: #FFFFFF;
+	border: 1px solid #3f3f46;
+	width: 100%; 
+	box-sizing: border-box;
+}
+
+/* File */
+input[type="file"] {
+	display: none;
+}

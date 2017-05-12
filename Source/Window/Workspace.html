@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="../Design/Workspace.css" />
+	</head>
+	<body>
+		<header>
+			<ui-icon data-name="window"></ui-icon>
+			<ui-title>Workspace</ui-title>
+			<ui-buttons>
+				<button data-action="window:close"></button>
+				<button data-action="window:maximize"></button>
+				<button data-action="window:minimize"></button>
+			</ui-buttons>
+		</header>
+		<section>
+			<section-header>
+				<h1>Select a Workspace</h1>
+				<p>DSTEd stores your projects in your installed game.<br />Please select your installed <strong>Don't Starve Together</strong> directory.</p>
+			</section-header>
+			<form-entry>
+				<form-label style="width: 60px;">
+					<u>W</u>orkspace:
+				</form-label>
+				<form-input>
+					<input type="text" name="workspace" value="" placeholder="Path to Don't Starve Together..." />
+				</form-input>
+				<form-button style="width: 70px;">
+					<button name="select">Browse</button>
+				</form-button>
+				<input type="file" name="chooser" webkitdirectory />
+			</form-entry>
+			<form-entry>
+				<form-checkbox>
+					<input type="checkbox" name="save" />
+				</form-checkbox>
+				<form-label>
+					Use this as the default and do not ask again.
+				</form-label>
+			</form-entry>
+		</section>
+		<footer>
+			<button name="ok">OK</button>
+		</footer>
+		<script src="Workspace.js"></script>
+	</body>
+</html>

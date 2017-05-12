@@ -1,0 +1,241 @@
+* {
+	outline: none;
+}
+
+html {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+	font-family: sans-serif;
+	padding: 0px;
+	margin: 0px;
+	background-color: #2D2D30;
+	border: 1px solid #ED5C2D;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+header {
+	-webkit-app-region: drag;
+	height: 32px;	
+	padding: 0px;
+    margin: 0px;  
+	color: #ADADAD;
+}
+
+header ui-icon {
+	display: inline-block;
+}
+
+header ui-icon[data-name="window"] {
+	width: 16px;
+	height: 16px;
+	margin: 5px;
+	background-image: url('../Resources/window_icon.png');
+	background-size: 16px 16px;
+}
+
+header ui-title {
+	display: block;
+	position: fixed;
+	top: 0px;
+	left: 26px;	
+	line-height: 32px;
+	font-size: 14px;
+}
+
+header ui-buttons {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	top: 1px;
+	right: 0px;	
+}
+
+header ui-buttons button[data-action^="window:"] {
+	display: block;
+	position: relative;
+	z-index: 10;
+	width: 16px;
+	height: 16px;
+	background: none;
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	background-position: 100% 100%;
+    border: none;
+	cursor: pointer !important;
+	float: right;
+	opacity: 0.5;
+	margin: 7px 2px;
+}
+
+header ui-buttons button[data-action^="window:"]:hover {
+	opacity: 1;	
+}
+
+header ui-buttons button[data-action="window:close"] {
+	background-image: url('../Resources/window_close.png');
+}
+
+header ui-buttons button[data-action="window:maximize"] {
+	background-image: url('../Resources/window_maximize.png');
+}
+
+header ui-buttons button[data-action="window:minimize"] {
+	background-image: url('../Resources/window_minimize.png');
+}
+
+header ui-buttons button[data-action="window:restore"] {
+	background-image: url('../Resources/window_restore.png');
+}
+
+ui-menu {
+	position: relative;
+	display: flex;
+	font-size: 14px;
+    z-index: 1;
+}
+
+ui-menu ui-entry {
+    display: flex;	
+}
+
+ui-menu ui-entry button {
+	flex: 1;
+	border: none;
+	background: transparent;
+	border: 1px solid transparent;
+	cursor: pointer;
+	color: #FFFFFF;
+	z-index: 1;
+}
+
+ui-menu ui-entry button:hover {
+	background: #3E3E40;
+	border-color: #3E3E40;
+}
+
+ui-menu ui-entry button:focus, ui-menu ui-entry button:active {
+	background: #1B1B1C;
+	border-color: #3E3E40;
+}
+
+ui-menu ui-entry:has(> ui-dropdown) button:focus, ui-menu ui-entry:has(> ui-dropdown) button:active {
+    border-bottom-color: #1B1B1C;
+}
+
+ui-menu ui-entry ui-dropdown {
+	display: none;
+	position: absolute;
+	color: #FFFFFF;
+	background: #1B1B1C;
+	border: 1px solid #3E3E40;
+	margin: 18px 0 0 0;
+    padding: 5px;
+    z-index: 0;
+}
+
+ui-menu ui-entry button:focus + ui-dropdown, ui-menu ui-entry button:active + ui-dropdown {
+	display: block;
+}
+
+/* Footer */
+footer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 24px;
+	background: #ED5C2D;
+	color: #FFFFFF;
+}
+
+/* CONTENT */
+ui-content {
+	flex: 1;
+    position: relative;
+    -js-display: flex;
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 75px);
+    z-index: 0;
+}
+
+ ui-content ui-workspace {
+	flex: 0 0 auto;
+    position: relative;
+    width: 300px;
+    z-index: 20;
+	margin: 5px;
+    box-sizing: border-box;
+    flex-direction: column;
+    overflow-y: hidden;
+	border: 1px solid #3F3F46;
+ }
+ 
+ ui-content ui-workspace resize-handler{
+	     display: block;
+    position: fixed;
+    width: 10px;
+	top: 58px;
+    bottom: 30px;
+    z-index: 100;
+    left: 95px;
+    cursor: e-resize;
+ }
+ 
+  ui-content ui-workspace resize-handler:hover {
+	  background: rgba(0, 0, 0, 0.5);
+  }
+ 
+ ui-content ui-workspace ui-title {
+    position: relative;
+	display: block;
+	color: #FFFFFF;
+	font-size: 12px;
+	padding: 3px 5px;
+	background: #ED5C2D;	 
+ }
+ 
+ ui-content ui-workspace ui-projects {
+    display: flex;
+    flex-direction: column;	 
+ }
+ 
+ ui-content ui-workspace ui-projects project-entry {
+	display: block;
+    position: relative;
+	color: #FFFFFF;
+	font-size: 12px;
+ }
+ 
+ ui-content ui-workspace ui-projects project-entry project-name {
+	 font-size: bold;
+	 background: rgba(128, 128, 128, 0.2);
+	display: block;
+	    position: relative;
+    line-height: 22px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding-left: 20px;
+    overflow: hidden;
+    display: flex;
+	background-repeat: no-repeat;
+ }
+ 
+ ui-content ui-workspace ui-projects project-entry project-name.collapsible {
+	background-image: url('../Resources/arrow_collapsed.svg');
+	background-position: 2px 0;
+ }
+ 
+ ui-content ui-container {
+	display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    flex: 1 1 0%; 
+ }

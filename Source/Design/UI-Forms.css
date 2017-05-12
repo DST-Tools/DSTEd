@@ -1,0 +1,32 @@
+form-entry {
+	display: table;
+    position: relative;
+	width: 100%;
+	table-layout: fixed;
+}
+
+form-entry form-label {
+	display: table-cell;
+    position: relative;
+	color: #FFFFFF;
+	font-size: 12px;
+	padding: 10px;
+}
+
+form-entry form-input {
+	display: table-cell; 
+    position: relative;
+	padding: 5px;
+}
+
+form-entry form-button {
+	display:table-cell;
+    position: relative;
+	padding: 5px;
+}
+
+form-entry form-checkbox {
+	display: table-cell;
+    width: 10px;
+    padding: 0 0 0 65px;
+}

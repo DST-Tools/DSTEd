@@ -1,0 +1,37 @@
+{
+  "name":			"DSTEd",
+  "version":		"1.0.0",
+  "description":	"DSTEd IDE",
+  "author": {
+    "name":			"Adrian Preuß"
+  },
+  "main":			"Classes/Core.js",
+  "private":		true,
+  "scripts": {
+	"start":				"electron ."
+  },
+  "repository":	"https://github.com/DST-Tools/DSTEd",
+  "keywords": [
+    "Dont't Starve Together",
+	"IDE",
+	"DSTEd",
+	"DST"
+  ],
+  "author": "Adrian Preuß",
+  "license": "MIT",
+  "dependencies": {
+	"monaco-editor": "~0.8.3",
+	"winreg": "~1.2.3",
+	"luaparse": "~0.2.1"
+  },
+  "devDependencies": {
+    "electron": "~1.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Microsoft/vscode/issues"
+  }
+}

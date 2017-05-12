@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="../Design/UI.css" />
+	</head>
+	<body>
+		<header>
+			<ui-icon data-name="window"></ui-icon>
+			<ui-title>DSTEd</ui-title>
+			<ui-buttons>
+				<button data-action="window:close"></button>
+				<button data-action="window:maximize"></button>
+				<button data-action="window:minimize"></button>
+			</ui-buttons>
+		</header>
+		<ui-menu>
+			<ui-entry>
+				<button>File</button>
+				<ui-dropdown>
+					Content
+				</ui-dropdown>
+			</ui-entry>
+			<ui-entry>
+				<button>Edit</button>
+			</ui-entry>
+			<ui-entry>
+				<button>Search</button>
+				<ui-dropdown>
+					Content
+				</ui-dropdown>
+			</ui-entry>
+			<ui-entry>
+				<button>View</button>
+			</ui-entry>
+			<ui-entry>
+				<button>Debug</button>
+			</ui-entry>
+			<ui-entry>
+				<button>Tools</button>
+			</ui-entry>
+			<ui-entry>
+				<button>Settings</button>
+			</ui-entry>
+			<ui-entry>
+				<button>Help</button>
+			</ui-entry>
+		</ui-menu>
+		<ui-content>
+			<ui-workspace>
+				<ui-title>
+					Projects
+				</ui-title>
+				<ui-projects></ui-projects>
+			</ui-workspace>
+			<ui-container>
+				<code-editor></code-editor>
+			</ui-container>
+		</ui-content>
+		<footer>
+			Status
+		</footer>
+		<script src="IDE.js"></script>
+	</body>
+</html>

@@ -1,0 +1,80 @@
+* {
+	outline: none;
+}
+
+html {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+	font-family: sans-serif;
+	padding: 0px;
+	margin: 0px;
+	background-color: #2D2D30;
+	border: 1px solid #ED5C2D;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border: 1px solid #272728;
+	-webkit-app-region: drag;
+}
+
+h1 {
+	color: #FFFFFF;
+    position: absolute;
+    top: 37px;
+    left: 115px;
+}
+
+h1 ui-icon {
+	display: inline-block;
+}
+
+h1 ui-icon[data-name="window"] {
+	width: 45px;
+    height: 45px;
+    margin: -8px 0 0 -55px;
+    background-image: url(../Resources/window_icon.png);
+    background-size: 45px 45px;
+    position: absolute;
+}
+
+ui-triangle {
+	display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 45px solid #ED5C2D;
+    border-bottom: 35px solid transparent;
+    border-top: 35px solid transparent;
+    left: 0px;
+    top: 40px;
+}
+
+ui-progress {
+	display: block;
+	position: absolute;
+	background: #4C4C4F;
+	height: 10px;
+	bottom: 95px;
+	left: 20px;
+	right: 20px;
+}
+
+ui-progress ui-percentage {
+	background: #ED5C2D;
+	width: 0%;
+    display: block;
+    height: 100%;
+}
+
+footer {
+	color: #999999;
+    font-size: 11px;
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+}
