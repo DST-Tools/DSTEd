@@ -18,3 +18,8 @@ Comming soon...
 - Asset Editor
 - Console/Logger
 - And lots of more...
+
+# Screenshots
+![Loading](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/Loading.PNG)
+![Workspace](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/Workspace.PNG)
+![IDE](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/IDE.PNG)
