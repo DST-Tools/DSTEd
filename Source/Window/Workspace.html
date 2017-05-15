@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="../Design/Workspace.css" />
 	</head>
 	<body>
 		<header>
@@ -10,7 +9,6 @@
 			<ui-title>Workspace</ui-title>
 			<ui-buttons>
 				<button data-action="window:close"></button>
-				<button data-action="window:maximize"></button>
 				<button data-action="window:minimize"></button>
 			</ui-buttons>
 		</header>
@@ -43,6 +41,17 @@
 		<footer>
 			<button name="ok">OK</button>
 		</footer>
-		<script src="Workspace.js"></script>
+		<script type="text/javascript">
+			var a				= require('../Classes/Application.js');
+			const Application	= new a();
+			Application.importCSS(
+				'../Design/UI-Global.css',
+				'../Design/UI-Window.css',
+				'../Design/UI-Controls.css',
+				'../Design/UI-Forms.css',
+				'../Design/Workspace.css'
+			);
+			Application.importJS('Workspace.js');
+		</script>
 	</body>
 </html>

@@ -2,7 +2,6 @@ form-entry {
 	display: table;
     position: relative;
 	width: 100%;
-	table-layout: fixed;
 }
 
 form-entry form-label {

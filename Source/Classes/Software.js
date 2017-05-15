@@ -83,6 +83,10 @@ exports = module.exports = (function Software() {
 	};
 	
 	this.loadWorkspace = function loadWorkspace() {
+		/*
+			d:\Software\SteamSteamApps/common/Don't Starve Together/
+			D:\Software\Steam\SteamApps\common\Don't Starve Together
+		*/
 		if(global.DSTEd.workspace == null) {
 			return;
 		}

@@ -95,7 +95,6 @@
 	this.openSplash = function openSplash() {
 		Software.loadConfig();
 		Software.loadSteamPath();
-		Software.loadWorkspace();
 		this.loadScreens();
 		this.getScreen('Splash').open();
 	};
@@ -110,6 +109,7 @@
 			var _loader		= setInterval(function() {
 				if(global.DSTEd.loading.percentage >= 100) {
 					clearInterval(_loader);
+					Software.loadWorkspace();
 					this.getScreen('IDE').open();
 					this.getScreen('Splash').close();
 					return;

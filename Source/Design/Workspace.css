@@ -1,17 +1,9 @@
-@import url('UI-Controls.css');
-@import url('UI-Forms.css');
-
-* {
-	outline: none;
-}
-
 html {
     margin: 0px;
     padding: 0px;
 }
 
 body {
-	font-family: sans-serif;
 	padding: 0px;
 	margin: 0px;
 	background-color: #2D2D30;
@@ -23,79 +15,6 @@ body {
 	bottom: 0px;
 }
 
-header {
-	-webkit-app-region: drag;
-	height: 32px;	
-	padding: 0px;
-    margin: 0px;  
-	color: #ADADAD;
-}
-
-header ui-icon {
-	display: inline-block;
-}
-
-header ui-icon[data-name="window"] {
-	width: 16px;
-	height: 16px;
-	margin: 5px;
-	background-image: url('../Resources/window_icon.png');
-	background-size: 16px 16px;
-}
-
-header ui-title {
-	display: block;
-	position: fixed;
-	top: 0px;
-	left: 26px;	
-	line-height: 32px;
-	font-size: 14px;
-}
-
-header ui-buttons {
-	-webkit-app-region: no-drag;
-	position: fixed;
-	top: 1px;
-	right: 0px;	
-}
-
-header ui-buttons button[data-action^="window:"] {
-	display: block;
-	position: relative;
-	z-index: 10;
-	width: 16px;
-	height: 16px;
-	background: none;
-	background-size: 100% auto;
-	background-repeat: no-repeat;
-	background-position: 100% 100%;
-    border: none;
-	cursor: pointer !important;
-	float: right;
-	opacity: 0.5;
-	margin: 7px 2px;
-}
-
-header ui-buttons button[data-action^="window:"]:hover {
-	opacity: 1;	
-}
-
-header ui-buttons button[data-action="window:close"] {
-	background-image: url('../Resources/window_close.png');
-}
-
-header ui-buttons button[data-action="window:maximize"] {
-	background-image: url('../Resources/window_maximize.png');
-}
-
-header ui-buttons button[data-action="window:minimize"] {
-	background-image: url('../Resources/window_minimize.png');
-}
-
-header ui-buttons button[data-action="window:restore"] {
-	background-image: url('../Resources/window_restore.png');
-}
-
 section-header {
 	background: rgba(0, 0, 0, 0.2);
     display: block;
@@ -103,6 +22,7 @@ section-header {
     margin: -52px 0 10px 0;
     padding: 55px 10px 10px 10px;
     font-size: 12px;
+	z-index: -1;
 }
 
 section-header h1 {
