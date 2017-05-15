@@ -5,6 +5,8 @@ const Editor		= require('../Classes/Editor.js');
 const IPC			= require('electron').ipcRenderer;
 
 (function IDE() {
+	var _editors = {};
+	
 	this.init = function init() {
 		this.createMenu();
 		this.createSidebar();
@@ -38,11 +40,15 @@ const IPC			= require('electron').ipcRenderer;
 						}
 					break;
 					case 'file:open':
-						IPC.send('file:open', event.target.dataset.file);
+						if(typeof(_editors[event.target.dataset.file]) == 'undefined') {
+							IPC.send('file:open', event.target.dataset.file);
+						} else {
+							this.openEditor(event.target.dataset.file);
+						}
 					break;
 				}
 			}
-		});
+		}.bind(this));
 		
 		IPC.on('workspace:projects', function(event, projects) {
 			this.renderWorkspace(projects);
@@ -50,9 +56,61 @@ const IPC			= require('electron').ipcRenderer;
 		
 		IPC.on('file:open', function(event, file) {
 			console.log(file);
-			_editor			= new Editor();		
-			_editor.init(file.content, 'lua');
+			var editor			= new Editor(this);
+			editor.init(file, 'lua');
+			_editors[file.file] = editor;
+			this.openEditor(file.file);
 		}.bind(this));
+	};
+	
+	this.closeEditor = function closeEditor(file) {
+		 var keys	= Object.keys(_editors);
+		 var index	= keys.indexOf(file);
+		 var next	= null;
+		 var open	= null;
+		 
+		 if(index !== -1) {
+			 var previous	= keys[index - 1];
+			 var next		= keys[index + 1];
+			 var editor		= null;
+			 
+			 if(typeof(previous) != 'undefined' && typeof(_editors[previous]) != 'undefined' && _editors[previous].length > 0) {
+				 console.log('Open Previous Editor', previous);
+				open = previous;
+			 } else if(typeof(next) != 'undefined'&& typeof(_editors[next]) != 'undefined' && _editors[next].length > 0) {
+				console.log('Open Next Editor', next);
+				open = next;
+			 }
+		 }
+		 
+		 _editors[file].close();
+		 _editors[file] = null;
+		delete _editors[file];
+		
+		if(open == null) {
+			keys	= Object.keys(_editors);
+			open	= _editors[keys[0]];
+		}
+		
+		this.openEditor(open);
+	};
+	
+	this.openEditor = function openEditor(file) {
+		Object.keys(_editors).map(function(editor, index) {
+			_editors[editor].hide();
+		});
+		
+		if(typeof(_editors[file]) != 'undefined' && typeof(_editors[file].open) != 'undefined') {
+			_editors[file].open();
+		}
+		
+		Object.keys(_editors).map(function(editor, index) {
+			if(_editors[editor].isOpened()) {
+				_editors[editor].getTab().classList.add('active');
+			} else {
+				_editors[editor].getTab().classList.remove('active');
+			}
+		});
 	};
 	
 	this.createMenu = function createMenu() {

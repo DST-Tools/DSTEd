@@ -294,3 +294,50 @@ label[data-type="application/x-tex"]:before {
     flex-direction: column;
     flex: 1 1 0%; 
  }
+ 
+ ui-content ui-container editor-tabs {
+	display: flex;
+    flex-direction: row;
+    flex: 0 auto;
+	border-bottom: 2px solid #ED5C2D;
+ }
+ 
+ ui-content ui-container editor-tab,
+ ui-content ui-container editor-welcome {
+	margin: 0 1px;
+	font-size: 12px;
+	position: relative;
+	background: #AAAAAA;
+	cursor: pointer;
+	color: #FFFFFF;
+	padding: 4px 25px 4px 10px;
+	margin: 0;
+ }
+ 
+ ui-content ui-container editor-tabs:empty {
+	display: none;
+ }
+ 
+  ui-content ui-container editor-tab tab-close {
+		content: "";
+	display: block;
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	width: 16px;
+	height: 16px;
+	opacity: 0.5;
+	background-color: #FFFFFF;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: 50%;
+	-webkit-mask-image: url(../Resources/window_close.svg);
+	-webkit-mask-size: 10px;
+  }
+  
+  ui-content ui-container editor-tab tab-close:hover {
+	opacity: 1;
+  }
+  
+  ui-content ui-container editor-tab.active {
+	  background: #ED5C2D;
+  }
