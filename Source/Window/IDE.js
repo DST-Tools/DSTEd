@@ -6,6 +6,7 @@ const IPC			= require('electron').ipcRenderer;
 
 (function IDE() {
 	this.init = function init() {
+		this.createMenu();
 		this.createSidebar();
 		
 		document.addEventListener('click', function onClick(event) {
@@ -52,7 +53,95 @@ const IPC			= require('electron').ipcRenderer;
 			_editor			= new Editor();		
 			_editor.init(file.content, 'lua');
 		}.bind(this));
-	}
+	};
+	
+	this.createMenu = function createMenu() {
+		const items	= Remote.Menu.getApplicationMenu().items;
+		const menu	= document.querySelector('ui-menu');
+		
+		console.log('Render Menu', items);
+		
+		items.forEach(function(item) {
+			var MenuItem			= document.createElement('ui-entry');
+			var Button				= document.createElement('button');
+			Button.innerHTML		= item.label;
+			Button.disabled			= !item.enabled;
+			
+			MenuItem.appendChild(Button);
+			if(typeof(item.submenu) != 'undefined' && item.submenu != null && typeof(item.submenu.items) != 'undefined' && item.submenu.items != null) {
+				Button.classList.add('submenu');
+				this.renderSubMenu(MenuItem, item.submenu.items);			
+			}
+			menu.appendChild(MenuItem);
+		}.bind(this));
+	};
+	
+	this.renderSubMenu = function renderSubMenu(target, items) {
+		if(items.length > 0) {
+			var Submenu			= document.createElement('ui-dropdown');
+			
+			items.forEach(function(submenu) {
+				var SubmenuItem;
+				
+				/*console.log({
+					accelerator:	submenu.accelerator,
+					label:			submenu.label,
+					checked:		submenu.checked,
+					click:			submenu.click,
+					commandId:		submenu.commandId,
+					enabled:		submenu.enabled,
+					icon:			submenu.icon,
+					menu:			submenu.menu,
+					role:			submenu.role,
+					sublabel:		submenu.sublabel,
+					type:			submenu.type,
+					visible:		submenu.visible
+				});*/
+				
+				switch(submenu.type) {
+					case 'separator':
+						SubmenuItem				= document.createElement('menu-seperator');
+					break;
+					default:
+						var accelerator			= '';
+						
+						if(submenu.accelerator != null) {
+							accelerator			= '<keyboard-shortcut>' + submenu.accelerator + '</keyboard-shortcut>';
+						}
+						
+						SubmenuItem					= document.createElement('button');
+						SubmenuItem.innerHTML		= submenu.label + accelerator;
+						SubmenuItem.disabled		= !submenu.enabled;
+						var command					= null;
+						var command_id				= submenu.commandId;
+						
+						if(
+							typeof(submenu.menu) != 'undefined' && submenu.menu != null &&
+							typeof(submenu.menu.commandsMap) != 'undefined' && submenu.menu.commandsMap != null &&
+							typeof(submenu.menu.commandsMap[command_id]) != 'undefined' && submenu.menu.commandsMap[command_id] != null &&
+							typeof(submenu.menu.commandsMap[command_id].command) != 'undefined' && submenu.menu.commandsMap[command_id].command != null							
+						) {
+							command = submenu.menu.commandsMap[command_id].command;
+						}
+						
+						SubmenuItem.dataset.command = command;
+						
+						SubmenuItem.addEventListener('click', function onClick() {
+							console.log(this.dataset.command);
+						});
+					break;
+				}
+								
+				Submenu.appendChild(SubmenuItem);
+				
+				if(typeof(submenu.submenu) != 'undefined' && submenu.submenu != null && typeof(submenu.submenu.items) != 'undefined' && submenu.submenu.items != null) {
+					this.renderSubMenu(Submenu, submenu.submenu.items);			
+				}
+			}.bind(this));
+			
+			target.appendChild(Submenu);
+		}
+	};
 	
 	this.createSidebar = function createSidebar() {
 		/* Resizing */

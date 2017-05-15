@@ -4,6 +4,7 @@
 	const App			= electron.app;
 	const IPC			= require('electron').ipcMain;
 	const Screen		= require('../Classes/Screen');
+	const Menu			= require('../Classes/Menu');
 	const Software		= require('../Classes/Software')();
 	const path			= require('path');
 	const fs 			= require('fs');
@@ -22,6 +23,8 @@
 		}
 		
 		if(typeof(window) == 'undefined') {
+			new Menu();
+			
 			App.on('ready', function onReady() {
 				IPC.on('workspace:update', function(event, args) {
 					global.DSTEd.workspace = args.path;

@@ -12,6 +12,7 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	var _window			= null;
 	var _debug			= false;
 	var _resizable		= false;
+	var _menu			= null;
 	var _callbacks		= {
 		onStart:	function onStart() { /* Override Me */ },
 		onLoad:		function onLoad() { /* Override Me */ }
@@ -46,6 +47,11 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		_window.webContents.send(name, data);
 	};
 	
+	this.setMenu = function setMenu(menu) {
+		_menu = menu;
+		_window.setMenu(_menu.getMenu());
+	};
+	
 	this.open = function open() {
 		_window = new Window({
 			width:				_width,
@@ -68,7 +74,12 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 			_window.webContents.openDevTools();
 		}
 		
-		_window.setMenu(null);
+		if(_menu != null) {
+			_window.setMenu(_menu.getMenu());
+		} else {
+			_window.setMenu(null);
+		}
+		
 		_window.on('closed', function onClosed() {
 			_window = null;
 		});
