@@ -1,52 +1,65 @@
 module.exports = (function Application() {
+	const _path		= require('path');
+	const IPC		= require('electron').ipcRenderer;
+	const Monaco	= require('../Classes/Monaco.js');
+	
+	var _loaded = {
+		editor: false,
+		css:	{
+			count: 	0,
+			loaded:	0
+		},
+		js:	{
+			count: 	0,
+			loaded:	0
+		}
+	};
+
 	this.init = function init() {
-		this.createSidebar();
+		new Monaco().init(function onLoad() {
+			_loaded.editor	= true;
+		});
+		
+		var _watcher = setInterval(function onWatching() {
+			if(_loaded.editor && _loaded.css.loaded >= _loaded.css.count && _loaded.js.loaded >= _loaded.js.count) {
+				console.log('INITED');
+				IPC.send('window:init', true);
+				clearInterval(_watcher);
+				return;
+			}
+		}.bind(this), 100);
 	};
 	
-	this.createSidebar = function createSidebar() {
-		/* Resizing */
-		var _sidebar			= document.body.querySelector('ui-content ui-workspace');
+	this.importCSS = function importCSS() {
+		_loaded.css.count = arguments.length;
 		
-		if(_sidebar == null) {
-			return;
-		}
-		
-		var _handler		= document.createElement('resize-handler');
-		var width			= _sidebar.getBoundingClientRect().width;
-		var start			= 5;
-		_sidebar.appendChild(_handler);
-		_handler.style.left		= (width + start) + 'px';
-		
-		_handler.addEventListener('mousedown', function onMouseDown(event) {
-			event.preventDefault();
-			
-			width			= _sidebar.getBoundingClientRect().width;
-			var startDrag	= event.clientX;
-			
-			var onMouseMove = function onMouseMove(event) {
-				var size					= width + -startDrag + event.clientX;
-				_sidebar.style.width		= size + 'px';
-				
-				if(parseInt(_sidebar.style.width, 10) > 0) {
-					_handler.style.left		= (size + start) + 'px';
-				} else {
-					event.stopPropagation();
-				}
+		[].forEach.call(arguments, function(file) {
+			var link	= document.createElement('link');
+			link.type	= 'text/css';
+			link.rel	= 'stylesheet';
+			link.href	= file;
+			link.onload	= function onLoad() {
+				console.log(file, 'loaded');
+				++_loaded.css.loaded;
 			};
-			
-			var onMouseUp = function onMouseUp(event) {
-				var size						= 0;
-				
-				if(parseInt(_handler.style.left, 10) < size) {
-					_handler.style.left		= (size + start) + 'px';
-				}
-				
-				window.removeEventListener('mousemove', onMouseMove);
-				window.removeEventListener('mouseup', onMouseUp);
-			};
-			
-			window.addEventListener('mousemove', onMouseMove);
-			window.addEventListener('mouseup', onMouseUp);
+			document.getElementsByTagName('head')[0].appendChild(link);
 		});
 	};
+	
+	this.importJS = function importJS() {
+		_loaded.js.count = arguments.length;
+		
+		[].forEach.call(arguments, function(file) {
+			var link	= document.createElement('script');
+			link.type	= 'text/javascript';
+			link.src	= file;
+			link.onload	= function onLoad() {
+				console.log(file, 'loaded');
+				++_loaded.js.loaded;
+			};
+			document.getElementsByTagName('body')[0].appendChild(link);
+		});
+	};
+		
+	this.init();
 });

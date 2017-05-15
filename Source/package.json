@@ -1,37 +1,35 @@
 {
-  "name":			"DSTEd",
-  "version":		"1.0.0",
-  "description":	"DSTEd IDE",
-  "author": {
-    "name":			"Adrian Preuß"
-  },
-  "main":			"Classes/Core.js",
-  "private":		true,
-  "scripts": {
-	"start":				"electron ."
-  },
-  "repository":	"https://github.com/DST-Tools/DSTEd",
-  "keywords": [
-    "Dont't Starve Together",
-	"IDE",
-	"DSTEd",
-	"DST"
-  ],
-  "author": "Adrian Preuß",
-  "license": "MIT",
-  "dependencies": {
-	"monaco-editor": "~0.8.3",
-	"winreg": "~1.2.3",
-	"luaparse": "~0.2.1"
-  },
-  "devDependencies": {
-    "electron": "~1.6.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/vscode.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Microsoft/vscode/issues"
-  }
+	"name":			"DSTEd",
+	"version":		"1.0.0",
+	"description":	"IDE for Don't Starve Together",
+	"author":		"Adrian Preuß",
+	"main":			"Classes/Core.js",
+	"private":		true,
+	"scripts": {
+		"start": "electron ."
+	},
+	"repository": {
+		"type":	"git",
+		"url":	"https://github.com/DST-Tools/DSTEd.git"
+	},
+	"keywords": [
+		"Dont't Starve Together",
+		"IDE",
+		"DSTEd",
+		"DST"
+	],
+	"license": "MIT",
+	"dependencies": {
+		"luaparse":			"~0.2.1",
+		"mime-types":		"~2.1.15",
+		"monaco-editor":	"~0.8.3",
+		"winreg":			"~1.2.3"
+	},
+	"devDependencies": {
+		"electron":			"~1.6.2",
+		"electron-rebuild":	"^1.5.11"
+	},
+	"bugs": {
+		"url":	"https://github.com/DST-Tools/DSTEd/issues"
+	}
 }

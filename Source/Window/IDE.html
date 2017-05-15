@@ -2,7 +2,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="../Design/UI.css" />
+		<script type="text/javascript">
+			var _require	= {};
+			_require.node	= global.require;
+		</script>
+		<script src="../node_modules/monaco-editor/min/vs/loader.js"></script>
+		<script type="text/javascript">
+			_require.amd	= global.require;
+			global.require	= _require.node;
+		</script>
 	</head>
 	<body>
 		<header>
@@ -54,12 +62,20 @@
 				<ui-projects></ui-projects>
 			</ui-workspace>
 			<ui-container>
-				<code-editor></code-editor>
+				<code-editors></code-editors>
 			</ui-container>
 		</ui-content>
 		<footer>
 			Status
 		</footer>
-		<script src="IDE.js"></script>
+		<script type="text/javascript">
+			var a				= require('../Classes/Application.js');
+			const Application	= new a();
+			Application.importCSS('../Design/IDE.css',
+				'../Design/UI-Global.css',
+				'../Design/UI-Window.css',
+				'../Design/UI-Menu.css');
+			Application.importJS('IDE.js');
+		</script>
 	</body>
 </html>

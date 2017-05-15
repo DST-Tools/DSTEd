@@ -4,6 +4,7 @@ const path			= require('path');
 const fs			= require('fs');
 const Registry		= require('winreg');
 const glob			= require('glob');
+const mime			= require('mime-types');
 
 exports = module.exports = (function Software() {
 	var _config = App.getAppPath() + path.sep + 'config.json';
@@ -26,10 +27,17 @@ exports = module.exports = (function Software() {
 		if(fs.existsSync(_config)) {
 			var config = require(_config);
 			
+			console.log(config);
+			
 			if(typeof(global.DSTEd.workspace) != 'undefined') {
-				if(fs.existsSync(config.workspace + path.sep + 'bin' + path.sep + 'dontstarve_steam.exe')) {
+
+			if(fs.existsSync(config.workspace + path.sep + 'bin' + path.sep + 'dontstarve_steam.exe')) {
 					global.DSTEd.workspace = config.workspace;
+				} else {
+					console.warn('Workspace is not DST!');
 				}
+			} else {
+				console.warn('Workspace is undefined.');
 			}
 		}
 	};
@@ -80,14 +88,16 @@ exports = module.exports = (function Software() {
 		}
 		
 		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
+		var stats		= fs.lstatSync(mods_path);
 		
-		if(fs.existsSync(mods_path)) {
+		if(!stats.isDirectory()) {
+			console.warn('Mods dir dont exists (' + mods_path + ')');
 			return;
 		}
 		
 		fs.readdir(mods_path, function(error, files) {
 			files.forEach(function(file) {
-				if(fs.statSync(mods_path + file).isDirectory()){
+				if(fs.statSync(mods_path + file).isDirectory()) {
 					var modinfo = {};
 					
 					try {
@@ -150,10 +160,89 @@ exports = module.exports = (function Software() {
 						name:		'Unknown',
 						path:		mods_path + file,
 						workshop:	workshop,
-						info:		modinfo
+						info:		modinfo,
+						files:		null
 					};
+					
+					this.getProjectWorkspace(global.DSTEd.projects[file]);
 				}
+			}.bind(this));
+		}.bind(this));
+	};
+	
+	this.getProjectWorkspace = function getProjectWorkspace(project) {
+		var tree = function(dir, original_path, done) {
+			var name	= dir;
+							
+			/* Remove main path */
+			name = name.replace(original_path, '');
+			
+			/* Remove seperator */
+			if(name.substr(0, 1) == path.sep) {
+				name = name.substr(1);
+			}
+			
+			var results = {
+				name:		name,
+				path:		dir + path.sep,
+				directory:	true,
+				entries:	[]
+			};
+		
+			fs.readdir(dir, function(err, list) {
+				if(err) {
+					return done(err);
+				}
+				
+				var pending = list.length;
+				
+				if(!pending) {
+					return done(null, results);
+				}
+				
+				list.forEach(function(file) {
+					fs.stat(dir + path.sep + file, function(err, stat) {
+						if(stat && stat.isDirectory()) {
+							tree(dir + path.sep + file, dir, function(err, res) {
+								results.entries.push(res);
+								
+								if(!--pending){
+									done(null, results);
+								}
+							});
+						} else {
+							var stats	= fs.lstatSync(dir + path.sep + file);
+							var name	= file;
+							
+							/* Remove seperator */
+							if(name.substr(0, 1) == path.sep) {
+								name = name.substr(1);
+							}
+							
+							results.entries.push({
+								name:		name,
+								path:		dir + path.sep,
+								directory:	stats.isDirectory(),
+								size:		stats.size,
+								type:		mime.lookup(name),
+								time:		{
+									access:	stats.atime,
+									modify:	stats.mtime,
+									change:	stats.ctime
+								}
+							});
+							
+							if(!--pending) {
+								done(null, results);
+							}
+						}
+					});
+				});
 			});
+		};
+		
+		tree(project.path, project.path, function(err, list) {
+			project.files = list;
 		});
 	};
 	

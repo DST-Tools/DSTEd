@@ -8,7 +8,7 @@
 	const path			= require('path');
 	const fs 			= require('fs');
 	
-	this.init = function init() {
+	this.init = function init() {	
 		if(typeof(global.DSTEd) == 'undefined') {
 			global.DSTEd = {
 				loading:	{
@@ -33,6 +33,16 @@
 					this.getScreen('Workspace').close();
 				}.bind(this));
 				
+				IPC.on('file:open', function(event, args) {
+					fs.readFile(args, 'utf8', function(error, contents) {
+						this.getScreen('IDE').send('file:open', {
+							file:		args,
+							error:		error,
+							content:	contents
+						});
+					});
+				}.bind(this));
+				
 				this.openSplash();
 			}.bind(this));
 			
@@ -54,7 +64,7 @@
 		this.openSplash();
 	};
 	
-	this.createScreen = function createScreen(name, width, height, callback, resizeable) {
+	this.createScreen = function createScreen(name, width, height, callback_start, callback_load, resizeable) {
 		var screen = new Screen(name);
 		
 		screen.setSize(width, height);
@@ -64,7 +74,14 @@
 		}
 		
 		screen.setDebug(true);
-		screen.setOnStart(callback);
+		
+		if(callback_start != null) {
+			screen.setOnStart(callback_start);
+		}
+		
+		if(callback_load != null) {
+			screen.setOnLoad(callback_load);
+		}
 		
 		global.DSTEd.windows[name] = screen;
 		
@@ -112,9 +129,9 @@
 		});
 		
 		/* Screen :: IDE */
-		this.createScreen('IDE', 800, 600, function onStart() {
-			
-		}, true);
+		this.createScreen('IDE', 800, 600, null, function onLoad() {
+			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
+		}.bind(this), true);
 	};
 
 	this.init();

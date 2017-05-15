@@ -3,6 +3,7 @@ const Window		= electron.BrowserWindow;
 const Remote		= electron.remote;
 const url			= require('url');
 const path			= require('path');
+const IPC			= require('electron').ipcMain;
 	
 module.exports = (function Screen(name, size, callback_backend, callback_frontend) {
 	var _name			= '';
@@ -12,7 +13,8 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	var _debug			= false;
 	var _resizable		= false;
 	var _callbacks		= {
-		onStart:	function onStart() { /* Override Me */ }
+		onStart:	function onStart() { /* Override Me */ },
+		onLoad:		function onLoad() { /* Override Me */ }
 	};
 	
 	this.init = function init(name) {
@@ -36,11 +38,20 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		_callbacks.onStart = callback;
 	};
 	
+	this.setOnLoad = function setOnLoad(callback) {
+		_callbacks.onLoad = callback;
+	};
+	
+	this.send = function send(name, data) {
+		_window.webContents.send(name, data);
+	};
+	
 	this.open = function open() {
 		_window = new Window({
 			width:				_width,
 			height:				_height,
 			frame:				false,
+			show:				false,
 			resizable:			_resizable,
 			backgroundColor:	'#2D2D30',
 			vibrancy:			'popover',
@@ -62,11 +73,23 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 			_window = null;
 		});
 		
-		_callbacks.onStart();
+		_window.once('ready-to-show', function() {
+			_window.show();
+		});
+		
+		_window.once('show', function() {
+			_callbacks.onStart();
+		});
+		
+		IPC.on('window:init', function(event, args) {
+			_callbacks.onLoad();
+		}.bind(this));
 	};
 	
 	this.close = function close() {
-		_window.close();
+		if(_window != null) {
+			_window.close();
+		}
 	};
 	
 	this.init(name);

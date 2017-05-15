@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="../Design/Splash.css" />
 	</head>
 	<body>
 		<h1><ui-icon data-name="window"></ui-icon> DSTEd</h1>
@@ -14,6 +13,11 @@
 			<p>Dieses Programm steht unter OpenSource Lizenz.</p>
 			<p>&copy 2017 Adrian Preuß<br />Alle Rechte vorbehalten.</p>
 		</footer>
-		<script src="Splash.js"></script>
+		<script type="text/javascript">
+			var a				= require('../Classes/Application.js');
+			const Application	= new a();
+			Application.importCSS('../Design/Splash.css');
+			Application.importJS('Splash.js');
+		</script>
 	</body>
 </html>

@@ -1,0 +1,77 @@
+header {
+	-webkit-app-region: drag;
+	height: 32px;	
+	padding: 0px;
+    margin: 0px;  
+	color: #ADADAD;
+}
+
+header ui-icon {
+	display: inline-block;
+}
+
+header ui-icon[data-name="window"] {
+	width: 16px;
+	height: 16px;
+	margin: 5px;
+	background-image: url('../Resources/window_icon.png');
+	background-size: 16px 16px;
+}
+
+header ui-title {
+	display: block;
+	position: fixed;
+	top: 0px;
+	left: 26px;	
+	line-height: 32px;
+	font-size: 14px;
+}
+
+header ui-buttons {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	top: 1px;
+	right: 0px;	
+}
+
+header ui-buttons button[data-action^="window:"] {
+	display: block;
+	position: relative;
+	z-index: 10;
+	width: 16px;
+	height: 16px;
+	background-color: #FFFFFF;
+    border: none;
+	cursor: pointer !important;
+	float: right;
+	opacity: 0.5;
+	margin: 7px 2px;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: 50%;
+}
+
+header ui-buttons button[data-action^="window:"]:hover {
+	opacity: 1;	
+}
+
+header ui-buttons button[data-action="window:close"] {
+	-webkit-mask-image: url('../Resources/window_close.svg');
+}
+
+header ui-buttons button[data-action="window:maximize"] {
+	-webkit-mask-image: url('../Resources/window_maximize.svg');
+}
+
+header ui-buttons button[data-action="window:minimize"] {
+	-webkit-mask-image: url('../Resources/window_minimize.svg');
+	-webkit-mask-position: 50% 100%;
+}
+
+header ui-buttons button[data-action^="window:"] {
+	-webkit-mask-size: 11px;
+}
+
+header ui-buttons button[data-action="window:restore"] {
+	-webkit-mask-image: url('../Resources/window_restore.svg');
+	-webkit-mask-size: 16px;
+}
