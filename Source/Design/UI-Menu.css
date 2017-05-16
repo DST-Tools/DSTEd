@@ -83,9 +83,9 @@ ui-menu ui-entry ui-dropdown button {
 ui-menu ui-entry ui-dropdown button keyboard-shortcut {
 	display: block;
 	position: absolute;
-	right: 0;
-	top: 0;
-	font-size: 9px;
+	right: 2px;
+	top: 4px;
+	font-size: 8px;
 	padding: 2px;
 	color: rgba(255, 255, 255, 0.5);
 }

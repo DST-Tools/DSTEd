@@ -75,3 +75,79 @@
 	outline: none !important;
 	user-select: none;
 }
+
+.monaco-editor .monaco-scrollable-element .scrollbar.horizontal,
+.monaco-editor .decorationsOverviewRuler,
+.monaco-editor .monaco-scrollable-element .scrollbar.vertical .arrow-background {
+	background: #3e3e42;
+}
+
+.vs-dark .monaco-scrollable-element > .scrollbar > .slider {
+	background: rgba(104, 104, 104, 0.8);	
+}
+
+.vs-dark .monaco-scrollable-element > .scrollbar.vertical > .slider {
+	margin: 5px;
+	width: 8px !important;
+}
+
+.vs-dark .monaco-scrollable-element > .scrollbar.horizontal > .slider {
+	height: 8px !important;
+	margin: 5px;
+}
+
+.vs-dark .monaco-scrollable-element > .scrollbar > .slider:hover {
+	background: #9e9e9e;
+}
+
+.monaco-editor .monaco-scrollable-element .scrollbar.vertical {
+	  background: rgba(62, 62, 66, 0.5);
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.up-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.up-arrow {
+	height: 22px !important;
+    width: 10px !important;
+    background: #3e3e42 no-repeat 50% 3px !important;
+    background-size: 8px !important;
+	background-image: url('../Resources/arrow_up.svg') !important;
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.up-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.up-arrow:hover {
+	background-image: url('../Resources/arrow_up_hover.svg') !important;	
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.down-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.down-arrow {
+	height: 22px !important;
+    width: 10px !important;
+    background: #3e3e42 no-repeat 50% 100% !important;
+    background-size: 8px !important;
+	background-image: url('../Resources/arrow_down.svg') !important;
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.down-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.down-arrow:hover {
+	background-image: url('../Resources/arrow_down_hover.svg') !important;
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.left-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.left-arrow {
+	height: 10px !important;
+    width: 22px !important;
+    background: #3e3e42 no-repeat 4px 50% !important;
+    background-size: 8px !important;
+	background-image: url('../Resources/arrow_left.svg') !important;
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.left-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.left-arrow:hover {
+	background-image: url('../Resources/arrow_left_hover.svg') !important;
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.right-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.right-arrow {
+	height: 10px !important;
+    width: 22px !important;
+    background: #3e3e42 no-repeat 14px 50% !important;
+    background-size: 8px !important;
+	background-image: url('../Resources/arrow_right.svg') !important;
+}
+
+.hc-black .monaco-scrollable-element>.scrollbar>.right-arrow, .vs-dark .monaco-scrollable-element>.scrollbar>.right-arrow:hover {
+	background-image: url('../Resources/arrow_right_hover.svg') !important;
+}

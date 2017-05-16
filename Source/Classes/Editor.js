@@ -40,7 +40,21 @@ module.exports = (function Editor(IDE) {
 			roundedSelection:		true,
 			scrollBeyondLastLine:	false,
 			readOnly:				false,
+			folding:				true,
+			tabCompletion:			true,
+			useTabStops:			true,
+			wordWrap:				false, /* Make as View-Settings */
 			theme:					'vs-dark',
+			scrollbar: {
+				useShadows:					false,
+				verticalHasArrows:			true,
+				horizontalHasArrows:		true,
+				vertical:					'visible',
+				horizontal:					'visible',
+				verticalScrollbarSize:		18,
+				horizontalScrollbarSize:	18,
+				arrowSize:					21
+			}
 		});
 	};
 	

@@ -29,6 +29,8 @@ footer {
 	height: 24px;
 	background: #ED5C2D;
 	color: #FFFFFF;
+	font-size: 12px;
+	padding: 6px;
 }
 
 /* CONTENT */
@@ -48,7 +50,7 @@ ui-content {
     position: relative;
     width: 300px;
     z-index: 20;
-	margin: 5px;
+	margin: 5px 0px 5px 5px;
     box-sizing: border-box;
     flex-direction: column;
     overflow-y: hidden;
@@ -112,6 +114,8 @@ ui-content {
 	display: flex;
 	background: url('../Resources/arrow_collapsed.svg') no-repeat;
 	padding: 0 0 0 35px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
  }
  
   ui-content ui-workspace ui-projects project-entry label[data-project="true"] small {
@@ -292,13 +296,41 @@ label[data-type="application/x-tex"]:before {
 	display: flex;
     overflow: hidden;
     flex-direction: column;
+    flex: 1 1 0%;
+ }
+ 
+ 
+ ui-content ui-container {
+	margin: 5px 5px 5px 0;
+	z-index: 0;
+ }
+ 
+ ui-content ui-container code-editors {
+	margin: 0 0 0 10px;
+ }
+ 
+ ui-content ui-container code-editors:empty {
+	display: none;
+ }
+ 
+ ui-content ui-container welcome-panel {
+	display: flex;
+    overflow: hidden;
+    flex-direction: column;
     flex: 1 1 0%; 
+	background: url('../Resources/welcome.png') no-repeat 50% 50%;
+	background-size: cover;
+ }
+ 
+ ui-content ui-container code-editors:not(:empty) ~ welcome-panel {
+	display: none;
  }
  
  ui-content ui-container editor-tabs {
 	display: flex;
     flex-direction: row;
     flex: 0 auto;
+	margin: 1px 0 0 10px;
 	border-bottom: 2px solid #ED5C2D;
  }
  
@@ -310,7 +342,7 @@ label[data-type="application/x-tex"]:before {
 	background: #AAAAAA;
 	cursor: pointer;
 	color: #FFFFFF;
-	padding: 4px 25px 4px 10px;
+	padding: 2px 25px 2px 10px;
 	margin: 0;
  }
  
@@ -322,7 +354,7 @@ label[data-type="application/x-tex"]:before {
 		content: "";
 	display: block;
 	position: absolute;
-	top: 3px;
+	top: 2px;
 	right: 3px;
 	width: 16px;
 	height: 16px;
