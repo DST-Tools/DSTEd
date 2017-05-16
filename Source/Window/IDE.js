@@ -61,6 +61,10 @@ const IPC			= require('electron').ipcRenderer;
 			_editors[file.file] = editor;
 			this.openEditor(file.file);
 		}.bind(this));
+		
+		IPC.on('file:saved', function(event, file) {
+			this.getEditor(file).saved();
+		}.bind(this));
 	};
 	
 	this.closeEditor = function closeEditor(file) {
@@ -93,6 +97,16 @@ const IPC			= require('electron').ipcRenderer;
 		}
 		
 		this.openEditor(open);
+	};
+	
+	this.getEditor = function getEditor(file) {
+		var editor = null;
+		
+		if(typeof(_editors[file]) != 'undefined') {
+			editor = _editors[file];
+		}
+		
+		return editor;
 	};
 	
 	this.openEditor = function openEditor(file) {

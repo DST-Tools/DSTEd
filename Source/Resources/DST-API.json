@@ -1,0 +1,5 @@
+[{
+	"label":			"AddPrefabPostInit",
+	"documentation":	"This is a Test of <code>AddPrefabPostInit</code>",
+	"insertText":		"AddPrefabPostInit(name, method)"
+}]

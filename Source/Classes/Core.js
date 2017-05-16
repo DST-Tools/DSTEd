@@ -46,6 +46,16 @@
 					});
 				}.bind(this));
 				
+				IPC.on('file:save', function(event, args) {
+					fs.writeFile(args.file, args.content, function(error) {
+						if(error) {
+							return console.log(error);
+						}
+
+						this.getScreen('IDE').send('file:saved', args.file);
+					});
+				}.bind(this));
+				
 				this.openSplash();
 			}.bind(this));
 			
