@@ -4,6 +4,7 @@ const Remote		= electron.remote;
 const url			= require('url');
 const path			= require('path');
 const IPC			= require('electron').ipcMain;
+const OS			= require('os');
 	
 module.exports = (function Screen(name, size, callback_backend, callback_frontend) {
 	var _name			= '';
@@ -52,6 +53,19 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		_window.setMenu(_menu.getMenu());
 	};
 	
+	this.setWidth = function setWidth(width) {
+		_width = width;
+	};
+	
+	this.setHeight = function setHeight(height) {
+		_height = height;
+	};
+	
+	this.setSize = function setSize(width, height) {
+		_width = width;
+		_height = height;
+	};
+	
 	this.open = function open() {
 		_window = new Window({
 			width:				_width,
@@ -68,7 +82,9 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 			pathname:	path.join(__dirname, '..', 'Window', _name + '.html'),
 			protocol:	'file:',
 			slashes:	true
-		}));
+		}), {
+			userAgent:	'DSTEd v' + global.DSTEd.version + '/' + OS.platform() + ' ' + OS.release() +  ' (' + OS.arch() + ', ' + OS.type() + ')'
+		});
 		
 		if(_debug) {
 			_window.webContents.openDevTools();

@@ -1,4 +1,4 @@
-module.exports = (function Application() {
+module.exports = (function Application(no_editor) {
 	const _path		= require('path');
 	const IPC		= require('electron').ipcRenderer;
 	const Monaco	= require('../Classes/Monaco.js');
@@ -15,10 +15,18 @@ module.exports = (function Application() {
 		}
 	};
 
-	this.init = function init() {
-		new Monaco().init(function onLoad() {
+	this.init = function init(no_editor) {
+		if(typeof(no_editor) == 'undefined') {
+			no_editor = false;
+		}
+		
+		if(no_editor) {
 			_loaded.editor	= true;
-		});
+		} else {
+			new Monaco().init(function onLoad() {
+				_loaded.editor	= true;
+			});
+		}
 		
 		var _watcher = setInterval(function onWatching() {
 			if(_loaded.editor && _loaded.css.loaded >= _loaded.css.count && _loaded.js.loaded >= _loaded.js.count) {
@@ -61,5 +69,5 @@ module.exports = (function Application() {
 		});
 	};
 		
-	this.init();
+	this.init(no_editor);
 });

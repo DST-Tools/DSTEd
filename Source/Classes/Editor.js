@@ -21,6 +21,8 @@ module.exports = (function Editor(IDE) {
 		_element.id				= _file.file;
 		
 		this.setTitle(_path.basename(_file.file), false);
+		document.querySelector('ui-menu button[data-command="close"]').removeAttribute('disabled');
+		document.querySelector('ui-menu button[data-command="close_all"]').removeAttribute('disabled');
 		
 		_close.addEventListener('click', function onClick(event) {
 			_IDE.closeEditor(_file.file);
@@ -74,12 +76,18 @@ module.exports = (function Editor(IDE) {
 		
 		_editor.onDidChangeModelContent(function(event) {
 			_changed = true;
+			document.querySelector('ui-menu button[data-command="save"]').removeAttribute('disabled');
+			document.querySelector('ui-menu button[data-command="save_all"]').removeAttribute('disabled');
 			this.setTitle(_path.basename(_file.file), true);
 		}.bind(this));
 		
 		_editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function onSave() {
 			this.save();
 		}.bind(this));
+	};
+	
+	this.getFileName = function getFileName() {
+		return _path.basename(_file.file);
 	};
 	
 	this.save = function save() {
@@ -94,6 +102,10 @@ module.exports = (function Editor(IDE) {
 	this.saved = function saved() {
 		_changed = false;
 		this.setTitle(_path.basename(_file.file), false);
+	};
+	
+	this.hasChanged = function hasChanged() {
+		return _changed;
 	};
 	
 	this.setTitle = function setTitle(title, changed) {

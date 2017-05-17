@@ -3,15 +3,18 @@
 	const Remote		= electron.remote;
 	const App			= electron.app;
 	const IPC			= require('electron').ipcMain;
+	const Shell			= require('electron').shell;
 	const Screen		= require('../Classes/Screen');
 	const Menu			= require('../Classes/Menu');
 	const Software		= require('../Classes/Software')();
 	const path			= require('path');
+	const OS			= require('os');
 	const fs 			= require('fs');
 	
 	this.init = function init() {	
 		if(typeof(global.DSTEd) == 'undefined') {
 			global.DSTEd = {
+				version:	'1.0.0',
 				loading:	{
 					percentage:	0
 				},
@@ -34,6 +37,78 @@
 					}
 					
 					this.getScreen('Workspace').close();
+				}.bind(this));
+				
+				IPC.on('menu:command', function(event, command) {
+					switch(command) {
+						case 'exit':
+							App.quit();
+						break;
+						case 'forum':
+							Shell.openExternal('http://forums.kleientertainment.com/topic/78739-dsted-the-ide-for-dont-starve-together/');
+						break;
+						case 'about':
+							var dialog = this.getScreen('Dialog');
+							dialog.setHeight(300);
+							dialog.setOnLoad(function setOnLoad() {
+								dialog.send('dialog:title', 'About');
+								dialog.send('dialog:header', {
+									title:		'DSTEd',
+									content:	'This program is licensed under OpenSource.<br />&copy 2017 Adrian Preuß | All Rights Reserved.'
+								});
+								
+								var info			= '';
+								var memory_system	= process.getSystemMemoryInfo();
+								
+								info += '<strong>Version:</strong> ' + global.DSTEd.version;
+								info += '<br /><strong>Electron:</strong> v' + process.versions.electron;
+								info += '<br /><strong>Render Engine:</strong> Chrome v' + process.versions.chrome;
+								info += '<br /><strong>Memory (RAM):</strong> ' + memory_system.free + ' / ' + memory_system.total;
+								info += '<br /><strong>CPU:</strong> ';
+								
+								OS.cpus().forEach(function(cpu, index) {
+									info += '<br /><label>[' + (index + 1) + '] ' + cpu.model + '</label>';
+								});
+								
+								info += '<br /><strong>Network Interfaces:</strong> ';
+								var networks = OS.networkInterfaces();
+								Object.keys(networks).forEach(function(network) {
+									info += '<br /><label>' + network + '</label>';
+									
+									networks[network].forEach(function(net) {
+										info += '<br /><label><label>[' + net.family + '] ' + net.address + '</label></label>';
+									});
+								});
+								
+								info += '<br /><strong>Operating System</strong>';
+								info += '<br /><label>Platform:</label> ' + OS.platform() + ', ' + OS.type();
+								info += '<br /><label>Release:</label> ' + OS.release();
+								info += '<br /><label>Architecture:</label> ' + OS.arch();
+								info += '<br /><strong>Endianness:</strong> ' + OS.endianness();
+								info += '<br /><strong>Hostname:</strong> ' + OS.hostname();
+								
+								dialog.send('dialog:content', {
+									scrollable:	true,
+									height:		155,
+									content:	info
+								});
+								
+								dialog.send('dialog:buttons', [{
+									label:	'Close',
+									click:	'close'
+								}]);
+							});
+							dialog.open();
+						break;
+					}
+				}.bind(this));
+				
+				IPC.on('dialog:command', function(event, command) {
+					switch(command) {
+						case 'close':
+							this.getScreen('Dialog').close();
+						break;
+					}
 				}.bind(this));
 				
 				IPC.on('file:open', function(event, args) {
@@ -86,7 +161,7 @@
 			screen.setResizeable(resizeable);
 		}
 		
-		screen.setDebug(true);
+		//screen.setDebug(true);
 		
 		if(callback_start != null) {
 			screen.setOnStart(callback_start);
@@ -138,6 +213,11 @@
 		
 		/* Screen :: Workspace */
 		this.createScreen('Workspace', 420, 220, function onStart() {
+			
+		});
+		
+		/* Screen :: Dialog */
+		this.createScreen('Dialog', 420, 220, function onStart() {
 			
 		});
 		

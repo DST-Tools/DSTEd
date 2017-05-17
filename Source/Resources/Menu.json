@@ -2,12 +2,15 @@
 	"label":	"File",
 	"submenu": [{
 		"label":		"New...",
+		"disabled":		true,
 		"submenu":		[{
 			"label":	"Project",
-			"command":	"new_project"
+			"command":	"new_project",
+			"disabled":	true
 		}, {
 			"label":	"File",
-			"command":	"new_file"
+			"command":	"new_file",
+			"disabled":	true
 		}, {
 			"label":	"Asset",
 			"command":	"new_asset",
@@ -15,10 +18,12 @@
 		}]
 	}, {
 		"label":		"Open",
-		"command":		"open"
+		"command":		"open",
+		"disabled":		true
 	}, {
 		"label":		"Open Recent",
 		"command":		"open_recent",
+		"disabled":		true,
 		"submenu":		[{
 			"label":	"- No Recent Files -",
 			"disabled":	true

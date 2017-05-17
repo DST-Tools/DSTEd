@@ -19,12 +19,16 @@ ui-menu ui-entry button {
 	z-index: 1;
 }
 
-ui-menu ui-entry button:hover {
+ui-menu ui-entry button:not(:disabled) :hover {
 	background: #3E3E40;
 	border-color: #3E3E40;
 }
 
-ui-menu ui-entry:hover button {
+ui-menu ui-entry button:disabled {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+ui-menu ui-entry:hover button:not(:disabled) {
 	background: #1B1B1C;
 	border-color: #3E3E40;
 }
@@ -60,6 +64,11 @@ ui-menu ui-entry:hover button + ui-dropdown ui-dropdown {
 	display: none;
 }
 
+ui-menu ui-entry ui-dropdown button:hover + ui-dropdown,
+ui-menu ui-entry ui-dropdown button + ui-dropdown:hover {
+	display: block;
+}
+
 ui-menu ui-entry ui-dropdown menu-seperator {
 	flex-direction: row;
 	display: flex;
@@ -80,6 +89,10 @@ ui-menu ui-entry ui-dropdown button {
 	font-size: 12px;
 }
 
+ui-menu ui-entry ui-dropdown button:disabled {	
+	color: rgba(255, 255, 255, 0.5);
+}
+
 ui-menu ui-entry ui-dropdown button keyboard-shortcut {
 	display: block;
 	position: absolute;
@@ -96,6 +109,6 @@ ui-menu ui-entry ui-dropdown button:hover {
 
 ui-menu ui-entry ui-dropdown ui-dropdown {
 	display: none;
-	margin: -25px 0 0px 0 !important;
+	margin: -21px 0 0px 0 !important;
 	left: 100%;
 }

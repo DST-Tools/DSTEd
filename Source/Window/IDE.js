@@ -17,7 +17,7 @@ const IPC			= require('electron').ipcRenderer;
 			if(typeof(event.target.dataset) != 'undefined' && typeof(event.target.dataset.action) != 'undefined') {
 				switch(event.target.dataset.action) {
 					case 'window:close':
-						win.close();
+						this.executeCommand('exit');
 					break
 					case 'window:maximize':
 						document.querySelector('button[data-action="window:maximize"]').dataset.action = 'window:restore';
@@ -55,7 +55,6 @@ const IPC			= require('electron').ipcRenderer;
 		}.bind(this));
 		
 		IPC.on('file:open', function(event, file) {
-			console.log(file);
 			var editor			= new Editor(this);
 			editor.init(file, 'lua');
 			_editors[file.file] = editor;
@@ -131,13 +130,14 @@ const IPC			= require('electron').ipcRenderer;
 		const items	= Remote.Menu.getApplicationMenu().items;
 		const menu	= document.querySelector('ui-menu');
 		
-		console.log('Render Menu', items);
-		
 		items.forEach(function(item) {
 			var MenuItem			= document.createElement('ui-entry');
 			var Button				= document.createElement('button');
 			Button.innerHTML		= item.label;
-			Button.disabled			= !item.enabled;
+			
+			if(item.disabled) {
+				Button.setAttribute('disabled', '');
+			}
 			
 			MenuItem.appendChild(Button);
 			if(typeof(item.submenu) != 'undefined' && item.submenu != null && typeof(item.submenu.items) != 'undefined' && item.submenu.items != null) {
@@ -183,7 +183,11 @@ const IPC			= require('electron').ipcRenderer;
 						
 						SubmenuItem					= document.createElement('button');
 						SubmenuItem.innerHTML		= submenu.label + accelerator;
-						SubmenuItem.disabled		= !submenu.enabled;
+						
+						if(submenu.disabled) {
+							SubmenuItem.setAttribute('disabled', '');
+						}
+						
 						var command					= null;
 						var command_id				= submenu.commandId;
 						
@@ -198,9 +202,9 @@ const IPC			= require('electron').ipcRenderer;
 						
 						SubmenuItem.dataset.command = command;
 						
-						SubmenuItem.addEventListener('click', function onClick() {
-							console.log(this.dataset.command);
-						});
+						SubmenuItem.addEventListener('click', function onClick(event) {
+							this.executeCommand(event.target.dataset.command);
+						}.bind(this));
 					break;
 				}
 								
@@ -212,6 +216,89 @@ const IPC			= require('electron').ipcRenderer;
 			}.bind(this));
 			
 			target.appendChild(Submenu);
+		}
+	};
+	
+	this.executeCommand = function executeCommand(command) {
+		switch(command) {
+			case 'forum':
+			case 'steam_workshop':
+			case 'about':
+				IPC.send('menu:command', command);
+			break;
+			case 'save':
+				Object.keys(_editors).map(function(editor, index) {
+					if(_editors[editor].isOpened()) {
+						_editors[editor].save();
+					}
+				});
+			break;
+			case 'save_all':
+				Object.keys(_editors).map(function(editor, index) {
+					_editors[editor].save();
+				});
+			break;
+			case 'close':
+				Object.keys(_editors).map(function(editor, index) {
+					if(_editors[editor].isOpened()) {
+						this.closeEditor(editor);
+					}
+				}.bind(this));				
+			break;
+			case 'close_all':
+				Object.keys(_editors).map(function(editor, index) {
+					this.closeEditor(editor);
+				}.bind(this));
+			break;
+			case 'exit':
+				var changes = false;
+				var files	= [];
+				
+				Object.keys(_editors).map(function(editor, index) {
+					if(_editors[editor].hasChanged()) {
+						changes = true;
+						files.push(_editors[editor].getFileName());
+					}
+				});
+				
+				if(changes) {
+					Remote.dialog.showMessageBox(Remote.getCurrentWindow(), {
+						type:				'question',
+						detail:				'If you click "Don\'t Save", the recent files will be not changed:\n\t- ' + files.join('\n\t- '),
+						checkboxLabel:		'Rember...',
+						message:			'Save the changes before closing?',
+						checkboxChecked:	false,
+						buttons:	[
+							'Save',
+							'Don\'t Save',
+							'Cancel'
+						]
+					}, function onCallback(button, save) {
+						console.log(button);
+						switch(button) {
+							/* Save */
+							case 0:
+								Object.keys(_editors).map(function(editor, index) {
+									_editors[editor].save();
+								});
+								
+								IPC.send('menu:command', command);
+							break;
+							
+							/* Don't Save */
+							case 1:
+								IPC.send('menu:command', command);
+							break;
+						}
+					});
+					return;
+				}
+				
+				IPC.send('menu:command', command);
+			break;
+			default:
+				console.warn('Command not implemented: ' + command);
+			break;
 		}
 	};
 	
@@ -296,21 +383,6 @@ const IPC			= require('electron').ipcRenderer;
 			project_html += '</project-entry>';
 			workspace_projects.innerHTML += project_html;
 		});
-		
-		/*try {
-			const Application	= require('../Classes/Application.js');
-			_app				= new Application();		
-			_app.init();
-		} catch(e) {
-			console.log(e);
-		}
-		
-		try {
-			const Editor	= require('../Classes/Editor.js');
-			
-		} catch(e) {
-			console.log(e);
-		}*/
 	};
 	
 	this.renderDirectory = function renderDirectory(files, html, first) {
