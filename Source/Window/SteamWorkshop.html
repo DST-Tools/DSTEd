@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+	</head>
+	<body>
+		<header>
+			<ui-icon data-name="window"></ui-icon>
+			<ui-title>Steam Workshop</ui-title>
+			<ui-buttons>
+				<button data-action="window:close"></button>
+				<button data-action="window:maximize"></button>
+				<button data-action="window:minimize"></button>
+			</ui-buttons>
+		</header>
+		<section>
+			<section-header>
+				<h1>Dialog</h1>
+				<p>Message</p>
+			</section-header>
+		</section>
+		<footer></footer>
+		<script type="text/javascript">
+			var a				= require('../Classes/Application.js');
+			const Application	= new a(true);
+			Application.importCSS(
+				'../Design/UI-Global.css',
+				'../Design/UI-Window.css',
+				'../Design/UI-Controls.css',
+				'../Design/UI-Dialog.css',
+				'../Design/UI-Forms.css',
+				'../Design/SteamWorkshop.css'
+			);
+			Application.importJS('SteamWorkshop.js');
+		</script>
+	</body>
+</html>

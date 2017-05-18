@@ -7,11 +7,12 @@
 	const Screen		= require('../Classes/Screen');
 	const Menu			= require('../Classes/Menu');
 	const Software		= require('../Classes/Software')();
+	const Steam			= require('../Classes/Steam')();
 	const path			= require('path');
 	const OS			= require('os');
 	const fs 			= require('fs');
 	
-	this.init = function init() {	
+	this.init = function init() {
 		if(typeof(global.DSTEd) == 'undefined') {
 			global.DSTEd = {
 				version:	'1.0.0',
@@ -99,6 +100,9 @@
 								}]);
 							});
 							dialog.open();
+						break;
+						case 'steam_workshop':
+							this.getScreen('SteamWorkshop').open();
 						break;
 					}
 				}.bind(this));
@@ -221,6 +225,15 @@
 			
 		});
 		
+		/* Screen :: SteamWorkshop */
+		this.createScreen('SteamWorkshop', 420, 220, function onStart() {			
+			Steam.getWorkshop(function(error, files) {
+				this.getScreen('SteamWorkshop').send('steam:workshop:list', [error, files]);
+			}.bind(this));
+		}.bind(this));
+		
+		this.getScreen('SteamWorkshop').setDebug(true);
+			
 		/* Screen :: IDE */
 		this.createScreen('IDE', 800, 600, null, function onLoad() {
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);

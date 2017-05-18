@@ -4,7 +4,7 @@ var _path			= require('path');
 var IPC				= require('electron').ipcRenderer;
 const DSTEd			= Remote.getGlobal('DSTEd');
 
-(function Workspace() {
+(function Dialog() {
 	this.init = function init() {		
 		document.addEventListener('click', function onClick(event) {
 			const win = Remote.getCurrentWindow();
