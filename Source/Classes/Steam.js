@@ -41,6 +41,8 @@ exports = module.exports = (function Steam() {
 		}
 		
 		if(SteamAPI.initAPI()) {
+			SteamAPI.enableCloud(true);
+			console.log(SteamAPI.getAppId());
 			_running = true;
 			return;
 		}
@@ -57,6 +59,7 @@ exports = module.exports = (function Steam() {
 		};
 
 		process.versions['greenworks'] = SteamAPI._version;
+		SteamAPI.enableCloud(true);
 		_running = true;
 	};
 	
