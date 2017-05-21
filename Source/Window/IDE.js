@@ -356,6 +356,8 @@ const IPC			= require('electron').ipcRenderer;
 		console.log('Render Workspace');
 		var workspace_projects	= document.querySelector('ui-projects');
 		
+		workspace_projects.innerHTML = '';
+		
 		Object.keys(projects).map(function(key, index) {
 			subnode = 0;
 			var project			= projects[key];
