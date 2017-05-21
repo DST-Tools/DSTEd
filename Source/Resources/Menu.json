@@ -101,6 +101,23 @@
 			"label":	"Workshop",
 			"command":	"steam_workshop"
 		}]
+	}, {
+		"label":	"Server",
+		"submenu": [{
+			"label":	"Start",
+			"command":	"server_start"
+		}, {
+			"label":	"Stop",
+			"command":	"server_stop",
+			"disabled":	true
+		}, {
+			"label":	"Restart",
+			"command":	"server_restart",
+			"disabled":	true
+		}, {
+			"label":	"Configuration",
+			"command":	"server_config"
+		}]
 	}]
 }, {
 	"label":	"Settings",
