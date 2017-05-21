@@ -299,6 +299,11 @@ label[data-type="application/x-tex"]:before {
     flex: 1 1 0%;
  }
  
+ ui-content ui-container code-editor.image {
+	 align-items: center;
+	 justify-content: center;
+	 background: url('../Resources/raster.png');
+ }
  
  ui-content ui-container {
 	margin: 5px 5px 5px 0;
