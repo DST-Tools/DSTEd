@@ -31,7 +31,6 @@ section-header {
     margin: -52px 0 10px 0;
     padding: 55px 10px 10px 10px;
     font-size: 12px;
-	z-index: -1;
 }
 
 section-header h1 {

@@ -4,6 +4,7 @@ header {
 	padding: 0px;
     margin: 0px;  
 	color: #ADADAD;
+	z-index: 100;
 }
 
 header ui-icon {
@@ -31,7 +32,8 @@ header ui-buttons {
 	-webkit-app-region: no-drag;
 	position: fixed;
 	top: 1px;
-	right: 0px;	
+	right: 0px;
+	z-index: 100;
 }
 
 header ui-buttons button[data-action^="window:"] {
