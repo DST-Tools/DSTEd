@@ -38,8 +38,49 @@ const DSTEd			= Remote.getGlobal('DSTEd');
 			}
 		});
 		
+		document.querySelector('button[name="search"]').addEventListener('click', function onClick(event) {
+			IPC.send('steam:workshop:search', {
+				query: document.querySelector('input[name="query"]').value
+			});
+		});
+		
 		IPC.on('steam:workshop:list', function(event, data) {
+			var content	= document.querySelector('section-content');
+			content.innerHTML = '';
+			var pages	= data.pages;
+			var total	= data.total;
+			var page	= data.page;
+			var entries	= data.entries;
+			
 			console.log(data);
+			entries.forEach(function(entrie) {
+				var html = document.createElement('mod-entrie');
+				var tags = '';
+				
+				/*
+					num_comments_public
+					subscriptions
+					favorited
+					views
+					
+					vote_data
+						score
+						votes_down
+						votes_up
+				*/
+				
+				
+				entrie.tags.forEach(function(tag) {
+					tags += '<mod-tag>' + tag.tag + '</mod-tag>';
+				});
+				
+				var left = '<img src="' + entrie.preview_url + '" alt="Preview" /><h1>' + entrie.title + '</h1><small>' + entrie.short_description + '</small><mod-tags>' + tags + '</mod-tags>';
+				var right = '';
+				
+				html.innerHTML = '<mod-left>' + left  + '</mod-left>' + right;
+				
+				content.appendChild(html);
+			});
 		});			
 	};
 	

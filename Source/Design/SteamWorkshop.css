@@ -1,0 +1,59 @@
+section-header {
+	margin: -52px 0 0px 0;
+}
+
+section-content, section-content.scrollable {
+	height: 216px;
+	padding: 0;
+	margin: 0;	
+}
+
+mod-entrie {
+	display: block;
+	position: relative;
+}
+
+mod-entrie:nth-child(odd) {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+mod-entrie mod-left {
+	display: block;
+	position: relative;	
+}
+
+mod-entrie mod-left img {
+	width: 30px;
+	max-height: 30px;
+	float: left;
+	margin: 4px;
+}
+
+mod-entrie mod-left h1 {
+	font-size: 13px;
+	margin: 0 0 0 40px;
+	padding: 4px 0 0 0;
+}
+
+mod-entrie mod-left small {
+	font-size: 11px;
+	margin: 0 0 0 40px;
+	display: block;
+	position: relative;
+}
+
+mod-entrie mod-left mod-tags {
+	display: block;
+	position: relative;
+	margin: 0 0 0 40px;
+	padding: 4px 0 0 0;
+}
+
+mod-entrie mod-left mod-tags mod-tag {
+	display: inline-block;
+	padding: 2px 5px;
+	margin: 2px;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 3px;
+	font-size: 11px;
+}

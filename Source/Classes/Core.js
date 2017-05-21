@@ -107,6 +107,12 @@
 					}
 				}.bind(this));
 				
+				IPC.on('steam:workshop:search', function(event, request) {
+					Steam.getWorkshop(request, function(files) {
+						this.getScreen('SteamWorkshop').send('steam:workshop:list', files);
+					}.bind(this));
+				}.bind(this));
+				
 				IPC.on('dialog:command', function(event, command) {
 					switch(command) {
 						case 'close':
@@ -118,6 +124,7 @@
 				IPC.on('file:open', function(event, args) {
 					fs.readFile(args, 'utf8', function(error, contents) {
 						this.getScreen('IDE').send('file:open', {
+							type:		args.split('.').pop(),
 							file:		args,
 							error:		error,
 							content:	contents
@@ -226,13 +233,11 @@
 		});
 		
 		/* Screen :: SteamWorkshop */
-		this.createScreen('SteamWorkshop', 420, 220, function onStart() {			
-			Steam.getWorkshop(function(error, files) {
-				this.getScreen('SteamWorkshop').send('steam:workshop:list', [error, files]);
+		this.createScreen('SteamWorkshop', 420, 300, function onStart() {			
+			Steam.getWorkshop(null, function(files) {
+				this.getScreen('SteamWorkshop').send('steam:workshop:list', files);
 			}.bind(this));
 		}.bind(this));
-		
-		this.getScreen('SteamWorkshop').setDebug(true);
 			
 		/* Screen :: IDE */
 		this.createScreen('IDE', 800, 600, null, function onLoad() {

@@ -1,84 +1,49 @@
 exports = module.exports = (function Steam() {
-	var EventEmitter = require('events').EventEmitter;
-	var _running = false;
-	var SteamAPI = null;
+	const _domain		= 'DSTEd.grimms-welt.net';
+	const _secured		= true;
+	const Request		= require('request');
+	const OS			= require('os');
 	
 	this.init = function init() {
-		process.activateUvLoop();
-	
-		switch(process.platform) {
-			/* OS X */
-			case 'darwin':
-				switch(process.arch) {
-					case 'x64':
-						SteamAPI = require('../Library/osx64/greenworks');
-					break;
-					case 'ia32':
-						console.error('OS X don\'t support 32bit anymore!');
-					break;
-				}
-			break;
-			case 'win32':
-				switch(process.arch) {
-					case 'x64':
-						SteamAPI = require('../Library/win64/greenworks');
-					break;
-					case 'ia32':
-						SteamAPI = require('../Library/win32/greenworks');
-					break;
-				}
-			break;
-			case 'linux':
-				switch(process.arch) {
-					case 'x64':
-						SteamAPI = require('../Library/linux64/greenworks');
-					break;
-					case 'ia32':
-						SteamAPI = require('../Library/linux32/greenworks');
-					break;
-				}
-			break;
-		}
 		
-		if(SteamAPI.initAPI()) {
-			SteamAPI.enableCloud(true);
-			console.log(SteamAPI.getAppId());
-			_running = true;
-			return;
-		}
-		
-		if(!SteamAPI.isSteamRunning())  {
-			throw new Error("Steam initialization failed. Steam is not running.");
-		}
-		
-		SteamAPI.__proto__ = EventEmitter.prototype;
-		EventEmitter.call(SteamAPI);
-
-		SteamAPI._steam_events.on = function onSteamEvents() {
-			SteamAPI.emit.apply(SteamAPI, arguments);
-		};
-
-		process.versions['greenworks'] = SteamAPI._version;
-		SteamAPI.enableCloud(true);
-		_running = true;
 	};
 	
-	this.getWorkshop = function getWorkshop(callback) {
-		if(!_running) {
-			callback('STEAM ERROR', null);
-			console.log('Steam is not running!');
-			return;
+	this.getWorkshop = function getWorkshop(data, callback) {
+		var language	= 'English';
+		var query		= '';
+		var page		= 1;
+		
+		if(data != null) {
+			if(typeof(data.language) != 'undefined') {
+				language = data.language;
+			}
+			
+			if(typeof(data.query) != 'undefined') {
+				query = data.query;
+			}
+			
+			if(typeof(data.page) != 'undefined') {
+				page = data.page;
+			}
 		}
 		
-		SteamAPI.ugcGetItems(SteamAPI.UGCMatchingType.Items, SteamAPI.UGCQueryType.RankedByVote, function onSuccess(items) {
-			callback(null, items);
-			console.log('onSuccess', items);
-		}, function onError(error) {
-			callback(error, null);
-			console.log('onError', error);
+		Request({
+			url:		'http' + (_secured ? 's' : '' ) + '://' + _domain + '/API/',
+			method:		'POST',
+			json:		true,
+			headers: {
+				'User-Agent':	'DSTEd v' + global.DSTEd.version + '/' + OS.platform() + ' ' + OS.release() +  ' (' + OS.arch() + ', ' + OS.type() + ')'
+			},
+			body:		{
+				language:	language,
+				page:		page,
+				search:		query
+			}
+		}, function onResponse(error, response, body) {
+			callback(body);
 		});
 	};
 	
-	this.init();	
+	this.init();
 	return this;
 });
