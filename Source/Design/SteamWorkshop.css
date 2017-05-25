@@ -1,16 +1,120 @@
+ui-loading {
+	display: none;
+	background: rgba(0, 0, 0, 0.9);
+	position: fixed;
+	z-index: 100;
+	bottom: 51px;
+	top: 82px;
+	left: 1px;
+	right: 1px;
+}
+
+body[data-loading="true"] ui-loading {
+	display: block;
+}
+
+ui-loading ui-image {
+	display: block;
+	position: absolute;
+	width: 64px;
+	height: 64px;
+	top: 50%;
+	left: 50%;
+	margin: -32px 0 0 -32px;
+	background: url(../Resources/steam_loading.gif) no-repeat 50% 50%;
+	background-size: 64px;
+	border-radius: 5px;
+	border: 1px solid #0e0e0e;
+}
+
+ui-loading ui-string {
+	position: absolute;
+	left: 0;
+	top: calc(50% + 45px);
+	color: white;
+	right: 0px;
+	text-align: center;
+	font-size: 12px;
+	display: block;
+}
+
 section-header {
 	margin: -52px 0 0px 0;
 }
 
-section-content, section-content.scrollable {
-	height: 216px;
+section-content, section-content.scrollable, empty-panel {
 	padding: 0;
-	margin: 0;	
+	display: block;
+	margin: 0;
+	position: absolute;
+	bottom: 51px;
+	top: 82px;
+	left: 0;
+	right: 0;
+}
+
+empty-panel {
+	overflow: auto;
+}
+
+empty-panel ui-logo {
+	position: absolute;
+	top: calc(50% - 75px);
+	left: calc(50% - 75px);
+	width: 150px;
+	height: 150px;
+	background-image: url(../Resources/steam_failure.svg);
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: 150px;
+}
+
+empty-panel ui-logo[data-before]:before {
+	content: attr(data-before);
+	display: block;
+	color: rgba(255, 255, 255, 0.18);
+	font-size: 18px;
+	font-weight: bold;
+	margin: 160px -100px 0 -100px;
+	text-align: center;
+}
+
+empty-panel ui-logo[data-after]:after {
+	content: attr(data-after);
+	display: block;
+	color: rgba(255, 255, 255, 0.18);
+	font-size: 14px;
+	margin: 10px -20px 0 -20px;
+	text-align: center;
+}
+
+section-content.scrollable:not(:empty) ~ empty-panel {
+	display: none;
+}
+
+footer {
+	display: flex;
+}
+
+footer ui-pagination {
+	display: flex;	
+}
+
+footer ui-results {
+	display: flex;
+	flex: 0 100%;
+	color: #FFFFFF;
+	font-size: 12px;
+	text-align: right;
+	line-height: 26px;
+	flex-direction: column;
 }
 
 mod-entrie {
-	display: block;
-	position: relative;
+	display: flex;
+    flex: 1 100%;
+    position: relative;
+	padding: 5px;
 }
 
 mod-entrie:nth-child(odd) {
@@ -18,28 +122,37 @@ mod-entrie:nth-child(odd) {
 }
 
 mod-entrie mod-left {
-	display: block;
-	position: relative;	
+	display: flex;
+	flex: 1 100%;
 }
 
 mod-entrie mod-left img {
 	width: 30px;
 	max-height: 30px;
-	float: left;
+	display: flex;
 	margin: 4px;
 }
 
-mod-entrie mod-left h1 {
+mod-entrie mod-left mod-content {
+	display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1 100%;	
+}
+
+mod-entrie mod-left mod-content h1 {
+	display: flex;
 	font-size: 13px;
-	margin: 0 0 0 40px;
+	margin: 0 0 0 4px;
 	padding: 4px 0 0 0;
 }
 
-mod-entrie mod-left small {
+mod-entrie mod-left mod-content small {
+	display: flex;
 	font-size: 11px;
-	margin: 0 0 0 40px;
-	display: block;
+	margin: 0 0 0 4px;
 	position: relative;
+		flex-direction: column;
 }
 
 mod-entrie mod-left mod-tags {
@@ -56,4 +169,47 @@ mod-entrie mod-left mod-tags mod-tag {
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 3px;
 	font-size: 11px;
+}
+
+mod-entrie mod-right {
+	display: flex;
+	flex: 1 100px;
+	position: relative;
+	flex-direction: column;
+}
+
+mod-entrie mod-right mod-rating {
+	display: inline-block;
+	-webkit-mask-image: url(../Resources/star.svg);
+	-webkit-mask-size: 15px 14px;
+	background: #4c4c4c;
+	-webkit-mask-repeat: repeat;
+	width: 75px;
+	height: 14px;
+	margin: 0 auto 5px auto;
+}
+
+mod-entrie mod-right mod-rating rating-star {
+	display: inline-block;
+	-webkit-mask-image: url(../Resources/star.svg);
+	-webkit-mask-size: 15px 14px;
+	-webkit-mask-repeat: repeat;
+	height: 14px;
+	background: #ffd055;
+}
+
+mod-entrie mod-right button[name="install"] {
+	background: rgba(20, 95, 20, 0.3);
+}
+
+mod-entrie mod-right button[name="install"]:hover:after {
+	border-color: rgba(20, 95, 20, 1);
+}
+
+mod-entrie mod-right button[name="deinstall"] {
+	background: rgba(220, 15, 15, 0.3);
+}
+
+mod-entrie mod-right button[name="deinstall"]:hover:after {
+	border-color: rgba(220, 15, 15, 1);
 }

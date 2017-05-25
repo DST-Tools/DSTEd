@@ -53,7 +53,7 @@
   background: transparent;
 }
 
-::selection, ::-webkit-selection, *::selection {
+:not(input)::selection, :not(input)::-webkit-selection, *:not(input)::selection {
 	background:	transparent;
 	background:	rgba(255, 255, 255, 0);
 }
@@ -73,7 +73,16 @@
 
 *, *:hover, *:focus, *:active {
 	outline: none !important;
+}
+
+*:not(input), *:focus:not(input) {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 	user-select: none;
+	outline-style:none;/*IE*/
 }
 
 .monaco-editor .monaco-scrollable-element .scrollbar.horizontal,

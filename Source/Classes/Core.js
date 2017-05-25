@@ -163,10 +163,11 @@
 		this.openSplash();
 	};
 	
-	this.createScreen = function createScreen(name, width, height, callback_start, callback_load, resizeable) {
+	this.createScreen = function createScreen(name, width, height, min_width, min_height, callback_start, callback_load, resizeable) {
 		var screen = new Screen(name);
 		
 		screen.setSize(width, height);
+		screen.setMinSize(min_width, min_height);
 		
 		if(typeof(resizeable) != 'undefined') {
 			screen.setResizeable(resizeable);
@@ -200,7 +201,7 @@
 	
 	this.loadScreens = function loadScreens() {
 		/* Screen :: Splash */
-		this.createScreen('Splash', 500, 300, function onStart() {
+		this.createScreen('Splash', 500, 300, null, null, function onStart() {
 			if(!Software.isInstalled()) {
 				this.getScreen('Workspace').open();
 			}
@@ -223,24 +224,25 @@
 		}.bind(this));
 		
 		/* Screen :: Workspace */
-		this.createScreen('Workspace', 420, 220, function onStart() {
+		this.createScreen('Workspace', 420, 220, null, null, function onStart() {
 			
 		});
 		
 		/* Screen :: Dialog */
-		this.createScreen('Dialog', 420, 220, function onStart() {
+		this.createScreen('Dialog', 420, 220, null, null, function onStart() {
 			
 		});
 		
 		/* Screen :: SteamWorkshop */
-		this.createScreen('SteamWorkshop', 420, 300, function onStart() {			
+		this.createScreen('SteamWorkshop', 500, 400, 640, 165, function onStart() {			
 			Steam.getWorkshop(null, function(files) {
 				this.getScreen('SteamWorkshop').send('steam:workshop:list', files);
 			}.bind(this));
-		}.bind(this));
+		}.bind(this), null, true);
+		this.getScreen('SteamWorkshop').setDebug(true);
 			
 		/* Screen :: IDE */
-		this.createScreen('IDE', 800, 600, null, function onLoad() {
+		this.createScreen('IDE', 800, 600, null, null, null, function onLoad() {
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
 		}.bind(this), true);
 	};

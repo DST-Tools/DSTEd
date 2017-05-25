@@ -10,6 +10,8 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	var _name			= '';
 	var _width			= 0;
 	var _height			= 0;
+	var _min_width		= null;
+	var _min_height		= null;
 	var _window			= null;
 	var _debug			= false;
 	var _resizable		= false;
@@ -34,6 +36,13 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	this.setSize = function setSize(width, height) {
 		_width	= width;
 		_height	= height;
+	};
+	
+	this.setMinSize = function setMinSize(width, height) {
+		_min_width	= width;
+		_min_height	= height;
+		
+		this.setSize(width, height);
 	};
 	
 	this.setOnStart = function setOnStart(callback) {
@@ -72,6 +81,8 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 			height:				_height,
 			frame:				false,
 			show:				false,
+			minWidth:			(_min_width == null ? 0 : _min_width),
+			minHeight:			(_min_height == null ? 0 : _min_height),
 			resizable:			_resizable,
 			backgroundColor:	'#2D2D30',
 			vibrancy:			'popover',

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 	</head>
-	<body>
+	<body data-loading="true">
 		<header>
 			<ui-icon data-name="window"></ui-icon>
 			<ui-title>Steam Workshop</ui-title>
@@ -13,6 +13,10 @@
 				<button data-action="window:minimize"></button>
 			</ui-buttons>
 		</header>
+		<ui-loading>
+			<ui-image></ui-image>
+			<ui-string>Loading Workshop...</ui-string>
+		</ui-loading>
 		<section>
 			<section-header>
 				<form-entry>
@@ -28,8 +32,14 @@
 				</form-entry>
 			</section-header>
 			<section-content class="scrollable"></section-content>
+			<empty-panel>
+				<ui-logo data-before="No Items Found!" data-after="We couldn't find any items you where looking for."></ui-logo>
+			</empty-panel>
 		</section>
-		<footer></footer>
+		<footer>
+			<ui-pagination></ui-pagination>
+			<ui-results></ui-results>
+		</footer>
 		<script type="text/javascript">
 			var a				= require('../Classes/Application.js');
 			const Application	= new a(true);

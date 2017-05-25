@@ -19,8 +19,22 @@ button[name]:after {
 	bottom: 0;
 }
 
+button[name].active {
+	background: #ED5C2D;
+	color: #000000;
+	text-shadow: 0 0 4px #FFFFFF;	
+}
+
+button[name].active:after {
+	border-color: rgba(255, 255, 255, 0.5);
+}
+
 button[name]:hover:after {
 	border-color: #ED5C2D;
+}
+
+button[name].active:hover:after {
+	border-color: #FFFFFF;
 }
 
 /* Input */

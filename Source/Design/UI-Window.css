@@ -32,7 +32,7 @@ header ui-buttons {
 	-webkit-app-region: no-drag;
 	position: fixed;
 	top: 1px;
-	right: 0px;
+	right: 5px;
 	z-index: 100;
 }
 
