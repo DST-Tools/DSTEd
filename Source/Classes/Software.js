@@ -5,7 +5,9 @@ const fs			= require('fs');
 const Registry		= require('winreg');
 const glob			= require('glob');
 const mime			= require('mime-types');
-
+const Chokidar		= require('chokidar');
+const rimraf		= require('rimraf');
+	
 exports = module.exports = (function Software() {
 	var _config = App.getAppPath() + path.sep + 'config.json';
 		
@@ -82,11 +84,120 @@ exports = module.exports = (function Software() {
 		});
 	};
 	
+	this.deleteWorkspaceProject = function deleteWorkspaceProject(name, callback) {
+		rimraf(global.DSTEd.workspace + path.sep + 'mods' + path.sep + name, callback);
+	};
+	
+	this.createWorkspaceProject = function createWorkspaceProject(name) {
+		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
+		fs.mkdir(mods_path + name, function onSuccess() {
+			/* Do Nothing */
+		});		
+		return mods_path + name + path.sep;
+	};
+	
+	this.createWorkspaceWatcher = function createWorkspaceWatcher(callback_project_added) {
+		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
+		var watcher		= Chokidar.watch(mods_path, {
+			ignored:	/[\/\\]\./,
+			persistent:	true
+		});
+		
+		watcher.on('add', function(p) {
+		}).on('addDir', function(p) {
+			var segments	= p.replace(/\/+$/, '').split(path.sep);
+			var lastDir		= (segments.length > 0) ? segments[segments.length - 1] : '';
+			
+			if(new RegExp('workspace\-([0-9]+)', 'g').test(lastDir)) {
+				this.addProject(lastDir, callback_project_added);
+			}
+		}.bind(this)).on('change', function(p) {
+		}).on('unlink', function(p) {
+		}).on('unlinkDir', function(p) {
+		}).on('error', function(error) {
+		}).on('ready', function onReady() {
+		}).on('raw', function(event, p, details) {
+		}.bind(this));
+	};
+	
+	this.addProject = function addProject(file, callback_project_added) {
+		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
+		
+		if(fs.statSync(mods_path + file).isDirectory()) {
+			var modinfo = {};
+			
+			try {						
+				var parser = require('luaparse');
+				
+				parser.parse(fs.readFileSync(mods_path + file + path.sep + 'modinfo.lua', 'utf8'), {
+					comments: false
+				}).body.forEach(function(entry) {
+					var name	= '';
+					var value	= null;
+					
+					if(typeof(entry.variables) != 'undefined') {
+						entry.variables.forEach(function(variable) {
+							if(variable.type == 'Identifier') {
+								name = variable.name;
+							}
+						});
+					}
+					
+					if(typeof(entry.init) != 'undefined') {
+						entry.init.forEach(function(content) {
+							switch(content.type) {
+								case 'StringLiteral':
+									value = content.value;
+								break;
+								case 'BooleanLiteral':
+									value = content.value;
+								break;
+								case 'NumericLiteral':
+									value = parseInt(content.value, 10);
+								break;
+								default:
+									//console.warn('[LUA] ' + content.type + 'is not implemented yet!');
+								break;
+							}
+						});
+					}
+					
+					modinfo[name] = value;
+				});
+				
+			} catch(e) {
+				console.log(e);
+			}
+			
+			/* Check if Mod is from Steam-Workshop */
+			var workshop = {
+				enabled:	false,
+				id:			-1
+			};
+			
+			if(file.match(/^workshop\-/g)) {
+				workshop.enabled	= true;
+				var matches			= (/workshop\-([0-9]+)/g).exec(file);
+				workshop.id			= parseInt(matches[1], 10);
+			}
+			
+			global.DSTEd.projects[file] = {
+				name:		'Unknown',
+				path:		mods_path + file,
+				workshop:	workshop,
+				info:		modinfo,
+				files:		null
+			};
+			
+			if(typeof(callback_project_added) != 'undefined') {
+				callback_project_added(file, global.DSTEd.projects[file]);
+			}
+			
+			this.getProjectWorkspace(global.DSTEd.projects[file]);
+		}
+	};
+	
 	this.loadWorkspace = function loadWorkspace() {
-		/*
-			d:\Software\SteamSteamApps/common/Don't Starve Together/
-			D:\Software\Steam\SteamApps\common\Don't Starve Together
-		*/
 		if(global.DSTEd.workspace == null) {
 			return;
 		}
@@ -101,75 +212,7 @@ exports = module.exports = (function Software() {
 		
 		fs.readdir(mods_path, function(error, files) {
 			files.forEach(function(file) {
-				if(fs.statSync(mods_path + file).isDirectory()) {
-					var modinfo = {};
-					
-					try {
-						console.log('----------- MODINFO -----------------');						
-						var parser = require('luaparse');
-						
-						parser.parse(fs.readFileSync(mods_path + file + path.sep + 'modinfo.lua', 'utf8'), {
-							comments: false
-						}).body.forEach(function(entry) {
-							var name	= '';
-							var value	= null;
-							
-							if(typeof(entry.variables) != 'undefined') {
-								entry.variables.forEach(function(variable) {
-									if(variable.type == 'Identifier') {
-										name = variable.name;
-									}
-								});
-							}
-							
-							if(typeof(entry.init) != 'undefined') {
-								entry.init.forEach(function(content) {
-									switch(content.type) {
-										case 'StringLiteral':
-											value = content.value;
-										break;
-										case 'BooleanLiteral':
-											value = content.value;
-										break;
-										case 'NumericLiteral':
-											value = parseInt(content.value, 10);
-										break;
-										default:
-											console.warn('[LUA] ' + content.type + 'is not implemented yet!');
-										break;
-									}
-								});
-							}
-							
-							modinfo[name] = value;
-						});
-						
-					} catch(e) {
-						console.log(e);
-					}
-					
-					/* Check if Mod is from Steam-Workshop */
-					var workshop = {
-						enabled:	false,
-						id:			-1
-					};
-					
-					if(file.match(/^workshop\-/g)) {
-						workshop.enabled	= true;
-						var matches			= (/workshop\-([0-9]+)/g).exec(file);
-						workshop.id			= parseInt(matches[1], 10);
-					}
-					
-					global.DSTEd.projects[file] = {
-						name:		'Unknown',
-						path:		mods_path + file,
-						workshop:	workshop,
-						info:		modinfo,
-						files:		null
-					};
-					
-					this.getProjectWorkspace(global.DSTEd.projects[file]);
-				}
+				this.addProject(file);
 			}.bind(this));
 		}.bind(this));
 	};

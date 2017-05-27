@@ -48,6 +48,18 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 							win.unminimize();
 						}
 					break;
+					case 'steam:workshop:deinstall':
+						IPC.send('steam:workshop:deinstall', {
+							id:		event.target.value,
+							button:	event.target
+						});
+					break;
+					case 'steam:workshop:install':
+						IPC.send('steam:workshop:install', {
+							id:		event.target.value,
+							button:	event.target
+						});
+					break;
 				}
 			}
 		});
@@ -63,6 +75,33 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 				query: document.querySelector('input[name="query"]').value
 			});
 		}.bind(this));
+		
+		IPC.on('steam:workshop:event', function(event, data) {
+			switch(data.action) {
+				case 'progress':
+					var mod				= document.querySelector('mod-entrie#MOD' + data.id);
+					var button			= mod.querySelector('button[name="install"]');
+					button.innerHTML	= parseInt(data.value, 10) + '%';
+					button.classList.add('loading');
+				break;
+				case 'installed':
+					var mod					= document.querySelector('mod-entrie#MOD' + data.id);
+					var button				= mod.querySelector('button[name="install"]');
+					button.innerHTML		= 'Deinstall';
+					button.dataset.action	= 'steam:workshop:deinstall';
+					button.classList.remove('loading');
+					button.setAttribute('name', 'deinstall');
+				break;
+				case 'uninstalled':
+					var mod					= document.querySelector('mod-entrie#MOD' + data.id);
+					var button				= mod.querySelector('button[name="deinstall"]');
+					button.innerHTML		= 'Install';
+					button.dataset.action	= 'steam:workshop:install';
+					button.classList.remove('loading');
+					button.setAttribute('name', 'install');
+				break;
+			}
+		});
 		
 		IPC.on('steam:workshop:list', function(event, data) {
 			var content				= document.querySelector('section-content');
@@ -94,16 +133,16 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 								votes_down
 								votes_up
 						*/
-		
+						html.setAttribute('id',  'MOD' + entrie.publishedfileid);
 						var left	= '<img src="' + entrie.preview_url + '" alt="Preview" /><mod-content><h1>' + entrie.title + '</h1><small>' + entrie.short_description + '</small></mod-content>';
 						var right	= '<mod-rating><rating-star style="width: ' + (entrie.vote_data.score * 10) + '%;"></rating-star></mod-rating>';
 						
 						right += '<button name="details" value="' + entrie.publishedfileid + '">Details</button>';
 						
 						if(this.isInstalled(parseInt(entrie.publishedfileid, 10))) {
-							right += '<button name="deinstall" value="' + entrie.publishedfileid + '">Deinstall</button>';
+							right += '<button name="deinstall" data-action="steam:workshop:deinstall" value="' + entrie.publishedfileid + '">Deinstall</button>';
 						} else {
-							right += '<button name="install" value="' + entrie.file_url + '">Install</button>';
+							right += '<button name="install" data-action="steam:workshop:install" value="' + entrie.publishedfileid + '">Install</button>';
 						}
 						
 						html.innerHTML = '<mod-left>' + left  + '</mod-left><mod-right>' + right + '</mod-right>';

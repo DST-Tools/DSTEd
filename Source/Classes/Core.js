@@ -11,6 +11,7 @@
 	const path			= require('path');
 	const OS			= require('os');
 	const fs 			= require('fs');
+	const UnZIP			= require('unzip');
 	
 	this.init = function init() {
 		if(typeof(global.DSTEd) == 'undefined') {
@@ -113,6 +114,34 @@
 					}.bind(this));
 				}.bind(this));
 				
+				IPC.on('steam:workshop:install', function(event, data) {
+					Steam.downloadFile(data.id, function onProgress(value) {
+						this.getScreen('SteamWorkshop').send('steam:workshop:event', {
+							action:	'progress',
+							id:		data.id,
+							value:	value
+						});
+					}.bind(this), function onEnd(file, path) {
+						fs.createReadStream(file).pipe(UnZIP.Extract({
+							path: path
+						}));
+						
+						this.getScreen('SteamWorkshop').send('steam:workshop:event', {
+							action:	'installed',
+							id:		data.id
+						});
+					}.bind(this));
+				}.bind(this));
+				
+				IPC.on('steam:workshop:deinstall', function(event, data) {
+					Software.deleteWorkspaceProject('workshop-' + data.id, function onSuccess() {
+						this.getScreen('SteamWorkshop').send('steam:workshop:event', {
+							action:	'uninstalled',
+							id:		data.id
+						});
+					}.bind(this));
+				}.bind(this));
+				
 				IPC.on('dialog:command', function(event, command) {
 					switch(command) {
 						case 'close':
@@ -195,6 +224,10 @@
 	this.openSplash = function openSplash() {
 		Software.loadConfig();
 		Software.loadSteamPath();
+		Software.createWorkspaceWatcher(function onProjectAdded(name, project) {
+			console.log('Project added', name, project);
+			this.getScreen('IDE').send('workspace:project:add', {name: name, project: project});	
+		}.bind(this));
 		this.loadScreens();
 		this.getScreen('Splash').open();
 	};

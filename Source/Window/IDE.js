@@ -50,8 +50,16 @@ const IPC			= require('electron').ipcRenderer;
 			}
 		}.bind(this));
 		
+		var _projects = {};
+		
+		IPC.on('workspace:project:add', function(event, project) {
+			_projects[project.name] = project.project;
+			this.renderWorkspace(_projects);
+		}.bind(this));
+		
 		IPC.on('workspace:projects', function(event, projects) {
-			this.renderWorkspace(projects);
+			_projects = projects;
+			this.renderWorkspace(_projects);
 		}.bind(this));
 		
 		IPC.on('file:open', function(event, file) {
@@ -351,6 +359,10 @@ const IPC			= require('electron').ipcRenderer;
 	
 	var node				= 0;
 	var subnode				= 0;
+	
+	this.postUpdateWorkspace = function postUpdateWorkspace(project) {
+		
+	};
 	
 	this.renderWorkspace = function renderWorkspace(projects) {
 		console.log('Render Workspace');
