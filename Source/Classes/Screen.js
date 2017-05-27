@@ -42,7 +42,13 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		_min_width	= width;
 		_min_height	= height;
 		
-		this.setSize(width, height);
+		if(_width < _min_width) {
+			this.setWidth(_min_width);
+		}
+		
+		if(_height < _min_height) {
+			this.setHeight(_min_height);
+		}
 	};
 	
 	this.setOnStart = function setOnStart(callback) {
