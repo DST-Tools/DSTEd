@@ -10,12 +10,14 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	var _name			= '';
 	var _width			= 0;
 	var _height			= 0;
+	var _max_width		= null;
 	var _min_width		= null;
 	var _min_height		= null;
 	var _window			= null;
 	var _debug			= false;
 	var _resizable		= false;
 	var _menu			= null;
+	var _post_data		= null;
 	var _callbacks		= {
 		onStart:	function onStart() { /* Override Me */ },
 		onLoad:		function onLoad() { /* Override Me */ }
@@ -23,6 +25,20 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	
 	this.init = function init(name) {
 		_name	= name;
+	};
+	
+	this.setPostData = function setPostData(data) {
+		_post_data = data;
+		return this;
+	};
+	
+	this.getPostData = function getPostData() {
+		return _post_data;
+	};
+	
+	this.setMaxWidth = function setMaxWidth(width) {
+		_max_width = width;
+		return this;
 	};
 	
 	this.setDebug = function setDebug(state) {
@@ -60,25 +76,35 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	};
 	
 	this.send = function send(name, data) {
+		if(_window == null || _window.webContents == null) {
+			return this;
+		}
+		
 		_window.webContents.send(name, data);
+		
+		return this;
 	};
 	
 	this.setMenu = function setMenu(menu) {
 		_menu = menu;
 		_window.setMenu(_menu.getMenu());
+		return this;
 	};
 	
 	this.setWidth = function setWidth(width) {
 		_width = width;
+		return this;
 	};
 	
 	this.setHeight = function setHeight(height) {
 		_height = height;
+		return this;
 	};
 	
 	this.setSize = function setSize(width, height) {
 		_width = width;
 		_height = height;
+		return this;
 	};
 	
 	this.open = function open() {
@@ -87,6 +113,7 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 			height:				_height,
 			frame:				false,
 			show:				false,
+			maxWidth:			_max_width,
 			minWidth:			(_min_width == null ? 0 : _min_width),
 			minHeight:			(_min_height == null ? 0 : _min_height),
 			resizable:			_resizable,
