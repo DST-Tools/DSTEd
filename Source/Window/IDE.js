@@ -57,6 +57,12 @@ const IPC			= require('electron').ipcRenderer;
 			this.renderWorkspace(_projects);
 		}.bind(this));
 		
+		IPC.on('workspace:project:remove', function(event, name) {
+			_projects[name] = null;
+			delete _projects[name];
+			this.renderWorkspace(_projects);
+		}.bind(this));
+		
 		IPC.on('workspace:projects', function(event, projects) {
 			_projects = projects;
 			this.renderWorkspace(_projects);
@@ -379,7 +385,7 @@ const IPC			= require('electron').ipcRenderer;
 			
 			if(key.length > 0) {
 				project_html += '<input type="checkbox" id="' + key + '">';
-				project_html += '<label data-project="true" data-type="' + (project.workshop.enabled ? 'steam' : 'local') + '" for="' + key + '">';
+				project_html += '<label data-project="true" data-contextmenu="true" data-type="' + (project.workshop.enabled ? 'steam' : 'local') + '" for="' + key + '">';
 				
 				/* Steam nice name */
 				if(project.workshop.enabled) {

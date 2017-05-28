@@ -91,6 +91,7 @@
 								
 								dialog.send('dialog:content', {
 									scrollable:	true,
+									selectable: true,
 									height:		155,
 									content:	info
 								});
@@ -121,15 +122,28 @@
 							id:		data.id,
 							value:	value
 						});
+						
+						this.getScreen('SteamWorkshopDetails').send('steam:workshop:event', {
+							action:	'progress',
+							id:		data.id,
+							value:	value
+						});
 					}.bind(this), function onEnd(file, path) {
 						fs.createReadStream(file).pipe(UnZIP.Extract({
 							path: path
-						}));
-						
-						this.getScreen('SteamWorkshop').send('steam:workshop:event', {
-							action:	'installed',
-							id:		data.id
-						});
+						}).on('finish', function Finish() {
+							fs.unlink(file, function onSuccess() {
+								this.getScreen('SteamWorkshop').send('steam:workshop:event', {
+									action:	'installed',
+									id:		data.id
+								});
+								
+								this.getScreen('SteamWorkshopDetails').send('steam:workshop:event', {
+									action:	'installed',
+									id:		data.id
+								});
+							}.bind(this));
+						}.bind(this)));
 					}.bind(this));
 				}.bind(this));
 				
@@ -139,6 +153,17 @@
 							action:	'uninstalled',
 							id:		data.id
 						});
+						
+						this.getScreen('SteamWorkshopDetails').send('steam:workshop:event', {
+							action:	'uninstalled',
+							id:		data.id
+						});
+					}.bind(this));
+				}.bind(this));
+				
+				IPC.on('steam:workshop:details', function(event, id) {
+					Software.getFile(id, function onData(data) {
+						this.getScreen('SteamWorkshopDetails').setPostData(data).open();
 					}.bind(this));
 				}.bind(this));
 				
@@ -224,10 +249,6 @@
 	this.openSplash = function openSplash() {
 		Software.loadConfig();
 		Software.loadSteamPath();
-		Software.createWorkspaceWatcher(function onProjectAdded(name, project) {
-			console.log('Project added', name, project);
-			this.getScreen('IDE').send('workspace:project:add', {name: name, project: project});	
-		}.bind(this));
 		this.loadScreens();
 		this.getScreen('Splash').open();
 	};
@@ -272,12 +293,25 @@
 				this.getScreen('SteamWorkshop').send('steam:workshop:list', files);
 			}.bind(this));
 		}.bind(this), null, true);
-		this.getScreen('SteamWorkshop').setDebug(true);
+		this.getScreen('SteamWorkshop').setDebug(false);
+		
+		/* Screen :: SteamWorkshop Details */
+		this.createScreen('SteamWorkshopDetails', 500, 400, 640, 165, null, function onLoad() {
+			var screen	= this.getScreen('SteamWorkshopDetails');
+			var data	= screen.getPostData(data);			
+			screen.send('steam:workshop:details', data);
+		}.bind(this), true).setMaxWidth(950).setDebug(false);
 			
 		/* Screen :: IDE */
 		this.createScreen('IDE', 800, 600, null, null, null, function onLoad() {
+			Software.createWorkspaceWatcher(function onProjectAdded(name, project) {
+				this.getScreen('IDE').send('workspace:project:add', {name: name, project: project});
+			}.bind(this), function onProjectDeleted(name) {
+				this.getScreen('IDE').send('workspace:project:remove', name);
+			}.bind(this));
+			
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
-		}.bind(this), true);
+		}.bind(this), true).setDebug(false);
 	};
 
 	this.init();

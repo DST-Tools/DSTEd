@@ -60,6 +60,9 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 							button:	event.target
 						});
 					break;
+					case 'steam:workshop:details':
+						IPC.send('steam:workshop:details', event.target.value);
+					break;
 				}
 			}
 		});
@@ -134,10 +137,10 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 								votes_up
 						*/
 						html.setAttribute('id',  'MOD' + entrie.publishedfileid);
-						var left	= '<img src="' + entrie.preview_url + '" alt="Preview" /><mod-content><h1>' + entrie.title + '</h1><small>' + entrie.short_description + '</small></mod-content>';
+						var left	= '<img src="' + entrie.preview_url + '" alt="Preview" /><mod-content><h1>' + entrie.title + '</h1><small>' + entrie.description.plain + '</small></mod-content>';
 						var right	= '<mod-rating><rating-star style="width: ' + (entrie.vote_data.score * 10) + '%;"></rating-star></mod-rating>';
 						
-						right += '<button name="details" value="' + entrie.publishedfileid + '">Details</button>';
+						right += '<button name="details" data-action="steam:workshop:details" value="' + entrie.publishedfileid + '">Details</button>';
 						
 						if(this.isInstalled(parseInt(entrie.publishedfileid, 10))) {
 							right += '<button name="deinstall" data-action="steam:workshop:deinstall" value="' + entrie.publishedfileid + '">Deinstall</button>';

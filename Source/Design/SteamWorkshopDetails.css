@@ -1,0 +1,161 @@
+section-header {
+	background: url('../Resources/workshop_header.png') no-repeat 0% 50%;
+	z-index: -1;
+	height: 245px;
+	padding: 80px 10px 10px 10px;
+}
+
+section-header mod-picture {
+	display: block;
+	width: 100px;
+	height: 100px;
+	float: left;
+	margin: 0 40px;
+	text-shadow: 0 0 3px #000000, 0 0 60px #ed5c2d;
+	background-size: cover;
+}
+
+section-header mod-title {
+	display: block;
+	color: #FFFFFF;
+	font-size: 30px;
+	text-shadow: 0 0 3px #000000, 0 0 60px #ed5c2d;
+	border-bottom: 2px solid #ed5c2d;
+}
+
+section-content {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 204px;
+	bottom: 47px;
+	display: flex;
+	padding: 0;
+	flex: 1 1 0%;
+}
+
+section-content section-main {
+	display: flex;
+	flex-direction: column;
+	flex: 1 100%;
+}
+
+section-content section-main section-tabs {
+	display: flex;
+	flex-direction: row;
+	flex: 0 auto;
+	border-bottom: 2px solid #ED5C2D;
+}
+
+section-content section-sidebar {
+	background: #333337;
+	display: flex;
+	flex: 1 300px;
+	position: relative;
+	flex-direction: column;
+		overflow-x: hidden;
+	overflow-y: auto;
+}
+
+section-content section-sidebar sidebar-entry {
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+}
+
+section-content section-sidebar sidebar-entry label {
+	display: flex;
+	flex-direction: column;
+	flex: 1 50%;
+}
+
+section-content section-sidebar sidebar-entry span {
+	display: flex;
+	flex-direction: column;
+	flex: 1 50%;
+}
+
+section-content section-sidebar sidebar-entry a {
+	display: flex;
+	color: #FFFFFF;
+	text-decoration: none;
+	cursor: pointer !important;
+}
+
+section-content section-sidebar sidebar-entry a * {
+	cursor: pointer !important;	
+}
+
+section-content section-sidebar sidebar-entry a span {
+	margin: 4px 0 0 4px;
+}
+
+section-content section-sidebar sidebar-entry a img {
+	width: 24px;
+	height: 24px;
+	line-height: 0;
+	vertical-align: middle;
+}
+
+tab-content label {
+	font-weight: bold;
+	display: inline-block;
+	min-width: 250px;
+}
+
+tab-content mod-tags {
+	display: block;
+	position: relative;
+	margin: 10px 0 0 0;
+	border-top: 1px solid #424244;
+	padding: 5px 0 0 0;
+	text-align: center;
+}
+
+tab-content mod-tags mod-tag {
+	display: inline-block;
+	padding: 2px 5px;
+	margin: 2px;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 3px;
+	font-size: 11px;
+}
+
+footer {
+	border-top: 1px solid #ed5c2d;
+}
+
+footer button[name="install"] {
+	background: rgba(20, 95, 20, 0.3);
+}
+
+footer button[name="install"]:hover:after {
+	border-color: rgba(20, 95, 20, 1);
+}
+
+footer button[name="deinstall"] {
+	background: rgba(220, 15, 15, 0.3);
+}
+
+footer button[name="deinstall"]:hover:after {
+	border-color: rgba(220, 15, 15, 1);
+}
+
+footer button.loading {
+	background: url(../Resources/loading.svg) no-repeat 50% 50% !important;
+	width: 27px;
+	height: 27px;
+	border: none;
+	font-size: 8px;
+	margin: 2px auto;
+	text-align: center;
+	padding: 0;
+}
+
+footer button.loading:after{
+	border: none;	
+}
+
+footer button.loading:after, button.loading:hover:after {
+	display: none;
+}

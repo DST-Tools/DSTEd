@@ -1,0 +1,11 @@
+/* Context Menu */
+ui-contextmenu {
+	display: none;
+	position: fixed;
+	z-index: 500;
+	background: red;
+}
+
+ui-contextmenu.show {
+	display: block;
+}

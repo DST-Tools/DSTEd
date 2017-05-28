@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+	</head>
+	<body data-loading="true">
+		<header>
+			<ui-icon data-name="window"></ui-icon>
+			<ui-title>Mod Details</ui-title>
+			<ui-buttons>
+				<button data-action="window:close"></button>
+				<button data-action="window:maximize"></button>
+				<button data-action="window:minimize"></button>
+			</ui-buttons>
+		</header>
+		<section>
+			<section-header>
+				<mod-picture></mod-picture>
+				<mod-title></mod-title>
+			</section-header>
+			<section-content>
+				<section-main>
+					<section-tabs>
+						<ui-tabs class="big">
+							<ui-tab data-tab="description" class="active">Description</ui-tab>
+							<ui-tab data-tab="preview">Preview</ui-tab>
+							<ui-tab data-tab="comments">Comments <ui-badge></ui-badge></ui-tab>
+							<ui-tab data-tab="statistics">Statistics</ui-tab>
+						</ui-tabs>
+					</section-tabs>
+					<tab-content id="description" class="visible"></tab-content>
+					<tab-content id="preview"></tab-content>
+					<tab-content id="comments">
+						<ui-alert class="info">Currently not implemented.</ui-alert>
+					</tab-content>
+					<tab-content id="statistics"></tab-content>
+				</section-main>
+				<section-sidebar>
+					<sidebar-entry>
+						<label>Version:</label> <span data-name="version">0.0.0</span>
+					</sidebar-entry>
+					<sidebar-entry>
+						<label>Author:</label> <span data-name="author">Unknown</span>
+					</sidebar-entry>
+					<sidebar-entry>
+						<label>Last Updated:</label> <span data-name="updated">Never</span>
+					</sidebar-entry>
+					<sidebar-entry>
+						<label>Size:</label> <span data-name="size">0 MB</span>
+					</sidebar-entry>
+					<sidebar-entry>
+						<label>Downloads:</label> <span data-name="downloads">0</span>
+					</sidebar-entry>
+				</section-sidebar>
+			</section-content>
+		</section>
+		<footer>
+			<button name="close" data-action="window:close">Close</button>
+			<button name="install" data-action="steam:workshop:install" value="0">Install</button>
+		</footer>
+		<script type="text/javascript">
+			var a				= require('../Classes/Application.js');
+			const Application	= new a(true);
+			Application.importCSS(
+				'../Design/UI-Global.css',
+				'../Design/UI-Window.css',
+				'../Design/UI-Controls.css',
+				'../Design/UI-Dialog.css',
+				'../Design/UI-Alert.css',
+				'../Design/UI-Forms.css',
+				'../Design/UI-Tabs.css',
+				'../Design/SteamWorkshopDetails.css'
+			);
+			Application.importJS('SteamWorkshopDetails.js');
+		</script>
+	</body>
+</html>

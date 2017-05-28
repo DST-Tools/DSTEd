@@ -5,7 +5,7 @@ module.exports = (function Menu() {
 	
 	this.init = function init() {
 		_menu		= new Menu();
-		this.setTemplate(require('../Resources/Menu.json'));		
+		this.setTemplate(require('../Resources/Menu.json'));
 	};
 	
 	this.setTemplate = function setTemplate(template) {

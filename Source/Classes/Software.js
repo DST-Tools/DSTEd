@@ -86,41 +86,48 @@ exports = module.exports = (function Software() {
 	
 	this.deleteWorkspaceProject = function deleteWorkspaceProject(name, callback) {
 		rimraf(global.DSTEd.workspace + path.sep + 'mods' + path.sep + name, callback);
+		global.DSTEd.projects[name] = null;
+		delete global.DSTEd.projects[name];
 	};
 	
 	this.createWorkspaceProject = function createWorkspaceProject(name) {
 		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
 		fs.mkdir(mods_path + name, function onSuccess() {
 			/* Do Nothing */
-		});		
+		});
 		return mods_path + name + path.sep;
 	};
 	
-	this.createWorkspaceWatcher = function createWorkspaceWatcher(callback_project_added) {
+	this.createWorkspaceWatcher = function createWorkspaceWatcher(callback_project_added, callback_project_deleted) {
 		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
 		var watcher		= Chokidar.watch(mods_path, {
 			ignored:	/[\/\\]\./,
 			persistent:	true
 		});
 		
-		watcher.on('add', function(p) {
-		}).on('addDir', function(p) {
+		watcher.on('addDir', function onAddDirectory(p) {
 			var segments	= p.replace(/\/+$/, '').split(path.sep);
 			var lastDir		= (segments.length > 0) ? segments[segments.length - 1] : '';
 			
-			if(new RegExp('workspace\-([0-9]+)', 'g').test(lastDir)) {
-				this.addProject(lastDir, callback_project_added);
+			if(new RegExp('^workshop\-([0-9]+)$', 'gi').test(lastDir)) {
+				var _wait = setInterval(function onWait() {
+					if(fs.existsSync(p + path.sep + 'modinfo.lua')) {
+						this.addProject(lastDir, false, callback_project_added);
+						clearInterval(_wait);
+					}
+				}.bind(this), 1000);
 			}
-		}.bind(this)).on('change', function(p) {
-		}).on('unlink', function(p) {
-		}).on('unlinkDir', function(p) {
-		}).on('error', function(error) {
-		}).on('ready', function onReady() {
-		}).on('raw', function(event, p, details) {
-		}.bind(this));
+		}.bind(this)).on('unlinkDir', function onDeleteDirectory(p) {
+			var segments	= p.replace(/\/+$/, '').split(path.sep);
+			var lastDir		= (segments.length > 0) ? segments[segments.length - 1] : '';
+			
+			if(new RegExp('^workshop\-([0-9]+)$', 'gi').test(lastDir)) {
+				callback_project_deleted(lastDir);
+			}
+		});
 	};
 	
-	this.addProject = function addProject(file, callback_project_added) {
+	this.addProject = function addProject(file, initial, callback_project_added) {
 		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
 		
 		if(fs.statSync(mods_path + file).isDirectory()) {
@@ -189,11 +196,13 @@ exports = module.exports = (function Software() {
 				files:		null
 			};
 			
-			if(typeof(callback_project_added) != 'undefined') {
-				callback_project_added(file, global.DSTEd.projects[file]);
-			}
-			
-			this.getProjectWorkspace(global.DSTEd.projects[file]);
+			this.getProjectWorkspace(global.DSTEd.projects[file], function onEnd() {
+				if(typeof(callback_project_added) != 'undefined') {
+					if(!initial) {
+						callback_project_added(file, global.DSTEd.projects[file]);
+					}
+				}
+			});
 		}
 	};
 	
@@ -212,12 +221,12 @@ exports = module.exports = (function Software() {
 		
 		fs.readdir(mods_path, function(error, files) {
 			files.forEach(function(file) {
-				this.addProject(file);
+				this.addProject(file, true);
 			}.bind(this));
 		}.bind(this));
 	};
 	
-	this.getProjectWorkspace = function getProjectWorkspace(project) {
+	this.getProjectWorkspace = function getProjectWorkspace(project, callback_end) {
 		var tree = function(dir, original_path, done) {
 			var name	= dir;
 							
@@ -290,6 +299,7 @@ exports = module.exports = (function Software() {
 		
 		tree(project.path, project.path, function(err, list) {
 			project.files = list;
+			callback_end();
 		});
 	};
 	
