@@ -18,7 +18,7 @@ Pending...
 ### Linux:
 install nodejs and npm
 run build.sh
-if you get an error with electron try running ' sudo npm install electron -g '
+if you get an error with electron try running `sudo npm install -g`
 if you have any issues @ThemInspectors will try to help.
 
 ## Features
