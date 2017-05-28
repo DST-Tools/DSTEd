@@ -48,7 +48,8 @@ const DSTEd			= Remote.getGlobal('DSTEd');
 		});
 		
 		IPC.on('dialog:buttons', function(event, buttons) {
-			var footer = document.querySelector('footer');
+			var footer			= document.querySelector('footer');
+			footer.innerHTML	= '';
 			
 			buttons.forEach(function(button) {
 				var b		= document.createElement('button');
@@ -65,14 +66,24 @@ const DSTEd			= Remote.getGlobal('DSTEd');
 		
 		IPC.on('dialog:content', function(event, data) {
 			var section			= document.querySelector('section');
+			var old_content		= document.querySelectorAll('section-content');
+			
+			Array.prototype.forEach.call(old_content, function onEntrie(node) {
+				node.parentNode.removeChild(node);
+			});
+			
 			var content			= document.createElement('section-content');
 			
 			if(typeof(data.height) != 'undefined') {
 				content.style.height = data.height + 'px';
 			}
 			
-			if(typeof(data.scrollable) != 'data.scrollable' && data.scrollable) {
+			if(typeof(data.scrollable) != 'undefined' && data.scrollable) {
 				content.classList.add('scrollable');
+			}
+			
+			if(typeof(data.selectable) != 'undefined' && data.selectable) {
+				content.classList.add('selectable');
 			}
 			
 			content.innerHTML	= data.content;

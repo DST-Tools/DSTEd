@@ -58,6 +58,10 @@
 	background:	rgba(255, 255, 255, 0);
 }
 
+.selectable::selection, .selectable::-webkit-selection, .selectable::selection {
+	background:	initial;
+}
+
 * {
 	cursor: default;
 	-webkit-box-sizing: border-box;
@@ -83,6 +87,16 @@
 	-ms-user-select: none;
 	user-select: none;
 	outline-style:none;/*IE*/
+}
+
+.selectable, .selectable * {
+	-webkit-touch-callout: auto;
+	-webkit-user-select: auto;
+	-khtml-user-select: auto;
+	-moz-user-select: auto;
+	-ms-user-select: auto;
+	user-select: auto;
+	outline-style:auto;
 }
 
 .monaco-editor .monaco-scrollable-element .scrollbar.horizontal,
