@@ -1,0 +1,72 @@
+ui-tabs {
+	display: flex;
+    flex-direction: row;
+    flex: 0 auto;
+}
+
+ui-tabs ui-tab {
+	margin: 0 1px;
+	font-size: 12px;
+	position: relative;
+	background: #AAAAAA;
+	cursor: pointer;
+	color: #FFFFFF;
+	padding: 10px 15px 10px 10px;
+	margin: 0;
+}
+
+ui-tabs.big ui-tab {
+	font-size: 14px;
+	padding: 10px 15px 10px 10px;
+}
+
+ui-tabs ui-tab tab-close {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 2px;
+	right: 3px;
+	width: 16px;
+	height: 16px;
+	opacity: 0.5;
+	background-color: #FFFFFF;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: 50%;
+	-webkit-mask-image: url(../Resources/window_close.svg);
+	-webkit-mask-size: 10px;
+}
+  
+ui-tabs ui-tab tab-close:hover {
+	opacity: 1;
+}
+  
+ui-tabs ui-tab.active {
+	background: #ED5C2D;
+}
+
+ui-tabs ui-tab ui-badge {
+	background: #928888;
+	padding: 3px 10px;
+	border-radius: 10px;
+	float: right;
+	margin: 0 0 0 10px;
+	font-size: 11px;
+}
+
+ui-tabs ui-tab.active ui-badge {
+	background: #71331f;
+}
+
+tab-content {
+	display: none;
+	flex: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding: 10px;
+	font-size: 14px;
+	flex-direction: column;
+}
+
+tab-content.visible {
+	display: block;
+}

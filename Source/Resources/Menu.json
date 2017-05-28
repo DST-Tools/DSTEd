@@ -57,35 +57,43 @@
 	"label": "Edit",
 	"submenu": [{
 		"role":			"undo",
-		"accelerator":	"CMD + Z"
+		"accelerator":	"CMD + Z",
+			"disabled":	true
 	}, {
 		"role":			"redo",
-		"accelerator":	"CMD + Y"
+		"accelerator":	"CMD + Y",
+			"disabled":	true
 	}, {
 		"type": "separator"
 	}, {
 		"role":			"cut",
-		"accelerator":	"CMD + X"
+		"accelerator":	"CMD + X",
+			"disabled":	true
 	}, {
 		"role":			"copy",
-		"accelerator":	"CMD + C"
+		"accelerator":	"CMD + C",
+			"disabled":	true
 	}, {
 		"role":			"paste",
-		"accelerator":	"CMD + V"
+		"accelerator":	"CMD + V",
+			"disabled":	true
 	}, {
 		"role":			"selectall",
-		"accelerator":	"CMD + A"
+		"accelerator":	"CMD + A",
+			"disabled":	true
 	}]
 }, {
 	"label":	"Search",
 	"submenu":	[{
 		"label":		"Find...",
 		"accelerator":	"CMD + F",
-		"command":		"find"
+		"command":		"find",
+		"disabled":		true
 	}, {
 		"label":		"Find Next",
 		"accelerator":	"F3",
-		"command":		"find_next"
+		"command":		"find_next",
+		"disabled":		true
 	}]
 }, {
 	"label":	"View",
@@ -103,9 +111,11 @@
 		}]
 	}, {
 		"label":	"Server",
+		"disabled":	true,
 		"submenu": [{
 			"label":	"Start",
-			"command":	"server_start"
+			"command":	"server_start",
+			"disabled":	true
 		}, {
 			"label":	"Stop",
 			"command":	"server_stop",
@@ -116,7 +126,8 @@
 			"disabled":	true
 		}, {
 			"label":	"Configuration",
-			"command":	"server_config"
+			"command":	"server_config",
+			"disabled":	true
 		}]
 	}]
 }, {

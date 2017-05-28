@@ -59,7 +59,7 @@ exports = module.exports = (function Steam() {
 				file: id
 			}
 		}, function onResponse(error, response, body) {
-			callback(JSON.parse(body));
+			callback(body);
 		});
 	};
 	
