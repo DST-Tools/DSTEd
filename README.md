@@ -16,13 +16,11 @@ Comming soon...
 Pending...
 
 ### Linux:
-install nodejs and npm
 
-run build.sh
-
-if you get an error with electron try running `sudo npm install -g`
-
-if you have any issues @ThemInspectors will try to help.
+1. install nodejs and npm 
+2. run build.sh 
+3. if you get an error with electron try running `sudo npm install -g` 
+- if you have any issues @ThemInspectors will try to help.
 
 ## Features
 
