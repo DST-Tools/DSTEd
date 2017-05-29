@@ -10,6 +10,19 @@ if [ -d "$CUR_DIR/$NAME_BUILD" ]; then
 	mkdir $CUR_DIR/$NAME_BUILD
 fi
 
+# Clean-Up Source Folder
+if ls $CUR_DIR/$NAME_SOURCE/npm-debug.log.* 1> /dev/null 2>&1; then
+	rm -r $CUR_DIR/$NAME_SOURCE/npm-debug.log.*
+fi
+
+if [ -e "$CUR_DIR/$NAME_SOURCE/config.json" ]; then
+	rm $CUR_DIR/$NAME_SOURCE/config.json
+fi
+
+if [ -d "$CUR_DIR/$NAME_SOURCE/node_modules" ]; then
+	rm -f -r $CUR_DIR/$NAME_SOURCE/node_modules
+fi
+
 # Move Source to Build Directory
 cp -rf $CUR_DIR/$NAME_SOURCE $CUR_DIR/$NAME_BUILD
 

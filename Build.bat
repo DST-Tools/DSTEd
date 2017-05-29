@@ -18,6 +18,11 @@ echo.
 :: Create Build Directory
 if not exist %CUR_DIR%\%NAME_BUILD% md "%CUR_DIR%\%NAME_BUILD%\"
 
+:: Clean-Up Source Folder
+if exist "%CUR_DIR%\%NAME_SOURCE%\npm-debug.log.*<" del /s %CUR_DIR%\%NAME_SOURCE%\npm-debug.log.*
+if exist "%CUR_DIR%\%NAME_SOURCE%\config.json" del %CUR_DIR%\%NAME_SOURCE%\config.json
+if exist "%CUR_DIR%\%NAME_SOURCE%\node_modules" rmdir /s/q %CUR_DIR%\%NAME_SOURCE%\node_modules
+
 :: Move Source to Build Directory
 @RD /S /Q %CUR_DIR%\%NAME_BUILD%
 xcopy /e /v %CUR_DIR%\%NAME_SOURCE% %CUR_DIR%\%NAME_BUILD%

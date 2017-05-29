@@ -1,4 +1,5 @@
 Bin/
+Build/
 Source/node_modules
 Source/config.json
 Source/npm-debug*
