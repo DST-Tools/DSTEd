@@ -1,17 +1,18 @@
 CUR_DIR=`pwd`
-INSTALL_DIR="$HOME/.dsted"
-NAME_SOURCE="Source" #this is redundant
-#UPDATE=true #if set to true it will attempt to grab the latest version and build the update. not going to work on it
+NAME_SOURCE="Source"
+NAME_BUILD="Build"
 
-echo "This is the Linux install version."
-echo "You need to install nodejs and npm for this to work."
+echo -e "\e[0;31mBuild DSTEd\e[0m"
+echo -e "\e[0;31m---\e[0m"
 
-#create the install directory
-mkdir $INSTALL_DIR
+# Create Build Directory
+if [ -d "$CUR_DIR/$NAME_BUILD" ]; then
+	mkdir $CUR_DIR/$NAME_BUILD
+fi
 
-# copy the things
-cp -rf $CUR_DIR/$NAME_SOURCE $INSTALL_DIR/
+# Move Source to Build Directory
+cp -rf $CUR_DIR/$NAME_SOURCE $CUR_DIR/$NAME_BUILD
 
-## Go to Build and Start NPM
-cd $INSTALL_DIR/$NAME_SOURCE
+# Go to Build and Start NPM
+cd $CUR_DIR/$NAME_BUILD
 npm install
