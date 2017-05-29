@@ -1,6 +1,6 @@
-INSTALL_DIR="~/.dsted"
-NAME_SOURCE="Source"
+INSTALL_DIR="$HOME/.dsted"
+NAME_SOURCE="Source/"
 
-cd $INSTALL_DIR
+cd $INSTALL_DIR/$NAME_SOURCE
 
 npm start
