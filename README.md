@@ -11,7 +11,16 @@ IDE for Don't Starve Together
 Comming soon...
 
 ## Installation
-Comming soon...
+
+### Windows:
+Pending...
+
+### Linux:
+
+1. install nodejs and npm 
+2. run ./Build.sh and ./Start.sh marking executable if needed
+- if you get an error with electron try running `sudo npm install -g` 
+- if you have any issues @ThemInspectors will try to help.
 
 ## Features
 
