@@ -57,3 +57,8 @@ do
 	fi
 done
 
+echo -e "\e[31m\e[48;5;17m...Remove Temporary Directory\033[0m"
+if [ -d "$CUR_DIR/$NAME_TEMP" ]; then
+	rm -f -r $CUR_DIR/$NAME_TEMP
+fi
+
