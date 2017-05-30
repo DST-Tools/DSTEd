@@ -1,5 +1,7 @@
 Bin/
 Build/
+Temp/
 Source/node_modules
 Source/config.json
 Source/npm-debug*
+Source/Output.log
