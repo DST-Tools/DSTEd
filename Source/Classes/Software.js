@@ -7,18 +7,24 @@ const glob			= require('glob');
 const mime			= require('mime-types');
 const Chokidar		= require('chokidar');
 const rimraf		= require('rimraf');
+const Logger		= require('../Classes/Logger')();
 	
 exports = module.exports = (function Software() {
-	var _config = App.getAppPath() + path.sep + 'config.json';
+	var _config = null;
 		
 	this.init = function init() {
+		var directory = path.dirname(App.getPath('exe'));
 		
+		if(new RegExp('node_modules', 'gi').test(directory)) {
+			directory = App.getAppPath();
+		}
+		
+		_config = directory + path.sep + 'config.json';
+		Logger.info('Set Configuration-Path: ' + _config);
 	};
 	
 	this.isInstalled = function isInstalled() {
-		var file = App.getAppPath() + path.sep + 'config.json';
-		
-		if(fs.existsSync(file) && global.DSTEd.workspace != null) {
+		if(fs.existsSync(_config) && global.DSTEd.workspace != null) {
 			return true;
 		}
 		
@@ -29,17 +35,16 @@ exports = module.exports = (function Software() {
 		if(fs.existsSync(_config)) {
 			var config = require(_config);
 			
-			console.log(config);
-			
 			if(typeof(global.DSTEd.workspace) != 'undefined') {
 
 			if(fs.existsSync(config.workspace + path.sep + 'bin' + path.sep + 'dontstarve_steam.exe')) {
 					global.DSTEd.workspace = config.workspace;
+					Logger.info('Set Workspace: ' + global.DSTEd.workspace);
 				} else {
-					console.warn('Workspace is not DST!');
+					Logger.warn('Workspace is not DST!');
 				}
 			} else {
-				console.warn('Workspace is undefined.');
+				Logger.warn('Workspace is undefined.');
 			}
 		}
 	};
@@ -61,7 +66,7 @@ exports = module.exports = (function Software() {
 				return;
 			}
 			
-			console.log('Config saved.');
+			Logger.info('Config saved.');
 		});
 	};
 	
@@ -81,16 +86,20 @@ exports = module.exports = (function Software() {
 			var pathRoot		= path.parse(global.DSTEd.steam).root;
 			var noDrivePath		= global.DSTEd.steam.slice(Math.max(pathRoot.length - 1, 0));
 			global.DSTEd.steam	= glob.sync(noDrivePath, { nocase: true, cwd: pathRoot })[0];
+			
+			Logger.info('Set Steam-Path: ' + global.DSTEd.steam);
 		});
 	};
 	
 	this.deleteWorkspaceProject = function deleteWorkspaceProject(name, callback) {
+		Logger.debug('Delete Workspace-Project: ' + name);
 		rimraf(global.DSTEd.workspace + path.sep + 'mods' + path.sep + name, callback);
 		global.DSTEd.projects[name] = null;
 		delete global.DSTEd.projects[name];
 	};
 	
 	this.createWorkspaceProject = function createWorkspaceProject(name) {
+		Logger.debug('Create Workspace-Project: ' + name);
 		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
 		fs.mkdir(mods_path + name, function onSuccess() {
 			/* Do Nothing */
@@ -131,9 +140,11 @@ exports = module.exports = (function Software() {
 		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
 		
 		if(fs.statSync(mods_path + file).isDirectory()) {
+			Logger.debug('Add Project: ' + file);
 			var modinfo = {};
 			
-			try {						
+			Logger.debug('...parsing LUA (modinfo.lua)');
+			try {
 				var parser = require('luaparse');
 				
 				parser.parse(fs.readFileSync(mods_path + file + path.sep + 'modinfo.lua', 'utf8'), {
@@ -173,7 +184,7 @@ exports = module.exports = (function Software() {
 				});
 				
 			} catch(e) {
-				console.log(e);
+				Logger.error('[LUA]', e);
 			}
 			
 			/* Check if Mod is from Steam-Workshop */
@@ -207,7 +218,10 @@ exports = module.exports = (function Software() {
 	};
 	
 	this.loadWorkspace = function loadWorkspace() {
+		Logger.info('Loading Worspace...');
+		
 		if(global.DSTEd.workspace == null) {
+			Logger.warn('Workspace is not set!');
 			return;
 		}
 		
@@ -215,7 +229,7 @@ exports = module.exports = (function Software() {
 		var stats		= fs.lstatSync(mods_path);
 		
 		if(!stats.isDirectory()) {
-			console.warn('Mods dir dont exists (' + mods_path + ')');
+			Logger.warn('Mods dir dont exists (' + mods_path + ')');
 			return;
 		}
 		

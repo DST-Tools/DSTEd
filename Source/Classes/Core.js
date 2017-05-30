@@ -12,6 +12,7 @@
 	const OS			= require('os');
 	const fs 			= require('fs');
 	const UnZIP			= require('unzip');
+	const Logger		= require('../Classes/Logger')();
 	
 	this.init = function init() {
 		if(typeof(global.DSTEd) == 'undefined') {
@@ -25,6 +26,8 @@
 				projects:	{},
 				windows:	{}
 			};
+			
+			Logger.info('Start DSTEd v' + global.DSTEd.version);
 		}
 		
 		if(typeof(window) == 'undefined') {
@@ -44,6 +47,7 @@
 				IPC.on('menu:command', function(event, command) {
 					switch(command) {
 						case 'exit':
+							Logger.info('Quit Application');
 							App.quit();
 						break;
 						case 'forum':
@@ -218,6 +222,7 @@
 	};
 	
 	this.createScreen = function createScreen(name, width, height, min_width, min_height, callback_start, callback_load, resizeable) {
+		Logger.info('Create Screen "' + name + '"');
 		var screen = new Screen(name);
 		
 		screen.setSize(width, height);
