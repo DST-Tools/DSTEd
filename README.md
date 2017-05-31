@@ -7,9 +7,22 @@
 
 IDE for Don't Starve Together
 
-## System requirements
-Comming soon...
+## System requirements (Minimal)
+**System:** `Windows 7` (`32bit` or `64bit`), `Linux` (like Ubuntu, Debian, Fedeora or other Distributions) (`32bit`, `64bit` or `armv`), `Mac OS X` 10.9 (`64bit`)
 
+**Memory:** _Undefined_ **
+
+**CPU:** _Undefined_ **
+
+**Graphics-Card:** _Undefined_ **, ***
+
+**Network:** An Internet-connection for `Steam-Workshop`
+
+**Software:** `Steam` and `Don't Starve Together` must be Installed.
+
+ - ** will be soon available after Benchmark-tests.
+ - *** Minimal requirements needed for rendering textures
+ 
 ## Download & Installation
 [![Download Now!](http://asduser.github.io/examples/images/githubDownloadButton.png)](https://github.com/DST-Tools/DSTEd/releases)
 
