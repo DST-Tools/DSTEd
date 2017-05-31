@@ -10,26 +10,31 @@ IDE for Don't Starve Together
 ## System requirements
 Comming soon...
 
-## Installation
+## Download & Installation
+[![Download Now!](http://asduser.github.io/examples/images/githubDownloadButton.png)](https://github.com/DST-Tools/DSTEd/releases)
 
-### Windows:
-Pending...
+## Topics
+You found lot's of Topics in our Wiki:
 
-### Linux:
-
-1. install nodejs and npm 
-2. run ./Build.sh and ./Start.sh marking executable if needed
-- if you get an error with electron try running `sudo npm install -g` 
-- if you have any issues @ThemInspectors will try to help.
+  - [ ] [Build for `Windows`](https://github.com/DST-Tools/DSTEd/wiki/Build-Windows)
+  - [ ] [Build for `Linux/Unix`](https://github.com/DST-Tools/DSTEd/wiki/Build-Linux)
+  - [ ] [Build for `OS X`](https://github.com/DST-Tools/DSTEd/wiki/Build-OSX)
 
 ## Features
 
-- Develop Mods in Lua language
-- Syntax highligtning
-- Mod-Specific projects
-- DST API
-- ModInfo Editor
-- Integrated Steam-Workshop (search, downloading and uploading Mods)
-- Asset Editor
-- Console/Logger
-- And lots of more...
+- [x] Develop Mods in Lua language
+- [x] Syntax highligtning
+- [x] Mod-Specific projects
+- [ ] DST API
+- [ ] ModInfo Editor
+- [ ] Integrated Steam-Workshop
+  - [x] search Mods
+  - [x] downloading Mods
+  - [ ] uploading Mods
+- [ ] Server ToolSet for development
+  - [ ] Starting/Stopping/Restarting Servers
+  - [ ] Configurate Servers
+- [ ] Asset Editor
+- [ ] Console/Logger
+
+And lots of more...
