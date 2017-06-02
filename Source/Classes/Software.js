@@ -49,6 +49,10 @@ exports = module.exports = (function Software() {
 		}
 	};
 	
+	this.getDSTPath = function getDSTPath() {
+		return global.DSTEd.workspace + path.sep;
+	};
+	
 	this.saveConfig = function saveConfig() {
 		var config = {
 			workspace:	null
