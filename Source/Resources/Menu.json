@@ -100,7 +100,11 @@
 	"disabled":	true
 }, {
 	"label":	"Debug",
-	"disabled":	true
+	"disabled":	false,
+	"submenu": [{
+		"label":	"Run DST",
+		"command":	"dst_run"
+	}]
 }, {
 	"label":	"Tools",
 	"submenu": [{

@@ -13,6 +13,7 @@
 	const fs 			= require('fs');
 	const UnZIP			= require('unzip');
 	const Logger		= require('../Classes/Logger')();
+	const Process		= require('child_process');
 	
 	this.init = function init() {
 		if(typeof(global.DSTEd) == 'undefined') {
@@ -109,6 +110,47 @@
 						break;
 						case 'steam_workshop':
 							this.getScreen('SteamWorkshop').open();
+						break;
+						case 'dst_run':
+							/*Exec(Software.getDSTPath() + 'bin' + path.sep + 'dontstarve_steam.exe', [], {
+								cwd:	Software.getDSTPath()
+							}, function(error, data) {  
+								Logger.info(error)
+								Logger.info(data);
+							});
+							
+							Process.execFile('D:\\Software\\Steam\\Steam.exe', ['-applaunch', 322330, '-window'], {
+								cwd: 'D:\\Software\\Steam\\'
+							}, function(error, data) {  
+								Logger.info(error)
+								Logger.info(data);
+							});**/
+							
+							const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
+								cwd: 'D:\\Software\\Steam\\',
+								detached: false
+							});
+						
+						Logger.info(ls);
+							ls.stdout.on('data', (data) => {
+								Logger.info(`stdout: ${data}`);
+							});
+							
+							ls.stderr.on('data', (data) => {
+								Logger.info(`stderr: ${data}`);
+							});
+							
+							ls.on('close', (code) => {
+								Logger.info(`child process exited with code ${code}`);
+							});
+							
+							ls.on('exit', (code) => {
+								Logger.info(`child process exited with code ${code}`);
+							});
+							
+							ls.on('message', (code) => {
+								Logger.info(`child process exited with code ${code}`);
+							});
 						break;
 					}
 				}.bind(this));
@@ -297,8 +339,7 @@
 			Steam.getWorkshop(null, function(files) {
 				this.getScreen('SteamWorkshop').send('steam:workshop:list', files);
 			}.bind(this));
-		}.bind(this), null, true);
-		this.getScreen('SteamWorkshop').setDebug(false);
+		}.bind(this), null, true).setDebug(false);
 		
 		/* Screen :: SteamWorkshop Details */
 		this.createScreen('SteamWorkshopDetails', 500, 400, 640, 165, null, function onLoad() {
@@ -316,7 +357,7 @@
 			}.bind(this));
 			
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
-		}.bind(this), true).setDebug(false);
+		}.bind(this), true).setDebug(true);
 	};
 
 	this.init();

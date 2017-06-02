@@ -44,9 +44,9 @@ ui-content {
     z-index: 0;
 }
 
- ui-content ui-workspace {
+ ui-content ui-workspace, ui-content editor-sidebar {
 	display: flex;
-	flex: 0 0 auto;
+	flex: 0 1 auto;
     position: relative;
     width: 300px;
     z-index: 20;
@@ -57,8 +57,8 @@ ui-content {
 	border: 1px solid #3F3F46;
  }
  
- ui-content ui-workspace resize-handler{
-	     display: block;
+ ui-content resize-handler {
+	 display: block;
     position: fixed;
     width: 10px;
 	top: 58px;
@@ -68,11 +68,11 @@ ui-content {
     cursor: e-resize;
  }
  
-  ui-content ui-workspace resize-handler:hover {
+  ui-content resize-handler:hover {
 	  background: rgba(0, 0, 0, 0.5);
   }
  
- ui-content ui-workspace ui-title {
+ ui-content ui-workspace ui-title, ui-content editor-sidebar ui-title {
     position: relative;
 	display: block;
 	color: #FFFFFF;
@@ -303,6 +303,15 @@ label[data-type="application/x-tex"]:before {
 	 align-items: center;
 	 justify-content: center;
 	 background: url('../Resources/raster.png');
+ }
+ 
+ui-content editor-sidebar {
+	display: none;
+    margin: 5px 5px 5px 5px;
+ }
+ 
+ ui-content editor-sidebar[data-visible="true"] {
+	display: flex;	 
  }
  
  ui-content ui-container {

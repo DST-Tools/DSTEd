@@ -11,12 +11,14 @@ module.exports = (function Editor(IDE) {
 	var _file		= null;
 	var _close		= null;
 	var _type		= null;
+	var _sidebar	= null;
 	var _changed	= false;
 	
 	this.init = function init(file, language) {
 		_file					= file;
 		_editors				= document.querySelector('code-editors');
 		_tabs					= document.querySelector('editor-tabs');
+		_sidebar				= document.querySelector('editor-sidebar');
 		_element				= document.createElement('code-editor');
 		_tab					= document.createElement('editor-tab');
 		_close					= document.createElement('tab-close');
@@ -146,6 +148,18 @@ module.exports = (function Editor(IDE) {
 	
 	this.open = function open() {
 		_element.style.display	= 'flex';
+		
+		switch(_type) {
+			case 'jpg':
+			case 'jpeg':
+			case 'bmp':
+			case 'png':
+				_sidebar.dataset.visible = true;
+			break;
+			default:
+				_sidebar.dataset.visible = false;			
+			break;
+		}
 	};
 	
 	this.isOpened = function isOpened() {
@@ -157,11 +171,13 @@ module.exports = (function Editor(IDE) {
 			_editor.dispose();
 		};
 		
+		_sidebar.dataset.visible	= false;
 		_tabs.removeChild(_tab);
 		_editors.removeChild(_element);
 	};
 	
 	this.hide = function hide() {
-		_element.style.display	= 'none';
+		_sidebar.dataset.visible	= false;
+		_element.style.display		= 'none';
 	};
 });

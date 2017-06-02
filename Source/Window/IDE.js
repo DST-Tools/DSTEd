@@ -9,7 +9,8 @@ const IPC			= require('electron').ipcRenderer;
 	
 	this.init = function init() {
 		this.createMenu();
-		this.createSidebar();
+		this.createSidebar('ui-content ui-workspace');
+		this.createSidebar('ui-content ui-container');
 		
 		document.addEventListener('click', function onClick(event) {
 			const win = Remote.getCurrentWindow();
@@ -235,6 +236,7 @@ const IPC			= require('electron').ipcRenderer;
 	
 	this.executeCommand = function executeCommand(command) {
 		switch(command) {
+			case 'dst_run':
 			case 'forum':
 			case 'steam_workshop':
 			case 'about':
@@ -316,7 +318,8 @@ const IPC			= require('electron').ipcRenderer;
 		}
 	};
 	
-	this.createSidebar = function createSidebar() {
+	
+	this.createSidebar = function createSidebar(selector) {
 		/* Resizing */
 		var _sidebar			= document.body.querySelector('ui-content ui-workspace');
 		
