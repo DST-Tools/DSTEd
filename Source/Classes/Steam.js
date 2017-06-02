@@ -1,5 +1,6 @@
 exports = module.exports = (function Steam() {
-	const _domain		= 'DSTEd.grimms-welt.net';
+	const Logger		= require('../Classes/Logger')();
+	const _domain		= 'api.DSTEd.net';
 	const _secured		= true;
 	const Request		= require('request');
 	const OS			= require('os');
@@ -31,7 +32,7 @@ exports = module.exports = (function Steam() {
 		}
 		
 		Request({
-			url:		'http' + (_secured ? 's' : '' ) + '://' + _domain + '/API/',
+			url:		'http' + (_secured ? 's' : '' ) + '://' + _domain + '/steam/workshop/search/',
 			method:		'POST',
 			json:		true,
 			headers: {
@@ -43,13 +44,19 @@ exports = module.exports = (function Steam() {
 				search:		query
 			}
 		}, function onResponse(error, response, body) {
+			try {
+				body = JSON.parse(body);
+			} catch(e) {
+				/* Do Nothing */
+			}
+
 			callback(body);
 		});
 	};
 	
 	this.getFile = function getFile(id, callback) {
 		Request({
-			url:		'http' + (_secured ? 's' : '' ) + '://' + _domain + '/API/',
+			url:		'http' + (_secured ? 's' : '' ) + '://' + _domain + '/steam/workshop/details/',
 			method:		'POST',
 			json:		true,
 			headers: {
@@ -59,6 +66,12 @@ exports = module.exports = (function Steam() {
 				file: id
 			}
 		}, function onResponse(error, response, body) {
+			try {
+				body = JSON.parse(body);
+			} catch(e) {
+				/* Do Nothing */
+			}
+			
 			callback(body);
 		});
 	};
