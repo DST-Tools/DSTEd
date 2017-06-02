@@ -357,7 +357,7 @@
 			}.bind(this));
 			
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
-		}.bind(this), true).setDebug(true);
+		}.bind(this), true).setDebug(false);
 	};
 
 	this.init();
