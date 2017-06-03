@@ -14,7 +14,7 @@ exports = module.exports = (function Logger() {
 		_logger.transports.file.file	= directory + '/Output.log';
 		_logger.transports.file.level	= 'info';
 		_logger.transports.console		= function Console(message) {
-			console.log('[' + message.date.toLocaleTimeString() + '] [' + message.level + '] ' + message.data);
+			console.log('[' + message.date.toLocaleTimeString() + '] [' + message.level + '] ' + JSON.stringify(message.data));
 		};
 	};
 	
