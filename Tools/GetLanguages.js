@@ -6,15 +6,17 @@ const path	= require('path');
 	var _table	= [];
 	
 	this.init = function init() {
-		console.log('Getting Files...');
-		
 		_source = process.argv[2];
 		
+		console.log('Handle Menu...');
+		this.handleMenu();
+		
+		console.log('Getting Files...');
 		this.LoadFiles(_source, function(error, list) {
 			var files = [];
 			
 			list.forEach(function(file) {
-				if(new RegExp('\.(js|html)$', 'gi').test(file) && !new RegExp('mode_modules', 'gi').test(file)) {
+				if(new RegExp('\.(js|html)$', 'gi').test(file) && !new RegExp('node_modules', 'gi').test(file)) {
 					console.log(' - ' + file.replace(_source, ''));
 					files.push(file);
 				}
@@ -23,6 +25,43 @@ const path	= require('path');
 			console.log('Fetched ' + files.length + ' Files');
 			this.handleFiles(files);
 		}.bind(this));
+	};
+	
+	this.handleMenu = function handleMenu() {
+		var items = require(path.resolve(_source, 'Resources', 'Menu.json'));
+		var count = 0;
+		
+		_table.push('/* MENU */');
+		
+		items.forEach(function(item) {
+			if(typeof(item.label) != 'undefined') {
+				_table.push(item.label);
+				++count;
+			}
+			
+			if(typeof(item.submenu) != 'undefined') {
+				count += this.handleSubmenu(item.submenu);
+			}
+		}.bind(this));
+		
+		console.log('Menu has ' + count + ' Entries.');
+	};
+	
+	this.handleSubmenu = function handleSubmenu(items) {
+		var count = 0;
+		
+		items.forEach(function(item) {
+			if(typeof(item.label) != 'undefined') {
+				_table.push(item.label);
+				++count;
+			}
+			
+			if(typeof(item.submenu) != 'undefined') {
+				count += this.handleSubmenu(item.submenu);
+			}
+		}.bind(this));
+		
+		return count;
 	};
 	
 	this.LoadFiles = function LoadFiles(dir, callback) {
@@ -76,7 +115,13 @@ const path	= require('path');
 			}
 		};
 		
+		var comment = 0;
 		_table.forEach(function(entrie) {
+			if(entrie.substr(0, 2) == '/*') {
+				json['__comment_' + ++comment] = entrie;
+				return;
+			}
+			
 			json[entrie] = entrie;
 		});
 		
@@ -91,6 +136,7 @@ const path	= require('path');
 	};
 	
 	this.handleContent = function handleContent(file, content) {
+		_table.push('/* ' + file.replace(_source, '') + ' */');
 		var found = this.fetchFunction(file, content);
 		
 		found += this.fetchAttributes(file, content, 'lang');
