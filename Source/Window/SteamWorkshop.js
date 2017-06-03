@@ -141,12 +141,12 @@ const I18N				= require('../Classes/I18N')();
 						var left	= '<img src="' + entrie.preview_url + '" alt="Preview" data-langalt="Preview" /><mod-content><h1>' + entrie.title + '</h1><small>' + entrie.description.plain + '</small></mod-content>';
 						var right	= '<mod-rating><rating-star style="width: ' + (entrie.vote_data.score * 10) + '%;"></rating-star></mod-rating>';
 						
-						right += '<button name="details" data-action="steam:workshop:details" value="' + entrie.publishedfileid + '" data-lang="Details">Details</button>';
+						right += '<button name="details" data-action="steam:workshop:details" value="' + entrie.publishedfileid + '" data-lang="Details">' + I18N.__('Details') + '</button>';
 						
 						if(this.isInstalled(parseInt(entrie.publishedfileid, 10))) {
-							right += '<button name="deinstall" data-action="steam:workshop:deinstall" value="' + entrie.publishedfileid + '" data-lang="Deinstall">Deinstall</button>';
+							right += '<button name="deinstall" data-action="steam:workshop:deinstall" value="' + entrie.publishedfileid + '" data-lang="Deinstall">' + I18N.__('Deinstall') + '</button>';
 						} else {
-							right += '<button name="install" data-action="steam:workshop:install" value="' + entrie.publishedfileid + '" data-lang="Install">Install</button>';
+							right += '<button name="install" data-action="steam:workshop:install" value="' + entrie.publishedfileid + '" data-lang="Install">' + I18N.__('Install') + '</button>';
 						}
 						
 						html.innerHTML = '<mod-left>' + left  + '</mod-left><mod-right>' + right + '</mod-right>';

@@ -23,11 +23,12 @@
 				loading:	{
 					percentage:	0
 				},
-				language:	'en_US',
-				workspace:	null,
-				steam:		null,
-				projects:	{},
-				windows:	{}
+				language:		'en_US',
+				language_table: null,
+				workspace:		null,
+				steam:			null,
+				projects:		{},
+				windows:		{}
 			};
 			
 			Logger.info('Start DSTEd v' + global.DSTEd.version);
@@ -60,26 +61,26 @@
 							var dialog = this.getScreen('Dialog');
 							dialog.setHeight(300);
 							dialog.setOnLoad(function setOnLoad() {
-								dialog.send('dialog:title', I18N.__('ABOUT.TITLE'));
+								dialog.send('dialog:title', I18N.__('About'));
 								dialog.send('dialog:header', {
 									title:		'DSTEd',
-									content:	'This program is licensed under OpenSource.<br />&copy 2017 Adrian Preuß | All Rights Reserved.'
+									content:	I18N.__('This program is licensed under OpenSource.') + '<br />' + I18N.__('&copy 2017 Adrian Preuß | All Rights Reserved.')
 								});
 								
 								var info			= '';
 								var memory_system	= process.getSystemMemoryInfo();
 								
-								info += '<strong>Version:</strong> ' + global.DSTEd.version;
-								info += '<br /><strong>Electron:</strong> v' + process.versions.electron;
-								info += '<br /><strong>Render Engine:</strong> Chrome v' + process.versions.chrome;
-								info += '<br /><strong>Memory (RAM):</strong> ' + memory_system.free + ' / ' + memory_system.total;
-								info += '<br /><strong>CPU:</strong> ';
+								info += '<strong data-lang="Version:">' + I18N.__('Version:') + '</strong> ' + global.DSTEd.version;
+								info += '<br /><strong data-lang="Electron:">' + I18N.__('Electron:') + '</strong> v' + process.versions.electron;
+								info += '<br /><strong data-lang="Render Engine:">' + I18N.__('Render Engine:') + '</strong> Chrome v' + process.versions.chrome;
+								info += '<br /><strong data-lang="Memory (RAM):">' + I18N.__('Memory (RAM):') + '</strong> ' + memory_system.free + ' / ' + memory_system.total;
+								info += '<br /><strong data-lang="CPU:">' + I18N.__('CPU:') + '</strong> ';
 								
 								OS.cpus().forEach(function(cpu, index) {
 									info += '<br /><label>[' + (index + 1) + '] ' + cpu.model + '</label>';
 								});
 								
-								info += '<br /><strong>Network Interfaces:</strong> ';
+								info += '<br /><strong data-lang="Network Interfaces:">' + I18N.__('Network Interfaces:') + '</strong> ';
 								var networks = OS.networkInterfaces();
 								Object.keys(networks).forEach(function(network) {
 									info += '<br /><label>' + network + '</label>';
@@ -89,12 +90,12 @@
 									});
 								});
 								
-								info += '<br /><strong>Operating System</strong>';
-								info += '<br /><label>Platform:</label> ' + OS.platform() + ', ' + OS.type();
-								info += '<br /><label>Release:</label> ' + OS.release();
-								info += '<br /><label>Architecture:</label> ' + OS.arch();
-								info += '<br /><strong>Endianness:</strong> ' + OS.endianness();
-								info += '<br /><strong>Hostname:</strong> ' + OS.hostname();
+								info += '<br /><strong data-lang="Operating System">' + I18N.__('Operating System') + '</strong>';
+								info += '<br /><label data-lang="Platform:">' + I18N.__('Platform:') + '</label> ' + OS.platform() + ', ' + OS.type();
+								info += '<br /><label data-lang="Release:">' + I18N.__('Release:') + '</label> ' + OS.release();
+								info += '<br /><label data-lang="Architecture:">' + I18N.__('Architecture:') + '</label> ' + OS.arch();
+								info += '<br /><strong data-lang="Endianness:">' + I18N.__('Endianness:') + '</strong> ' + OS.endianness();
+								info += '<br /><strong data-lang="Hostname:">' + I18N.__('Hostname:') + '</strong> ' + OS.hostname();
 								
 								dialog.send('dialog:content', {
 									scrollable:	true,
@@ -104,7 +105,7 @@
 								});
 								
 								dialog.send('dialog:buttons', [{
-									label:	'Close',
+									label:	I18N.__('Close'),
 									click:	'close'
 								}]);
 							});

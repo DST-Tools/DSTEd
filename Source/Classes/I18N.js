@@ -10,6 +10,21 @@ exports = module.exports = (function I18N() {
 	var _table			= null;
 	
 	this.init = function init() {
+		if(typeof(electron.app) == 'undefined') {
+			_table = Remote.getGlobal('DSTEd').language_table;
+		} else {
+			if(typeof(global.DSTEd) == 'undefined') {
+				setTimeout(this.init.bind(this), 100);
+				return;
+			}
+			
+			_table = global.DSTEd.language_table;
+		}
+		
+		if(typeof(_table) != 'undefined' && _table != null) {
+			return;
+		}
+		
 		var _directory = path.dirname(App.getPath('exe'));
 		
 		if(new RegExp('node_modules', 'gi').test(_directory)) {
@@ -32,6 +47,12 @@ exports = module.exports = (function I18N() {
 				
 				if(fs.existsSync(_directory + _language + '.json')) {
 					_table = require(_directory + _language + '.json');
+					
+					if(typeof(electron.app) == 'undefined') {
+						Remote.getGlobal('DSTEd').language_table = _table;
+					} else {
+						global.DSTEd.language_table = _table;
+					}
 				}
 				
 				clearInterval(_watcher);
@@ -50,7 +71,12 @@ exports = module.exports = (function I18N() {
 	};
 	
 	this.__ = function __(name) {
-		var temp = _table;
+		if(typeof(_table[name]) == 'string') {
+			return _table[name];
+		}
+		
+		return name;
+		/*var temp = _table;
 		
 		name.split('.').forEach(function(key) {
 			try {
@@ -58,7 +84,7 @@ exports = module.exports = (function I18N() {
 					temp = temp[key];
 				}
 			} catch(e) {
-				/* Do Nothing */
+				
 			}
 		});
 		
@@ -66,39 +92,41 @@ exports = module.exports = (function I18N() {
 			return temp;
 		}
 		
-		return name;
+		return name;*/
 	};
 	
 	this.renderHTML = function renderHTML() {
-		var _watcher = setInterval(function() {
-			if(_table != null) {
-				/* Default Text */
-				[].forEach.call(document.querySelectorAll('[data-lang]'), function(element) {
-					element.innerHTML = this.__(element.dataset.lang);
-				}.bind(this));
-				
-				/* Placeholders */
-				[].forEach.call(document.querySelectorAll('[data-langplaceholder]'), function(element) {
-					element.placeholder = this.__(element.dataset.langplaceholder);
-				}.bind(this));
-				
-				/* Before */
-				[].forEach.call(document.querySelectorAll('[data-langbefore]'), function(element) {
-					element.dataset.before = this.__(element.dataset.langbefore);
-				}.bind(this));
-				
-				/* After */
-				[].forEach.call(document.querySelectorAll('[data-langafter]'), function(element) {
-					element.dataset.after = this.__(element.dataset.langafter);
-				}.bind(this));
-				
-				/* Alt */
-				[].forEach.call(document.querySelectorAll('[data-langalt]'), function(element) {
-					element.alt = this.__(element.dataset.langalt);
-				}.bind(this));
-				clearInterval(_watcher);
-			}
-		}.bind(this), 10);
+		window.onload = function onLoad() {
+			var _watcher = setInterval(function() {
+				if(_table != null) {
+					/* Default Text */
+					[].forEach.call(document.querySelectorAll('[data-lang]'), function(element) {
+						element.innerHTML = this.__(element.dataset.lang);
+					}.bind(this));
+					
+					/* Placeholders */
+					[].forEach.call(document.querySelectorAll('[data-langplaceholder]'), function(element) {
+						element.placeholder = this.__(element.dataset.langplaceholder);
+					}.bind(this));
+					
+					/* Before */
+					[].forEach.call(document.querySelectorAll('[data-langbefore]'), function(element) {
+						element.dataset.before = this.__(element.dataset.langbefore);
+					}.bind(this));
+					
+					/* After */
+					[].forEach.call(document.querySelectorAll('[data-langafter]'), function(element) {
+						element.dataset.after = this.__(element.dataset.langafter);
+					}.bind(this));
+					
+					/* Alt */
+					[].forEach.call(document.querySelectorAll('[data-langalt]'), function(element) {
+						element.alt = this.__(element.dataset.langalt);
+					}.bind(this));
+					clearInterval(_watcher);
+				}
+			}.bind(this), 10);
+		};
 	};
 	
 	this.init();
