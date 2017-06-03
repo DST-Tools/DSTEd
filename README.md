@@ -29,9 +29,10 @@ IDE for Don't Starve Together
 ## Topics
 You found lot's of Topics in our Wiki:
 
-  - [ ] [Build for `Windows`](https://github.com/DST-Tools/DSTEd/wiki/Build-Windows)
-  - [ ] [Build for `Linux/Unix`](https://github.com/DST-Tools/DSTEd/wiki/Build-Linux)
-  - [ ] [Build for `OS X`](https://github.com/DST-Tools/DSTEd/wiki/Build-OSX)
+- [ ] [Build for `Windows`](https://github.com/DST-Tools/DSTEd/wiki/Build-Windows)
+- [ ] [Build for `Linux/Unix`](https://github.com/DST-Tools/DSTEd/wiki/Build-Linux)
+- [ ] [Build for `OS X`](https://github.com/DST-Tools/DSTEd/wiki/Build-OSX)
+- [x] [Translations / Languages](https://github.com/DST-Tools/DSTEd/wiki/Languages)
 
 ## Features
 
