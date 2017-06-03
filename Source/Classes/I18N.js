@@ -71,8 +71,12 @@ exports = module.exports = (function I18N() {
 	};
 	
 	this.__ = function __(name) {
-		if(typeof(_table[name]) == 'string') {
-			return _table[name];
+		try {
+			if(typeof(_table[name]) != 'undefined') {
+				return _table[name];
+			}
+		} catch(e) {
+			/* Do Nothing */
 		}
 		
 		return name;
