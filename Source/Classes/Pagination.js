@@ -82,16 +82,16 @@ module.exports = (function Pagination(selector, callback) {
 		_buttons.innerHTML	= '';
 		
 		if(_total == 0) {
-			_info.innerHTML		= 'No Items Available';
+			_info.innerHTML		= I18N.__('No Items Available');
 		} else {
 			if(_pages > 0) {
-				_info.innerHTML		= 'Page ' + _page + ' / ' + _pages + ' - ' + _total + ' Items';
+				_info.innerHTML		= I18N.__('Page') + ' ' + _page + ' / ' + _pages + ' - ' + _total + ' ' + I18N.__('Items');
 				
 				this.renderPreviousButton();
 			}
 			
 			if(_pages == 0) {
-				_info.innerHTML		= _total + ' Items';
+				_info.innerHTML		= _total + ' ' + I18N.__('Items');
 			} else if(_page < _maximum) {
 				if(_pages > _maximum) {
 					for(var index = 1; index <= _maximum; ++index) {

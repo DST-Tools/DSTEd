@@ -3,7 +3,8 @@ const Remote			= electron.remote;
 const Shell				= electron.shell;
 const IPC				= require('electron').ipcRenderer;
 const DSTEd				= Remote.getGlobal('DSTEd');
-
+const I18N				= require('../Classes/I18N')();
+	
 (function SteamWorkshopDetails() {	
 	this.init = function init() {
 		document.addEventListener('click', function onClick(event) {
@@ -87,14 +88,14 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 				break;
 				case 'installed':
 					var button				= document.querySelector('button[name="install"]');
-					button.innerHTML		= 'Deinstall';
+					button.innerHTML		= I18N.__('Deinstall');
 					button.dataset.action	= 'steam:workshop:deinstall';
 					button.classList.remove('loading');
 					button.setAttribute('name', 'deinstall');
 				break;
 				case 'uninstalled':
 					var button				= document.querySelector('button[name="deinstall"]');
-					button.innerHTML		= 'Install';
+					button.innerHTML		= I18N.__('Install');
 					button.dataset.action	= 'steam:workshop:install';
 					button.classList.remove('loading');
 					button.setAttribute('name', 'install');
@@ -113,7 +114,7 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 		picture.style.backgroundImage	= 'url(' + data.preview_url + ')'
 		
 		document.querySelector('section-sidebar span[data-name="version"]').innerHTML	= this.getVersion(data.tags);
-		document.querySelector('section-sidebar span[data-name="author"]').innerHTML	= '<a href="' + data.user.url + '" target="_blank"><img src="' + data.user.picture + '" alt="Picture" /> <span>' + data.user.username + '</span></a>';
+		document.querySelector('section-sidebar span[data-name="author"]').innerHTML	= '<a href="' + data.user.url + '" target="_blank"><img src="' + data.user.picture + '" alt="Picture" data-langalt="Preview" /> <span>' + data.user.username + '</span></a>';
 		document.querySelector('section-sidebar span[data-name="updated"]').innerHTML	= Application.Utils.TimeAgo(new Date(data.time_updated * 1000)) + ' ago';
 		document.querySelector('section-sidebar span[data-name="size"]').innerHTML		= Application.Utils.ByteSize(data.file_size);
 		document.querySelector('section-sidebar span[data-name="downloads"]').innerHTML	= data.subscriptions;
@@ -122,15 +123,15 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 		document.querySelector('tab-content[id="description"]').innerHTML				= data.description.html + this.getTags(data.tags);
 		
 		var statistics = '';
-		statistics += '<br /><label>Created:</label>' + Application.Utils.FormatDate(new Date(data.time_created * 1000));
-		statistics += '<br /><label>Updated:</label>' + Application.Utils.FormatDate(new Date(data.time_updated * 1000));
-		statistics += '<br /><label>Views:</label>' + data.views;
-		statistics += '<br /><label>Followers:</label>' + data.followers;
-		statistics += '<br /><label>Favorited:</label>' + data.favorited;
-		statistics += '<br /><label>Favorited (Lifetime):</label>' + data.lifetime_favorited;
-		statistics += '<br /><label>Subscriptions:</label>' + data.subscriptions;
-		statistics += '<br /><label>Subscriptions (Lifetime):</label>' + data.lifetime_subscriptions;
-		statistics += '<br /><label>Reports:</label>' + data.num_reports;
+		statistics += '<br /><label data-lang="Created:">Created:</label>' + Application.Utils.FormatDate(new Date(data.time_created * 1000));
+		statistics += '<br /><label data-lang="Updated:">Updated:</label>' + Application.Utils.FormatDate(new Date(data.time_updated * 1000));
+		statistics += '<br /><label data-lang="Views:">Views:</label>' + data.views;
+		statistics += '<br /><label data-lang="Followers:">Followers:</label>' + data.followers;
+		statistics += '<br /><label data-lang="Favorited:">Favorited:</label>' + data.favorited;
+		statistics += '<br /><label data-lang="Favorited (Lifetime):">Favorited (Lifetime):</label>' + data.lifetime_favorited;
+		statistics += '<br /><label data-lang="Subscriptions:">Subscriptions:</label>' + data.subscriptions;
+		statistics += '<br /><label data-lang="Subscriptions (Lifetime):">Subscriptions (Lifetime):</label>' + data.lifetime_subscriptions;
+		statistics += '<br /><label data-lang="Reports:">Reports:</label>' + data.num_reports;
 		document.querySelector('tab-content[id="statistics"]').innerHTML	= statistics;
 		
 		this.handleButton(data.publishedfileid);
@@ -169,12 +170,12 @@ const DSTEd				= Remote.getGlobal('DSTEd');
 			button.setAttribute('name', 'deinstall');
 			button.dataset.action	= 'steam:workshop:deinstall';
 			button.value			= file;
-			button.innerHTML		= 'Deinstall';
+			button.innerHTML		= I18N.__('Deinstall');
 		} else {
 			button.setAttribute('name', 'install');
 			button.dataset.action	= 'steam:workshop:install';
 			button.value			= file;
-			button.innerHTML		= 'Install';
+			button.innerHTML		= I18N.__('Install');
 		}
 	};
 	

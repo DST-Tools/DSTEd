@@ -12,6 +12,7 @@
 	const OS			= require('os');
 	const fs 			= require('fs');
 	const UnZIP			= require('unzip');
+	const I18N			= require('../Classes/I18N')();
 	const Logger		= require('../Classes/Logger')();
 	const Process		= require('child_process');
 	
@@ -22,6 +23,7 @@
 				loading:	{
 					percentage:	0
 				},
+				language:	'en_US',
 				workspace:	null,
 				steam:		null,
 				projects:	{},
@@ -58,7 +60,7 @@
 							var dialog = this.getScreen('Dialog');
 							dialog.setHeight(300);
 							dialog.setOnLoad(function setOnLoad() {
-								dialog.send('dialog:title', 'About');
+								dialog.send('dialog:title', I18N.__('ABOUT.TITLE'));
 								dialog.send('dialog:header', {
 									title:		'DSTEd',
 									content:	'This program is licensed under OpenSource.<br />&copy 2017 Adrian Preuß | All Rights Reserved.'
@@ -131,7 +133,7 @@
 								detached: false
 							});
 						
-						Logger.info(ls);
+							Logger.info(ls);
 							ls.stdout.on('data', (data) => {
 								Logger.info(`stdout: ${data}`);
 							});

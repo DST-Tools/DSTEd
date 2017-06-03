@@ -3,6 +3,7 @@ const Remote		= electron.remote;
 const DSTEd			= Remote.getGlobal('DSTEd');
 const Editor		= require('../Classes/Editor.js');
 const IPC			= require('electron').ipcRenderer;
+const I18N			= require('../Classes/I18N')();
 
 (function IDE() {
 	var _editors = {};
@@ -148,13 +149,14 @@ const IPC			= require('electron').ipcRenderer;
 		items.forEach(function(item) {
 			var MenuItem			= document.createElement('ui-entry');
 			var Button				= document.createElement('button');
-			Button.innerHTML		= item.label;
+			Button.innerHTML		= I18N.__(item.label);
 			
 			if(item.disabled) {
 				Button.setAttribute('disabled', '');
 			}
 			
 			MenuItem.appendChild(Button);
+			
 			if(typeof(item.submenu) != 'undefined' && item.submenu != null && typeof(item.submenu.items) != 'undefined' && item.submenu.items != null) {
 				Button.classList.add('submenu');
 				this.renderSubMenu(MenuItem, item.submenu.items);			
@@ -197,7 +199,7 @@ const IPC			= require('electron').ipcRenderer;
 						}
 						
 						SubmenuItem					= document.createElement('button');
-						SubmenuItem.innerHTML		= submenu.label + accelerator;
+						SubmenuItem.innerHTML		= I18N.__(submenu.label) + accelerator;
 						
 						if(submenu.disabled) {
 							SubmenuItem.setAttribute('disabled', '');
@@ -280,14 +282,14 @@ const IPC			= require('electron').ipcRenderer;
 				if(changes) {
 					Remote.dialog.showMessageBox(Remote.getCurrentWindow(), {
 						type:				'question',
-						detail:				'If you click "Don\'t Save", the recent files will be not changed:\n\t- ' + files.join('\n\t- '),
-						checkboxLabel:		'Rember...',
-						message:			'Save the changes before closing?',
+						detail:				I18N.__('If you click "Don\'t Save", the recent files will be not changed:') + '\n\t- ' + files.join('\n\t- '),
+						checkboxLabel:		I18N.__('Rember...'),
+						message:			I18N.__('Save the changes before closing?'),
 						checkboxChecked:	false,
 						buttons:	[
-							'Save',
-							'Don\'t Save',
-							'Cancel'
+							I18N.__('Save'),
+							I18N.__('Don\'t Save'),
+							I18N.__('Cancel')
 						]
 					}, function onCallback(button, save) {
 						console.log(button);
@@ -317,7 +319,6 @@ const IPC			= require('electron').ipcRenderer;
 			break;
 		}
 	};
-	
 	
 	this.createSidebar = function createSidebar(selector) {
 		/* Resizing */

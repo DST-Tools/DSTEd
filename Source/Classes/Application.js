@@ -1,3 +1,5 @@
+const I18N			= require('../Classes/I18N')();
+
 module.exports = (function Application(no_editor) {
 	const _path			= require('path');
 	const IPC			= require('electron').ipcRenderer;
@@ -23,9 +25,11 @@ module.exports = (function Application(no_editor) {
 			return number;
 		},
 		FormatDate:	function FormatDate(date) {
+			/* @ToDo format for special languages/I18N */
 			return this.zeroize(date.getDate()) + '.' + this.zeroize(date.getMonth()) + '.' + date.getFullYear();
 		},
 		TimeAgo:	function TimeAgo(ts) {
+			/* @ToDo format for special languages/I18N */
 			now = new Date();
 			var delta = now.getTime() - ts.getTime();
 
@@ -77,6 +81,7 @@ module.exports = (function Application(no_editor) {
 	};
 
 	this.init = function init(no_editor) {
+		I18N.renderHTML();
 		ContextMenu.init();
 		
 		if(typeof(no_editor) == 'undefined') {

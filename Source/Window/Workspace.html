@@ -6,7 +6,7 @@
 	<body>
 		<header>
 			<ui-icon data-name="window"></ui-icon>
-			<ui-title>Workspace</ui-title>
+			<ui-title data-lang="Workspace">Workspace</ui-title>
 			<ui-buttons>
 				<button data-action="window:close"></button>
 				<button data-action="window:minimize"></button>
@@ -14,18 +14,18 @@
 		</header>
 		<section>
 			<section-header>
-				<h1>Select a Workspace</h1>
-				<p>DSTEd stores your projects in your installed game.<br />Please select your installed <strong>Don't Starve Together</strong> directory.</p>
+				<h1 data-lang="Select a Workspace">Select a Workspace</h1>
+				<p data-lang="DSTEd stores your projects in your installed game.<br />Please select your installed <strong>Don't Starve Together</strong> directory.">DSTEd stores your projects in your installed game.<br />Please select your installed <strong>Don't Starve Together</strong> directory.</p>
 			</section-header>
 			<form-entry>
-				<form-label style="width: 60px;">
+				<form-label style="width: 60px;" data-lang="<u>W</u>orkspace:">
 					<u>W</u>orkspace:
 				</form-label>
 				<form-input>
-					<input type="text" name="workspace" value="" placeholder="Path to Don't Starve Together..." />
+					<input type="text" name="workspace" value="" placeholder="Path to Don't Starve Together..." data-langplaceholder="Path to Don't Starve Together..." />
 				</form-input>
 				<form-button style="width: 70px;">
-					<button name="select">Browse</button>
+					<button name="select" data-lang="Browse">Browse</button>
 				</form-button>
 				<input type="file" name="chooser" webkitdirectory />
 			</form-entry>
@@ -33,13 +33,13 @@
 				<form-checkbox>
 					<input type="checkbox" name="save" />
 				</form-checkbox>
-				<form-label>
+				<form-label data-lang="Use this as the default and do not ask again.">
 					Use this as the default and do not ask again.
 				</form-label>
 			</form-entry>
 		</section>
 		<footer>
-			<button name="ok">OK</button>
+			<button name="ok" data-lang="OK">OK</button>
 		</footer>
 		<script type="text/javascript">
 			var a				= require('../Classes/Application.js');

@@ -1,4 +1,5 @@
 module.exports = (function ContextMenu() {
+	const I18N		= require('../Classes/I18N')();
 	var _element	= null;
 	var _list		= [];
 	var _x			= 0;
@@ -17,8 +18,8 @@ module.exports = (function ContextMenu() {
 				if(typeof(event.target.dataset.project) != 'undefined' && event.target.dataset.project && typeof(event.target.dataset.type) != 'undefined') {
 					switch(event.target.dataset.type) {
 						case 'steam':
-							this.addEntry('Details');
-							this.addEntry('Deinstall');
+							this.addEntry(I18N.__('Details'));
+							this.addEntry(I18N.__('Deinstall'));
 							this.show(event.target);
 						break;
 						case 'local':

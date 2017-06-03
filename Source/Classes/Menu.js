@@ -9,6 +9,7 @@ module.exports = (function Menu() {
 	};
 	
 	this.setTemplate = function setTemplate(template) {
+		/* @ToDo Test with non-Aero under Windows & loop for I18N */
 		_template	= template;
 		_menu		= Menu.buildFromTemplate(_template);
 		Menu.setApplicationMenu(_menu);

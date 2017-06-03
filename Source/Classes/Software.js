@@ -8,6 +8,7 @@ const mime			= require('mime-types');
 const Chokidar		= require('chokidar');
 const rimraf		= require('rimraf');
 const Logger		= require('../Classes/Logger')();
+const I18N			= require('../Classes/I18N')();
 	
 exports = module.exports = (function Software() {
 	var _config = null;
@@ -32,12 +33,17 @@ exports = module.exports = (function Software() {
 	};
 	
 	this.loadConfig = function loadConfig() {
+		var directory = path.dirname(App.getPath('exe'));
+		
+		if(new RegExp('node_modules', 'gi').test(directory)) {
+			directory = App.getAppPath();
+		}
+		
 		if(fs.existsSync(_config)) {
 			var config = require(_config);
 			
 			if(typeof(global.DSTEd.workspace) != 'undefined') {
-
-			if(fs.existsSync(config.workspace + path.sep + 'bin' + path.sep + 'dontstarve_steam.exe')) {
+				if(fs.existsSync(config.workspace + path.sep + 'bin' + path.sep + 'dontstarve_steam.exe')) {
 					global.DSTEd.workspace = config.workspace;
 					Logger.info('Set Workspace: ' + global.DSTEd.workspace);
 				} else {
@@ -45,6 +51,19 @@ exports = module.exports = (function Software() {
 				}
 			} else {
 				Logger.warn('Workspace is undefined.');
+			}
+			
+			if(typeof(config.language) != 'undefined') {
+				var language = directory + path.sep + 'Languages' + path.sep + config.language + '.json';
+				
+				if(fs.existsSync(language)) {
+					global.DSTEd.language = config.language;
+					Logger.info('Set Language: ' + global.DSTEd.language);
+				} else {
+					Logger.warn('Failed loading Language: ' + config.language);
+				}
+			} else {
+				Logger.warn('Language is undefined.');				
 			}
 		}
 	};
@@ -204,7 +223,7 @@ exports = module.exports = (function Software() {
 			}
 			
 			global.DSTEd.projects[file] = {
-				name:		'Unknown',
+				name:		I18N.__('Unknown'),
 				path:		mods_path + file,
 				workshop:	workshop,
 				info:		modinfo,

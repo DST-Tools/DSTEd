@@ -6,7 +6,7 @@
 	<body data-loading="true">
 		<header>
 			<ui-icon data-name="window"></ui-icon>
-			<ui-title>Steam Workshop</ui-title>
+			<ui-title data-lang="Steam Workshop">Steam Workshop</ui-title>
 			<ui-buttons>
 				<button data-action="window:close"></button>
 				<button data-action="window:maximize"></button>
@@ -15,25 +15,25 @@
 		</header>
 		<ui-loading>
 			<ui-image></ui-image>
-			<ui-string>Loading Workshop...</ui-string>
+			<ui-string data-lang="Loading Workshop...">Loading Workshop...</ui-string>
 		</ui-loading>
 		<section>
 			<section-header>
 				<form-entry>
-					<form-label style="width: 60px;">
+					<form-label style="width: 60px;" data-lang="<u>S</u>earch:">
 						<u>S</u>earch:
 					</form-label>
 					<form-input>
-						<input type="text" name="query" value="" placeholder="Search for Mods..." />
+						<input type="text" name="query" value="" placeholder="Search for Mods..." data-langplaceholder="Search for Mods..." />
 					</form-input>
 					<form-button style="width: 70px;">
-						<button name="search">Search</button>
+						<button name="search" data-lang="Search">Search</button>
 					</form-button>
 				</form-entry>
 			</section-header>
 			<section-content class="scrollable"></section-content>
 			<empty-panel>
-				<ui-logo data-before="No Items Found!" data-after="We couldn't find any items you where looking for."></ui-logo>
+				<ui-logo data-langbefore="No Items Found!" data-before="No Items Found!" data-after="We couldn't find any items you where looking for." data-langafter="We couldn't find any items you where looking for."></ui-logo>
 			</empty-panel>
 		</section>
 		<footer>

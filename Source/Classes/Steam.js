@@ -7,13 +7,14 @@ exports = module.exports = (function Steam() {
 	const Progress		= require('request-progress');
 	const Software		= require('../Classes/Software')();
 	const fs			= require('fs');
+	const I18N			= require('../Classes/I18N')();
 		
 	this.init = function init() {
 		
 	};
 	
 	this.getWorkshop = function getWorkshop(data, callback) {
-		var language	= 'English';
+		var language	= 'English'; // I18N.getLanguage()
 		var query		= '';
 		var page		= 1;
 		

@@ -83,7 +83,7 @@ module.exports = (function Editor(IDE) {
 					folding:				true,
 					tabCompletion:			true,
 					useTabStops:			true,
-					wordWrap:				false, /* Make as View-Settings */
+					wordWrap:				false, /* @ToDo Make as View-Settings */
 					theme:					'vs-dark',
 					scrollbar: {
 						useShadows:					false,
