@@ -9,11 +9,16 @@ const Chokidar		= require('chokidar');
 const rimraf		= require('rimraf');
 const Logger		= require('../Classes/Logger')();
 const I18N			= require('../Classes/I18N')();
+const LUA			= require('../Classes/LUA.js');
 	
 exports = module.exports = (function Software() {
 	var _config = null;
 		
 	this.init = function init() {
+		if(typeof(mime.add) != 'undefined') {
+			mime.add ('valve/data-file', ['vdf']);
+		}
+		
 		var directory = path.dirname(App.getPath('exe'));
 		
 		if(new RegExp('node_modules', 'gi').test(directory)) {
@@ -159,53 +164,44 @@ exports = module.exports = (function Software() {
 		});
 	};
 	
+	this.getModInfo = function getModInfo(file) {
+		var core_path	= path.normalize(global.DSTEd.workspace + path.sep + 'mods').toLowerCase();
+		var file_path	= path.normalize(file).toLowerCase();
+		var mod_path	= file_path.replace(new RegExp('^' + core_path.replace(/\\/gi, '\\\\'), 'gi'), '');
+		var split 		= mod_path.split(path.sep);
+		var mod_info	= [];
+		
+		if(split.length > 0 && typeof(split[1]) != 'undefined') {
+			if(typeof(global.DSTEd.projects[split[1]]) != 'undefined' && typeof(global.DSTEd.projects[split[1]].info) != 'undefined') {
+				mod_info	= global.DSTEd.projects[split[1]].info;
+			}
+		}
+		
+		return mod_info;
+	};
+	
 	this.addProject = function addProject(file, initial, callback_project_added) {
 		var mods_path	= global.DSTEd.workspace + path.sep + 'mods' + path.sep;
 		
 		if(fs.statSync(mods_path + file).isDirectory()) {
 			Logger.debug('Add Project: ' + file);
-			var modinfo = {};
+			var modinfo	= {};
+			let lua		= new LUA();
 			
 			Logger.debug('...parsing LUA (modinfo.lua)');
+			
 			try {
-				var parser = require('luaparse');
-				
-				parser.parse(fs.readFileSync(mods_path + file + path.sep + 'modinfo.lua', 'utf8'), {
-					comments: false
-				}).body.forEach(function(entry) {
-					var name	= '';
-					var value	= null;
-					
-					if(typeof(entry.variables) != 'undefined') {
-						entry.variables.forEach(function(variable) {
-							if(variable.type == 'Identifier') {
-								name = variable.name;
-							}
-						});
-					}
-					
-					if(typeof(entry.init) != 'undefined') {
-						entry.init.forEach(function(content) {
-							switch(content.type) {
-								case 'StringLiteral':
-									value = content.value;
-								break;
-								case 'BooleanLiteral':
-									value = content.value;
-								break;
-								case 'NumericLiteral':
-									value = parseInt(content.value, 10);
-								break;
-								default:
-									//console.warn('[LUA] ' + content.type + 'is not implemented yet!');
-								break;
-							}
-						});
-					}
-					
-					modinfo[name] = value;
+				let context		= lua.parseFile(mods_path + file + path.sep + 'modinfo.lua', {
+					strings:	true,
+					comments:	false,
+					integers:	true,
+					floats:		true,
+					booleans:	true
 				});
 				
+				context.getVariables().forEach(function(entrie) {
+					modinfo[entrie.name] = entrie.value;
+				});
 			} catch(e) {
 				Logger.error('[LUA]', e);
 			}
@@ -230,7 +226,7 @@ exports = module.exports = (function Software() {
 				files:		null
 			};
 			
-			this.getProjectWorkspace(global.DSTEd.projects[file], function onEnd() {
+			this.getDirectoryFiles(global.DSTEd.projects[file], function onEnd() {
 				if(typeof(callback_project_added) != 'undefined') {
 					if(!initial) {
 						callback_project_added(file, global.DSTEd.projects[file]);
@@ -263,7 +259,42 @@ exports = module.exports = (function Software() {
 		}.bind(this));
 	};
 	
-	this.getProjectWorkspace = function getProjectWorkspace(project, callback_end) {
+	this.isCoreFile = function isCoreFile(file) {
+		var core_path = path.normalize(global.DSTEd.workspace + path.sep + 'data').toLowerCase();
+		var file_path = path.normalize(file).toLowerCase();
+		
+		return new RegExp('^' + core_path.replace(/\\/gi, '\\\\'), 'gi').test(file_path);
+	};
+	
+	this.loadCore = function loadCore() {
+		Logger.info('Loading Core...');
+		
+		var core_path	= global.DSTEd.workspace + path.sep + 'data' + path.sep;
+		var stats		= fs.lstatSync(core_path);
+		
+		if(!stats.isDirectory()) {
+			Logger.warn('Core dir dont exists (' + core_path + ')');
+			return;
+		}
+		
+		if(fs.statSync(core_path).isDirectory()) {
+			global.DSTEd.core['data'] = {
+				name:		'data',
+				path:		core_path,
+				files:		null
+			};
+			
+			this.getDirectoryFiles(global.DSTEd.core['data'], function onEnd() {
+				if(typeof(callback_core_added) != 'undefined') {
+					if(!initial) {
+						callback_core_added(file, global.DSTEd.core['data']);
+					}
+				}
+			});
+		}
+	};
+	
+	this.getDirectoryFiles = function getDirectoryFiles(project, callback_end) {
 		var tree = function(dir, original_path, done) {
 			var name	= dir;
 							

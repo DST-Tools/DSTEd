@@ -10,12 +10,46 @@ const I18N			= require('../Classes/I18N')();
 	
 	this.init = function init() {
 		this.createMenu();
-		this.createSidebar('ui-content ui-workspace');
-		this.createSidebar('ui-content ui-container');
+		this.createSidebar('ui-content ui-workspace', 95);
+		this.createSidebar('ui-content ui-container', 95);
 		
 		document.addEventListener('click', function onClick(event) {
 			const win = Remote.getCurrentWindow();
+			
+			if(typeof(event.target.dataset) != 'undefined' && typeof(event.target.dataset.tab) != 'undefined') {
+				/*var tabs		= document.querySelectorAll('ui-tab');
+				var contents	= document.querySelectorAll('tab-content');
+		
+				Array.prototype.forEach.call(contents, function onEntrie(node) {
+					node.classList.remove('visible');
+				});
 				
+				Array.prototype.forEach.call(tabs, function onEntrie(tab) {
+					tab.classList.remove('active');
+				});
+				
+				event.target.classList.add('active');
+				document.querySelector('tab-content#' + event.target.dataset.tab).classList.add('visible');*/
+				var tabs_container		= event.target.closest('ui-tabs');
+				var tabs				= tabs_container.parentNode.querySelectorAll('ui-tab');
+				var contents			= tabs_container.parentNode.querySelectorAll('tab-content');
+				
+				Array.prototype.forEach.call(contents, function onEntrie(node) {
+					node.classList.remove('visible');
+				});
+				
+				Array.prototype.forEach.call(tabs, function onEntrie(tab) {
+					tab.classList.remove('active');
+					
+					if(tab.dataset.tab == event.target.dataset.tab) {
+						tab.classList.add('active');
+					}
+				});
+				
+				tabs_container.parentNode.querySelector('tab-content#' + event.target.dataset.tab).classList.add('visible');
+				return;
+			}
+			
 			if(typeof(event.target.dataset) != 'undefined' && typeof(event.target.dataset.action) != 'undefined') {
 				switch(event.target.dataset.action) {
 					case 'window:close':
@@ -54,6 +88,12 @@ const I18N			= require('../Classes/I18N')();
 		
 		var _projects = {};
 		
+		/*
+			@ToDo this.renderWorkspace(_projects) will be generated completely new, if adds/remove a project
+			Fix this by following updates:
+				- Add/Remove "Projects" without render all (Coreside: with position)
+			
+		*/
 		IPC.on('workspace:project:add', function(event, project) {
 			_projects[project.name] = project.project;
 			this.renderWorkspace(_projects);
@@ -65,6 +105,10 @@ const I18N			= require('../Classes/I18N')();
 			this.renderWorkspace(_projects);
 		}.bind(this));
 		
+		IPC.on('workspace:core', function(event, core) {
+			this.renderCore(core);
+		}.bind(this));
+		
 		IPC.on('workspace:projects', function(event, projects) {
 			_projects = projects;
 			this.renderWorkspace(_projects);
@@ -73,6 +117,7 @@ const I18N			= require('../Classes/I18N')();
 		IPC.on('file:open', function(event, file) {
 			var editor			= new Editor(this);
 			editor.init(file, 'lua');
+			editor.setIsCore(file.is_core);
 			_editors[file.file] = editor;
 			this.openEditor(file.file);
 		}.bind(this));
@@ -102,8 +147,8 @@ const I18N			= require('../Classes/I18N')();
 			 }
 		 }
 		 
-		 _editors[file].close();
-		 _editors[file] = null;
+		_editors[file].close();
+		_editors[file] = null;
 		delete _editors[file];
 		
 		if(open == null) {
@@ -320,7 +365,7 @@ const I18N			= require('../Classes/I18N')();
 		}
 	};
 	
-	this.createSidebar = function createSidebar(selector) {
+	this.createSidebar = function createSidebar(selector, min_width) {
 		/* Resizing */
 		var _sidebar			= document.body.querySelector('ui-content ui-workspace');
 		
@@ -341,13 +386,13 @@ const I18N			= require('../Classes/I18N')();
 			var startDrag	= event.clientX;
 			
 			var onMouseMove = function onMouseMove(event) {
-				var size					= width + -startDrag + event.clientX;
-				_sidebar.style.width		= size + 'px';
+				var size = width + -startDrag + event.clientX;
 				
-				if(parseInt(_sidebar.style.width, 10) > 0) {
-					_handler.style.left		= (size + start) + 'px';
-				} else {
+				if(size < min_width) {
 					event.stopPropagation();
+				} else {
+					_sidebar.style.width	= size + 'px';
+					_handler.style.left		= (size + start) + 'px';
 				}
 			};
 			
@@ -374,10 +419,32 @@ const I18N			= require('../Classes/I18N')();
 		
 	};
 	
+	this.renderCore = function renderCore(core) {
+		console.log('Render Core', core);
+		var workspace_core	= document.querySelector('ui-core');
+		
+		workspace_core.innerHTML = '';
+		
+		Object.keys(core).map(function(key, index) {
+			subnode = 0;
+			var project			= core[key];
+			var id				= 'node-' + ++node + '-' + subnode;
+			var project_html	= '';
+			var has_files		= !(project.files == null);
+					
+			if(has_files) {
+				var tree	= this.renderDirectory(project.files, '', true);
+				project_html += tree.html;
+			}
+			
+			project_html += '';
+			workspace_core.innerHTML += project_html;
+		});
+	};
+	
 	this.renderWorkspace = function renderWorkspace(projects) {
 		console.log('Render Workspace');
 		var workspace_projects	= document.querySelector('ui-projects');
-		
 		workspace_projects.innerHTML = '';
 		
 		Object.keys(projects).map(function(key, index) {

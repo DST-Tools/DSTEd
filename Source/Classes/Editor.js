@@ -2,7 +2,8 @@ module.exports = (function Editor(IDE) {
 	const _IDE		= IDE;
 	const IPC		= require('electron').ipcRenderer;
 	const _path		= require('path');
-	const Klei		= require('../Classes/Klei/Texture.js');
+	const Texture	= require('../Classes/Klei/Texture.js');
+	const ModInfo	= require('../Classes/Klei/ModInfo.js');
 	var _element	= null;
 	var _editor		= null;
 	var _editors	= null;
@@ -12,7 +13,9 @@ module.exports = (function Editor(IDE) {
 	var _close		= null;
 	var _type		= null;
 	var _sidebar	= null;
+	var _is_core	= false;
 	var _changed	= false;
+	var _modinfo	= false;
 	
 	this.init = function init(file, language) {
 		_file					= file;
@@ -24,6 +27,7 @@ module.exports = (function Editor(IDE) {
 		_close					= document.createElement('tab-close');
 		_element.id				= _file.file;
 		_type					= _file.type;
+		_modinfo				= (_path.basename(_file.file) == 'modinfo.lua');
 		
 		this.setTitle(_path.basename(_file.file), false);
 		document.querySelector('ui-menu button[data-command="close"]').removeAttribute('disabled');
@@ -38,6 +42,27 @@ module.exports = (function Editor(IDE) {
 		});
 		
 		_tabs.appendChild(_tab);
+		if(_modinfo) {			
+			var tab_content	= document.createElement('tab-content');
+			tab_content.id	= 'mod_editor';
+			tab_content.classList.add('visible');
+			_element.appendChild(tab_content);
+			var mod_editor = new ModInfo();
+			
+			mod_editor.create(tab_content, file.modinfo);
+			
+			mod_editor.onChange(function(event) {
+				_changed = true
+				document.querySelector('ui-menu button[data-command="save"]').removeAttribute('disabled');
+				document.querySelector('ui-menu button[data-command="save_all"]').removeAttribute('disabled');
+				this.setTitle(_path.basename(_file.file), true);
+			}.bind(this));
+			
+			var tab_content	= document.createElement('tab-content');
+			tab_content.id	= 'source_code';
+			_element.appendChild(tab_content);
+		}
+		
 		_editors.appendChild(_element);
 		
 		switch(_type) {
@@ -54,7 +79,7 @@ module.exports = (function Editor(IDE) {
 				_element.classList.add('image');
 			break;
 			case 'tex':
-				var tex = new Klei();
+				var tex = new Texture();
 				tex.parse(file.content);
 			break;
 			default:
@@ -72,7 +97,7 @@ module.exports = (function Editor(IDE) {
 					}
 				});
 
-				_editor = monaco.editor.create(_element, {
+				_editor = monaco.editor.create(_modinfo ? tab_content : _element, {
 					value:					file.content,
 					language:				_type,
 					lineNumbers:			true,
@@ -107,8 +132,27 @@ module.exports = (function Editor(IDE) {
 				_editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function onSave() {
 					this.save();
 				}.bind(this));
+				
+				if(_modinfo) {
+					var tabbed_editor = document.createElement('ui-tabs');
+					tabbed_editor.innerHTML = '<ui-tab data-tab="mod_editor" class="active" data-lang="Mod-Editor">Mod-Editor</ui-tab>';
+					tabbed_editor.innerHTML += '<ui-tab data-tab="source_code" data-lang="Source">Source</ui-tab>';
+					_element.appendChild(tabbed_editor);
+				}
 			break;
 		}
+	};
+	
+	this.setIsCore = function setIsCore(state) {
+		_is_core = state;
+		
+		if(_is_core) {
+			this.setWarning('danger', I18N.__('This file is an Core file! If you modify this file, your Game can be crash.'));
+		}
+	};
+	
+	this.isCore = function isCore() {
+		return _is_core;
 	};
 	
 	this.getFileName = function getFileName() {
@@ -140,6 +184,11 @@ module.exports = (function Editor(IDE) {
 	this.setTitle = function setTitle(title, changed) {
 		_tab.innerHTML = title + (changed ? '*' : '');
 		_tab.appendChild(_close);
+	};
+	
+	this.setWarning = function setWarning(type, message) {
+		_element.dataset.warning = type;
+		_element.dataset.message = message;
 	};
 	
 	this.getTab = function getTab() {

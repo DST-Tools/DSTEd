@@ -1,4 +1,4 @@
-(function Core() {
+﻿(function Core() {
 	const electron		= require('electron');
 	const Remote		= electron.remote;
 	const App			= electron.app;
@@ -27,6 +27,7 @@
 				language_table: null,
 				workspace:		null,
 				steam:			null,
+				core:			{},
 				projects:		{},
 				windows:		{}
 			};
@@ -230,7 +231,9 @@
 							type:		args.split('.').pop(),
 							file:		args,
 							error:		error,
-							content:	contents
+							is_core:	Software.isCoreFile(args),
+							content:	contents,
+							modinfo:	Software.getModInfo(args)
 						});
 					});
 				}.bind(this));
@@ -313,6 +316,7 @@
 			var _loader		= setInterval(function() {
 				if(global.DSTEd.loading.percentage >= 100) {
 					clearInterval(_loader);
+					Software.loadCore();
 					Software.loadWorkspace();
 					this.getScreen('IDE').open();
 					this.getScreen('Splash').close();
@@ -359,6 +363,7 @@
 				this.getScreen('IDE').send('workspace:project:remove', name);
 			}.bind(this));
 			
+			this.getScreen('IDE').send('workspace:core', global.DSTEd.core);
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
 		}.bind(this), true).setDebug(false);
 	};

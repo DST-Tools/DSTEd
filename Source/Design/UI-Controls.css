@@ -38,12 +38,16 @@ button[name].active:hover:after {
 }
 
 /* Input */
-input[type="text"] {
+input[type="text"], input[type="number"], textarea, select {
 	background: #333337;
 	color: #FFFFFF;
 	border: 1px solid #3f3f46;
 	width: 100%; 
 	box-sizing: border-box;
+}
+
+textarea {
+	resize: vertical;
 }
 
 /* File */

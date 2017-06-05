@@ -53,7 +53,6 @@ ui-content {
 	margin: 5px 0px 5px 5px;
     box-sizing: border-box;
     flex-direction: column;
-    overflow-y: hidden;
 	border: 1px solid #3F3F46;
  }
  
@@ -62,7 +61,7 @@ ui-content {
     position: fixed;
     width: 10px;
 	top: 58px;
-    bottom: 30px;
+    bottom: 51px;
     z-index: 100;
     left: 95px;
     cursor: e-resize;
@@ -81,19 +80,102 @@ ui-content {
 	background: #ED5C2D;	 
  }
  
- ui-content ui-workspace ui-projects {
+ ui-content ui-workspace {
+	border: none;
+ }
+ 
+ ui-content ui-workspace ui-tabs, ui-content ui-container code-editors ui-tabs {
+	background: #2d2d30;
+ }
+ 
+ ui-content ui-workspace ui-tabs ui-tab, ui-content ui-container code-editors ui-tabs ui-tab {
+	padding: 3px 5px;
+	background: #2d2d30;
+	border: 1px solid #2d2d30;
+	border-top: 1px solid #2d2d30;
+ }
+ 
+ ui-content ui-workspace ui-tabs ui-tab.active, ui-content ui-container code-editors ui-tabs ui-tab.active {
+	border: 1px solid #3f3f46;
+    border-top: 1px solid #2d2d30;
+	background: #2d2d30;
+	margin: -1px 0px 0px 0px;
+    padding: 4px 5px 3px 5px;
+ }
+ 
+ ui-content ui-workspace tab-content, ui-content ui-container code-editors tab-content {
+	padding: 0;
+	border: 1px solid #3f3f46;
+	overflow-x: auto;
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor {
+	display: none;
+	overflow-y: scroll;
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor.visible {
+	display: flex;	 
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-table {
+	width: 100%;
+	display: table;
+	table-layout: fixed;
+	border-collapse: collapse;	 
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-entry {
+	border-bottom: 1px solid #3e3e42;
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-entry form-label, ui-content ui-container code-editors tab-content#mod_editor form-entry form-input {
+	vertical-align: top;
+	width: 50%;
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-entry form-label[data-header="true"] {
+	background: #333337;
+	padding: 5px 10px;
+	font-weight: bold;
+	display: block;
+    width: 100%;
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-entry form-label[data-color] {
+	font-size: 10px;
+	padding: 5px 10px;
+    margin: 10px;
+    font-weight: normal;
+    text-align: center;
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-entry form-label[data-color="danger"] {
+	background: #ed2d2d;
+    color: #560101;
+ }
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-entry form-label[data-color="info"] {
+	background: #d9edf7;
+    color: #252575;
+ }
+ 
+ 
+ ui-content ui-container code-editors tab-content#mod_editor form-entry.indent form-label {
+	padding: 10px 10px 10px 50px;
+ }
+ 
+ ui-content ui-workspace ui-projects, ui-content ui-workspace ui-core {
 	display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: scroll;
     min-height: 0px;
     -webkit-flex: 1 1 auto;
-    overflow-y: auto;
     min-height: 0px;
+	position: relative;
  }
  
- ui-content ui-workspace ui-projects project-entry {
+ ui-content ui-workspace ui-projects project-entry, ui-content ui-workspace ui-core project-entry {
 	display: block;
     position: relative;
 	color: #FFFFFF;
@@ -101,7 +183,7 @@ ui-content {
  }
 
  
- ui-content ui-workspace ui-projects project-entry label[data-project="true"] {
+ ui-content ui-workspace ui-projects project-entry label[data-project="true"], ui-content ui-workspace ui-core project-entry label[data-project="true"] {
 	font-size: bold;
 	background: rgba(128, 128, 128, 0.2);
 	display: block;
@@ -118,13 +200,13 @@ ui-content {
 	white-space: nowrap;
  }
  
-  ui-content ui-workspace ui-projects project-entry label[data-project="true"] small {
+  ui-content ui-workspace ui-projects project-entry label[data-project="true"] small, ui-content ui-workspace ui-core project-entry label[data-project="true"] small {
 	color: #666666;
 	margin: 0px 0 0 5px;
 	display: inline-block;
   }
   
-  ui-content ui-workspace ui-projects project-entry label[data-project="true"]:before {
+  ui-content ui-workspace ui-projects project-entry label[data-project="true"]:before, ui-content ui-workspace ui-core project-entry label[data-project="true"]:before {
 	content: "";
 	position: absolute;
 	display: inline-block;
@@ -136,29 +218,33 @@ ui-content {
 	margin: 3px 0 0 -18px;
   }
   
-  ui-content ui-workspace ui-projects project-entry label[data-project="true"][data-type="steam"]:before {
+  ui-content ui-workspace ui-projects project-entry label[data-project="true"][data-type="steam"]:before, ui-content ui-workspace ui-core project-entry label[data-project="true"][data-type="steam"]:before {
 	background-image: url('../Resources/steam.svg');
   }
   
-  ui-content ui-workspace ui-projects project-entry label[data-project="true"][data-type="local"]:before {
+  ui-content ui-workspace ui-projects project-entry label[data-project="true"][data-type="local"]:before, ui-content ui-workspace ui-core project-entry label[data-project="true"][data-type="local"]:before {
 	-webkit-mask-image: url('../Resources/folder.svg');
 	background: #3399ff;
   }
+  ui-content ui-workspace ui-core project-entry label[data-project="true"][data-type="core"]:before {
+	-webkit-mask-image: url('../Resources/folder.svg');
+	background: #800000;
+}
   
-  ui-content ui-workspace ui-projects project-entry input:checked + label[data-project="true"][data-type="local"]:before {
+  ui-content ui-workspace ui-projects project-entry input:checked + label[data-project="true"][data-type="local"]:before, ui-content ui-workspace ui-core project-entry input:checked + label[data-project="true"][data-type="local"]:before {
 	-webkit-mask-image: url('../Resources/folder_open.svg');
   }
  
- ui-content ui-workspace ui-projects project-entry input:checked + label[data-project="true"] {
+ ui-content ui-workspace ui-projects project-entry input:checked + label[data-project="true"], ui-content ui-workspace ui-core project-entry input:checked + label[data-project="true"] {
 	background: url('../Resources/arrow_expanded.svg') no-repeat;
 }
 
 
-  ui-content ui-workspace ui-projects project-entry project-files {
+  ui-content ui-workspace ui-projects project-entry project-files, ui-content ui-workspace ui-core project-entry project-files {
 	 display: none;
  }
  
- ui-content ui-workspace ui-projects project-entry input:checked ~ project-files {
+ ui-content ui-workspace ui-projects project-entry input:checked ~ project-files, ui-content ui-workspace ui-core project-entry input:checked ~ project-files, ui-content ui-workspace ui-core project-core ~ project-files {
 	 display: block;
  }
  
@@ -286,9 +372,12 @@ label[data-type="application/xml"]:before {
 
 label[data-type="application/x-tex"]:before {
 	content: "\E06C";
-	color: #2b2829;
+	color: #9e9e9e;
 }
-  
+
+label[data-type="application/zip"]:before {
+	
+}
   
  ui-content ui-container,
  ui-content ui-container code-editors,
@@ -297,6 +386,22 @@ label[data-type="application/x-tex"]:before {
     overflow: hidden;
     flex-direction: column;
     flex: 1 1 0%;
+ }
+ 
+ ui-content ui-container code-editor:before {
+	 display: none;
+ }
+ 
+ ui-content ui-container code-editor[data-warning]:before {
+	display: block;
+	content: attr(data-message);
+	font-size: 12px;
+	padding: 5px 10px;
+ }
+ 
+ ui-content ui-container code-editor[data-warning="danger"]:before {
+	background: #ed2d2d;
+    color: #560101;
  }
  
  ui-content ui-container code-editor.image {
@@ -325,6 +430,17 @@ ui-content editor-sidebar {
  
  ui-content ui-container code-editors:empty {
 	display: none;
+ }
+ 
+ ui-content ui-container code-editors tab-content.visible {
+	display: flex;
+	padding: 0;
+	overflow-y: inherit;
+    overflow-x: inherit;
+ }
+ 
+ ui-content ui-container code-editors code-editor div.monaco-editor {
+	display: flex;
  }
  
  ui-content ui-container welcome-panel {

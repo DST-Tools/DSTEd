@@ -25,10 +25,22 @@
 		<ui-menu></ui-menu>
 		<ui-content>
 			<ui-workspace>
-				<ui-title data-lang="Projects">
-					Projects
-				</ui-title>
-				<ui-projects></ui-projects>
+				<tab-content id="projects" class="visible">
+					<ui-title data-lang="Projects">
+						Projects
+					</ui-title>
+					<ui-projects></ui-projects>
+				</tab-content>
+				<tab-content id="core">
+					<ui-title data-lang="Core">
+						Core
+					</ui-title>
+					<ui-core class="css-treeview"></ui-core>
+				</tab-content>
+				<ui-tabs>
+					<ui-tab data-tab="projects" class="active" data-lang="Projects">Projects</ui-tab>
+					<ui-tab data-tab="core" data-lang="Core">Core</ui-tab>
+				</ui-tabs>
 			</ui-workspace>
 			<ui-container>
 				<editor-tabs></editor-tabs>
@@ -54,6 +66,9 @@
 				'../Design/UI-Global.css',
 				'../Design/UI-ContextMenu.css',
 				'../Design/UI-Window.css',
+				'../Design/UI-Forms.css',
+				'../Design/UI-Controls.css',
+				'../Design/UI-Tabs.css',
 				'../Design/UI-Menu.css');
 			Application.importJS('IDE.js');
 		</script>
