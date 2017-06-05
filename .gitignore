@@ -2,6 +2,7 @@ Bin/
 Build/
 Temp/
 Languages/
+Backup/
 Source/node_modules
 Source/config.json
 Source/npm-debug*
