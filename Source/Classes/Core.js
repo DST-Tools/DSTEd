@@ -1,4 +1,6 @@
-﻿(function Core() {
+﻿const os2 = require('os'); // use a custom one, can be removed/replaced
+
+(function Core() {
 	const electron		= require('electron');
 	const Remote		= electron.remote;
 	const App			= electron.app;
@@ -130,15 +132,15 @@
 								Logger.info(data);
 							});**/
 							
-							if (os.platform() === 'win32') {
+							if (os2.platform() === 'win32') {
 								const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
 									cwd: 'D:\\Software\\Steam\\',
 									detached: false
 								});
 							}
-							if (os.platform() === 'linux') {
-								const ls = Process.spawn(os.homedir() + '/.steam/steam/steamapps/common/Don''t Starve Together/bin/dontstarve', [ ], {
-									cwd: os.homedir() + '/.steam/steam/steamapps/common/Don''t Starve Together/bin/dontstarve',
+							if (os2.platform() === 'linux') {
+								const ls = Process.spawn('steam', [ 'steam://rungameid/322330'], {
+									cwd: os2.homedir(),
 									detached: false
 								});
 							}
