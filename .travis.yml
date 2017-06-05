@@ -12,5 +12,5 @@ node_js:
 - '7'
 - '8'
 before_install:
- - chmod +x ./Build.sh
-script: ./Build.sh
+ - chmod +x ./Build-All.sh
+script: ./Build-All.sh
