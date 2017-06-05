@@ -130,11 +130,18 @@
 								Logger.info(data);
 							});**/
 							
-							const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
-								cwd: 'D:\\Software\\Steam\\',
-								detached: false
-							});
-						
+							if (os.platform() === 'win32') {
+								const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
+									cwd: 'D:\\Software\\Steam\\',
+									detached: false
+								});
+							}
+							if (os.platform() === 'linux') {
+								const ls = Process.spawn(os.homedir() + '/.steam/steam/steamapps/common/Don''t Starve Together/bin/dontstarve', [ ], {
+									cwd: os.homedir() + '/.steam/steam/steamapps/common/Don''t Starve Together/bin/dontstarve',
+									detached: false
+								});
+							}
 							Logger.info(ls);
 							ls.stdout.on('data', (data) => {
 								Logger.info(`stdout: ${data}`);
