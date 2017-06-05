@@ -45,7 +45,12 @@ npm install
 
 # Create Software
 echo -e "\e[31m\e[48;5;17m...Package Application\033[0m"
-electron-packager $CUR_DIR/$NAME_TEMP DSTEd --asar=true --overwrite --prune=true --icon=$CUR_DIR/$NAME_TEMP/Resources/window_icon.ico --app-version=1.0.0 --out $CUR_DIR/$NAME_BUILD --win32metadata.CompanyName="DSTEd - OpenSource" --win32metadata.ProductName="DSTEd" --win32metadata.OriginalFilename="DSTEd.exe"
+
+if [[ $BUILD_OS == "all" ]]; then
+	electron-packager $CUR_DIR/$NAME_TEMP DSTEd --all --asar=true --overwrite --prune=true --icon=$CUR_DIR/$NAME_TEMP/Resources/window_icon.ico --app-version=1.0.0 --out $CUR_DIR/$NAME_BUILD --win32metadata.CompanyName="DSTEd - OpenSource" --win32metadata.ProductName="DSTEd" --win32metadata.OriginalFilename="DSTEd.exe"
+else
+	electron-packager $CUR_DIR/$NAME_TEMP DSTEd --asar=true --overwrite --prune=true --icon=$CUR_DIR/$NAME_TEMP/Resources/window_icon.ico --app-version=1.0.0 --out $CUR_DIR/$NAME_BUILD --win32metadata.CompanyName="DSTEd - OpenSource" --win32metadata.ProductName="DSTEd" --win32metadata.OriginalFilename="DSTEd.exe"
+fi
 
 # Remove unused files
 echo -e "\e[31m\e[48;5;17m...Remove unused Files\033[0m"

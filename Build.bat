@@ -50,7 +50,11 @@ cd %CUR_DIR%
 cd %CUR_DIR%\%NAME_BUILD%
 call :ColorText 1C "...Package Application"
 echo.
-call electron-packager "%CUR_DIR:"=%\%NAME_TEMP:"=%" DSTEd --asar=true --overwrite --prune=true --icon=%CUR_DIR:"=%\%NAME_TEMP:"=%\Resources\window_icon.ico --app-version=1.0.0 --win32metadata.CompanyName="DSTEd - OpenSource" --win32metadata.ProductName="DSTEd" --win32metadata.OriginalFilename="DSTEd.exe"
+IF "%BUILD_OS%"=="all" (
+	call electron-packager "%CUR_DIR:"=%\%NAME_TEMP:"=%" DSTEd --all --asar=true --overwrite --prune=true --icon=%CUR_DIR:"=%\%NAME_TEMP:"=%\Resources\window_icon.ico --app-version=1.0.0 --win32metadata.CompanyName="DSTEd - OpenSource" --win32metadata.ProductName="DSTEd" --win32metadata.OriginalFilename="DSTEd.exe"
+) ELSE (
+	call electron-packager "%CUR_DIR:"=%\%NAME_TEMP:"=%" DSTEd --asar=true --overwrite --prune=true --icon=%CUR_DIR:"=%\%NAME_TEMP:"=%\Resources\window_icon.ico --app-version=1.0.0 --win32metadata.CompanyName="DSTEd - OpenSource" --win32metadata.ProductName="DSTEd" --win32metadata.OriginalFilename="DSTEd.exe"
+)
 
 :: Remove unused files
 call :ColorText 1C "...Remove unused Files"
