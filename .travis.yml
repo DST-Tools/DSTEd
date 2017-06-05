@@ -5,8 +5,7 @@ os:
 dist: trusty
 osx_image: xcode8
 language: node_js
-node_js:
-- '7'
+node_js: '7'
 before_install:
  - chmod +x ./Build-All.sh
 script: ./Build-All.sh
