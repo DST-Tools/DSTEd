@@ -1,5 +1,3 @@
-﻿const os2 = require('os'); // use a custom one, can be removed/replaced
-
 (function Core() {
 	const electron		= require('electron');
 	const Remote		= electron.remote;
@@ -132,16 +130,16 @@
 								Logger.info(data);
 							});**/
 							
-							if (os2.platform() === 'win32') {
+							if (OS.platform() === 'win32') {
 								const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
 									cwd: 'D:\\Software\\Steam\\',
 									detached: false
 								});
 							}
-							if (os2.platform() === 'linux') {
+							if (OS.platform() === 'linux') {
 								const ls = Process.spawn('steam', [ 'steam://rungameid/322330'], {
-									cwd: os2.homedir(),
-									detached: false
+									cwd: OS.homedir(),
+									detached: true
 								});
 							}
 							Logger.info(ls);
