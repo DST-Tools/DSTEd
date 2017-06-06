@@ -13,13 +13,13 @@ install:
 
 # Caching
 cache:
-  - node_modules
+  - Source\node_modules
   
 # Packaging
 after_build:
-  - 7z a DSTEd-win32-x64.zip "%APPVEYOR_BUILD_FOLDER%\Build\DSTEd-win32-x64\"
+  - 7z a Build\DSTEd-win32-x64.zip "%APPVEYOR_BUILD_FOLDER%\Build\DSTEd-win32-x64\"
 artifacts:
- - path: DSTEd-win32-x64.zip
+ - path: Build\DSTEd-win32-x64.zip
 
   
 # Deployment Options
