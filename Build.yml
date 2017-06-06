@@ -4,6 +4,7 @@ version: 1.0.0-{build}
 environment:
   matrix:
     - nodejs_version: "7"
+    - appveyor_repo_tag: true
     
 # Install scripts. (runs after repo cloning)
 install:
@@ -28,7 +29,6 @@ deploy:
   draft: false
   prerelease: true
   on:
-    branch: master
     appveyor_repo_tag: true
     
 matrix:
