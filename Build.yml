@@ -4,7 +4,7 @@ version: 1.0.0-{build}
 environment:
   matrix:
     - nodejs_version: "7"
-    - appveyor_repo_tag: true
+    - appveyor_repo_tag: false
     
 # Install scripts. (runs after repo cloning)
 install:
@@ -41,7 +41,7 @@ matrix:
   fast_finish: true
 
 clone_depth: 1
-max_jobs: 1
+max_jobs: 10
   
 # Disable other
 build: OFF
