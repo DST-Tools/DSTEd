@@ -22,6 +22,10 @@ install:
 before_deploy:
   - node .\Tools\PackageBuild.js
   - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+
+artifacts:
+    - path: '*.zip'
+      name: DSTEd
     
 deploy:
   tag: 1.0.0
