@@ -18,8 +18,8 @@ before_deploy:
   - node .\Tools\PackageBuild.js
 
 deploy:
-  tag: $(appveyor_build_version)
-  release: 'DSTEd v${appveyor_build_version} (Build: ${build}) - Pre-Release (Preview)'
+  tag: $(APPVEYOR_BUILD_NUMBER)
+  release: 'DSTEd v${APPVEYOR_BUILD_NUMBER} (Build: ${APPVEYOR_BUILD_ID}) - Pre-Release (Preview)'
   description: ' ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)  ## Pre-Release v1.0.0 (Preview) Builded binarys for `Windows` (`32bit` & `64bit`), `Linux` (`32bit`, `64bit` & `armv7`) and `Mac OS X` (`darwin` & `mas`, only `64bit`).'
   provider: GitHub
   auth_token:
