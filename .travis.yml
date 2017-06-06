@@ -1,11 +1,40 @@
-sudo: required
-os:
-- osx
-dist: trusty
-osx_image: xcode8
+notifications:
+  email: true
+  
 language: node_js
-node_js: '7'
+cache: 
+  directories:
+    - node_modules
+    
+env:
+  - NODE_VERSION="7.5"
+  
 before_install:
- - chmod +x ./Build-All.sh
- - "npm install electron-packager -g" 
-script: ./Build-All.sh
+  - git clone https://github.com/creationix/nvm.git /tmp/.nvm
+  - source /tmp/.nvm/nvm.sh
+  - nvm install $NODE_VERSION
+  - nvm use --delete-prefix $NODE_VERSION
+  - node --version
+ 
+os:
+  - osx
+  
+osx_image: xcode7.3
+
+dist: trusty
+
+before_install:
+  - brew update
+  - brew install wine
+  - wine --version
+  - chmod +x ./Build-All.sh
+  - "npm install electron-packager -g" 
+
+deploy:
+  provider: releases
+  
+script: './Build-All.sh'
+
+branches:
+  only:
+    - master  
