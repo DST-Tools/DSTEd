@@ -24,7 +24,7 @@ before_deploy:
 
 # Define Artifacts
 artifacts:
-  - path: Build\*.zip
+  - path: '**\*.zip'
     name: DSTEd
     
 deploy:
