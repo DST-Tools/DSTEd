@@ -21,6 +21,7 @@ install:
 # Deployment Options
 after_build:
   - node .\Tools\PackageBuild.js
+  - ps: Get-ChildItem .\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 # Define Artifacts
 artifacts:
