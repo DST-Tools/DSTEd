@@ -9,12 +9,10 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version 
   - npm -g install electron-packager
+  - .\Build-All.bat
   
 matrix:
   fast_finish: true
-  
-install:
-  - .\Build-All.bat
   
 build: OFF
 test: OFF
