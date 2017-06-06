@@ -11,14 +11,11 @@ install:
   - npm -g install electron-packager
   - npm -g install archiver
   - ps: .\Build-All.bat
+  - ps: node .\Tools\PackageBuild.js
 
 # Caching
 cache:
   - Temp\node_modules
-  
-# Packaging
-after_build:
- - ps: node .\Tools\PackageBuild.js
 
 # Deployment Options
 deploy:
