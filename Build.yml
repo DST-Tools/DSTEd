@@ -23,10 +23,6 @@ before_deploy:
   - node .\Tools\PackageBuild.js
   - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
-artifacts:
-    - path: '*.zip'
-      name: DSTEd
-    
 deploy:
   tag: 1.0.0
   release: 'DSTEd v1.0.0 (Build: ${APPVEYOR_BUILD_NUMBER}) - Pre-Release (Preview)'
@@ -34,7 +30,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: V9hufIe4lJghIoqzu0XMfsay/OP+rXjO6CgNoQ1m9mc2oinsCgz+Y5UK0/6y0GLa
-  artifact: DSTEd
+  artifact: 
   draft: false
   prerelease: true
   force_update: true
