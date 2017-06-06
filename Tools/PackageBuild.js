@@ -10,8 +10,8 @@
 		
 		console.log('Check for Builds...');
 		
-		var build_path	= _path.join(__dirname, 'Build');
-		var source_path	= _path.join(__dirname, 'Source');
+		var build_path	= _path.join(__dirname, '..', 'Build');
+		var source_path	= _path.join(__dirname, '..', 'Source');
 		var stats		= _fs.lstatSync(build_path);
 		
 		if(!stats.isDirectory()) {
