@@ -17,11 +17,10 @@ cache:
   
 # Packaging
 after_build:
-  - 7z a Build\DSTEd-win32-x64.zip "Build\DSTEd-win32-x64\"
+  - 7z a DSTEd-win32-x64.zip "%APPVEYOR_BUILD_FOLDER%\Build\DSTEd-win32-x64\*"
 artifacts:
- - path: Build\DSTEd-win32-x64.zip
+ - path: DSTEd-win32-x64.zip
 
-  
 # Deployment Options
 deploy:
   tag: $(appveyor_build_version)
@@ -30,7 +29,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: b202f536350628ff69af69d08daee9f76a9cff20
-  artifact: '**\*.zip'
+  artifact: '*.zip'
   draft: false
   prerelease: true
   on:
