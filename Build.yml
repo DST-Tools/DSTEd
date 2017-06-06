@@ -17,16 +17,16 @@ install:
   - npm -g install electron-packager
   - npm -g install archiver
   - .\Build.bat
-
-# Define Artefacts
-artifacts:
-  - path: .\Build\*.zip
-    name: DSTEd
       
 # Deployment Options
 before_deploy:
   - node .\Tools\PackageBuild.js
 
+# Define Artifacts
+artifacts:
+  - path: Build\*.zip
+    name: DSTEd
+    
 deploy:
   tag: 1.0.0
   release: 'DSTEd v1.0.0 (Build: ${APPVEYOR_BUILD_NUMBER}) - Pre-Release (Preview)'
