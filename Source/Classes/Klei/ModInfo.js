@@ -6,10 +6,10 @@ module.exports = (function ModInfo() {
 		type:		'version',
 		versions:	[{
 			name:	'Don\'t Starve Together',
-			value:	11
+			value:	10
 		}, {
 			name:	'Don\'t Starve',
-			value:	10
+			value:	6
 		}, {
 			name:	'Unknown',
 			value:	0
