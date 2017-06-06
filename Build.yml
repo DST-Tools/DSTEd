@@ -19,7 +19,7 @@ install:
   - .\Build.bat
       
 # Deployment Options
-after_build:
+before_deploy:
   - node .\Tools\PackageBuild.js
   - ps: Get-ChildItem .\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
