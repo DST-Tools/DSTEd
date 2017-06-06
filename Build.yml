@@ -16,7 +16,7 @@ install:
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
-  - .\Build.bat
+  - .\Build-All.bat
       
 # Deployment Options
 before_deploy:
