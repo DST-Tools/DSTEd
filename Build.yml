@@ -1,5 +1,14 @@
 version: 1.0.0-{build}
+
+# Set the Node Version
 environment:
-  nodejs_version: "7"
+  matrix:
+    - nodejs_version: "7"
+    
+# Install scripts. (runs after repo cloning)
+install:
+  - ps: Install-Product node $env:nodejs_version 
+  - npm -g install electron-packager
+  
 build_script:
 - cmd: start ./Build-All.bat
