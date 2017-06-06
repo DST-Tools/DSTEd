@@ -1,5 +1,10 @@
 version: 1.0.0-{build}
 
+# Branches
+branches:
+  only:
+  - master
+
 # Set the Node Version
 environment:
   matrix:
@@ -24,7 +29,9 @@ deploy:
   provider: GitHub
   auth_token:
     secure: V9hufIe4lJghIoqzu0XMfsay/OP+rXjO6CgNoQ1m9mc2oinsCgz+Y5UK0/6y0GLa
-  artifact: /.*\.zip/
+  artifact:
+    - path: Build\*.zip
+      name: DSTEd
   draft: false
   prerelease: true
   force_update: true
