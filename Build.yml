@@ -30,9 +30,16 @@ deploy:
   prerelease: true
   on:
     appveyor_repo_tag: true
+
+# Branches
+branches:
+  only:
+    - master
+    - /^v\d+\.\d+\.\d+.*$/
     
 matrix:
   fast_finish: true
 
+# Disable other
 build: OFF
 test: OFF
