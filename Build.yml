@@ -1,9 +1,5 @@
 version: 1.0.0-{build}
 
-# Init
-init:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-  
 # Set the Node Version
 environment:
   matrix:
@@ -18,6 +14,9 @@ install:
   - .\Build.bat
   
 # Deployment Options
+before_deploy:
+  - node .\Tools\PackageBuild.js
+
 deploy:
   tag: $(appveyor_build_version)
   release: 'DSTEd v${appveyor_build_version} - Pre-Release (Preview)'
