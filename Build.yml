@@ -19,7 +19,7 @@ install:
   - .\Build.bat
       
 # Deployment Options
-before_deploy:
+after_build:
   - node .\Tools\PackageBuild.js
 
 # Define Artifacts
