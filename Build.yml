@@ -9,6 +9,7 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version 
   - npm -g install electron-packager
+  - npm -g install archiver
   - ps: .\Build-All.bat
 
 # Caching
@@ -17,9 +18,7 @@ cache:
   
 # Packaging
 after_build:
-  - 7z a DSTEd-win32-x64.zip "%APPVEYOR_BUILD_FOLDER%\Build\DSTEd-win32-x64\*"
-artifacts:
- - path: DSTEd-win32-x64.zip
+ - ps: node .\Tools\PackageBuild.js
 
 # Deployment Options
 deploy:
