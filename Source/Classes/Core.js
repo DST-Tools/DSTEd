@@ -130,18 +130,28 @@
 								Logger.info(data);
 							});**/
 							
-							if (OS.platform() === 'win32') {
-								const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
-									cwd: 'D:\\Software\\Steam\\',
-									detached: false
-								});
+							var spawn_path = '';
+							var spawn_arguments = [];
+							var spawn_cwd = '';
+							
+							switch(OS.platform()) {
+								case 'linux':
+									spawn_path		= 'steam'; // @ToDo get from Software.getSteamPath()
+									spawn_arguments = [ 'steam://rungameid/322330']; // @ToDo don't run via steam://-Protocol, because the process cant't be tracked
+									spawn_cwd		= OS.homedir(); // @ToDo get from Software.getSteamPath()
+								break;
+								default:
+									spawn_path		= 'D:\\Software\\Steam\\Steam.exe'; // @ToDo get from Software.getSteamPath()
+									spawn_arguments	= [ '-applaunch', 322330, '-window' ];
+									spawn_cwd		= 'D:\\Software\\Steam\\'; // @ToDo get from Software.getSteamPath()
+								break;
 							}
-							if (OS.platform() === 'linux') {
-								const ls = Process.spawn('steam', [ 'steam://rungameid/322330'], {
-									cwd: OS.homedir(),
-									detached: true
-								});
-							}
+							
+							const ls = Process.spawn(spawn_path, spawn_arguments, {
+								cwd:		spawn_cwd,
+								detached:	false
+							});
+							
 							Logger.info(ls);
 							ls.stdout.on('data', (data) => {
 								Logger.info(`stdout: ${data}`);
