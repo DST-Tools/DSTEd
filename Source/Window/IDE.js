@@ -17,19 +17,7 @@ const I18N			= require('../Classes/I18N')();
 			const win = Remote.getCurrentWindow();
 			
 			if(typeof(event.target.dataset) != 'undefined' && typeof(event.target.dataset.tab) != 'undefined') {
-				/*var tabs		= document.querySelectorAll('ui-tab');
-				var contents	= document.querySelectorAll('tab-content');
-		
-				Array.prototype.forEach.call(contents, function onEntrie(node) {
-					node.classList.remove('visible');
-				});
-				
-				Array.prototype.forEach.call(tabs, function onEntrie(tab) {
-					tab.classList.remove('active');
-				});
-				
-				event.target.classList.add('active');
-				document.querySelector('tab-content#' + event.target.dataset.tab).classList.add('visible');*/
+				/* @ToDo globalize, dont add the same code to other windows... (Spaghetti Code) */
 				var tabs_container		= event.target.closest('ui-tabs');
 				var tabs				= tabs_container.parentNode.querySelectorAll('ui-tab');
 				var contents			= tabs_container.parentNode.querySelectorAll('tab-content');
@@ -88,21 +76,28 @@ const I18N			= require('../Classes/I18N')();
 		
 		var _projects = {};
 		
-		/*
-			@ToDo this.renderWorkspace(_projects) will be generated completely new, if adds/remove a project
-			Fix this by following updates:
-				- Add/Remove "Projects" without render all (Coreside: with position)
-			
-		*/
 		IPC.on('workspace:project:add', function(event, project) {
-			_projects[project.name] = project.project;
-			this.renderWorkspace(_projects);
+			_projects[project.name]		= project.project;
+			var new_projects			= {};
+			new_projects[project.name]	= project.project;
+			this.renderWorkspace(new_projects, true);
+			new_projects = null;
+			delete new_projects;
 		}.bind(this));
 		
 		IPC.on('workspace:project:remove', function(event, name) {
+			console.log('Remove from Workspace: ', name);
+			
+			var project				= document.querySelector('input[type="checkbox"]#' + name);
+			var workspace_projects	= document.querySelector('ui-projects');
+			
+			if(typeof(project) != 'undefined' && project != null) {
+				project = project.closest('project-entry');
+				workspace_projects.removeChild(project)
+			}
+			
 			_projects[name] = null;
 			delete _projects[name];
-			this.renderWorkspace(_projects);
 		}.bind(this));
 		
 		IPC.on('workspace:core', function(event, core) {
@@ -111,7 +106,7 @@ const I18N			= require('../Classes/I18N')();
 		
 		IPC.on('workspace:projects', function(event, projects) {
 			_projects = projects;
-			this.renderWorkspace(_projects);
+			this.renderWorkspace(_projects, false);
 		}.bind(this));
 		
 		IPC.on('file:open', function(event, file) {
@@ -286,6 +281,7 @@ const I18N			= require('../Classes/I18N')();
 			case 'dst_run':
 			case 'forum':
 			case 'steam_workshop':
+			case 'settings':
 			case 'about':
 				IPC.send('menu:command', command);
 			break;
@@ -442,10 +438,25 @@ const I18N			= require('../Classes/I18N')();
 		});
 	};
 	
-	this.renderWorkspace = function renderWorkspace(projects) {
-		console.log('Render Workspace');
+	this.renderWorkspace = function renderWorkspace(projects, adding) {
+		console.log('Render Workspace', adding);
 		var workspace_projects	= document.querySelector('ui-projects');
-		workspace_projects.innerHTML = '';
+		
+		/* Get all checkboxes */
+		var toggled_trees		= [];
+		var toggled_checkboxes	= workspace_projects.querySelectorAll('input[type="checkbox"]');
+		Array.prototype.forEach.call(toggled_checkboxes, function onEntrie(node) {
+			if(node.checked) {
+				toggled_trees.push({
+					id:		node.id,
+					opened: node.checked
+				});
+			}
+		});
+		
+		if(!adding) {
+			workspace_projects.innerHTML = '';
+		}
 		
 		Object.keys(projects).map(function(key, index) {
 			subnode = 0;
@@ -474,6 +485,15 @@ const I18N			= require('../Classes/I18N')();
 			project_html += '</project-entry>';
 			workspace_projects.innerHTML += project_html;
 		});
+		
+		/* Restore toggled trees */
+		toggled_trees.forEach(function(tree) {
+			var checkbox		= workspace_projects.querySelector('input[type="checkbox"]#' + tree.id);
+			
+			if(typeof(checkbox) != 'undefined' && checkbox != null) {
+				checkbox.checked	= tree.opened;
+			}
+		});
 	};
 	
 	this.renderDirectory = function renderDirectory(files, html, first) {
@@ -484,7 +504,7 @@ const I18N			= require('../Classes/I18N')();
 			html += '<li>';
 		}
 		
-		if(files.name.length > 0) {
+		if(files != null && typeof(files.name) != 'undefined' && files.name.length > 0) {
 			if(typeof(files.entries) != 'undefined' && files.entries.length > 0) {
 				html += checkbox;
 			}
@@ -492,7 +512,7 @@ const I18N			= require('../Classes/I18N')();
 			html += '<label for="' + id + '" data-type="' + files.type + '" data-directory="' + (files.directory ? 'true' : 'false') + '"' + (files.directory ? '' : ' data-action="file:open" data-file="' + files.path + files.name + '"') + '>' + files.name + '</label>';
 		}
 		
-		if(typeof(files.entries) != 'undefined' && files.entries.length > 0) {
+		if(files != null && typeof(files.entries) != 'undefined' && typeof(files.entries) != 'undefined' && files.entries.length > 0) {
 			html += '<ul>';
 			
 			files.entries.forEach(function(entries) {
