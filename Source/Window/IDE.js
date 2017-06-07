@@ -195,6 +195,23 @@ const I18N			= require('../Classes/I18N')();
 				Button.setAttribute('disabled', '');
 			}
 			
+			var command					= null;
+			var command_id				= item.commandId;
+			
+			if(
+				typeof(item.menu) != 'undefined' && item.menu != null &&
+				typeof(item.menu.commandsMap) != 'undefined' && item.menu.commandsMap != null &&
+				typeof(item.menu.commandsMap[command_id]) != 'undefined' && item.menu.commandsMap[command_id] != null &&
+				typeof(item.menu.commandsMap[command_id].command) != 'undefined' && item.menu.commandsMap[command_id].command != null							
+			) {
+				command = item.menu.commandsMap[command_id].command;
+			}
+			Button.dataset.command = command;
+			
+			Button.addEventListener('click', function onClick(event) {
+				this.executeCommand(event.target.dataset.command);
+			}.bind(this));
+			
 			MenuItem.appendChild(Button);
 			
 			if(typeof(item.submenu) != 'undefined' && item.submenu != null && typeof(item.submenu.items) != 'undefined' && item.submenu.items != null) {
