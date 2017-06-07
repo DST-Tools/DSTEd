@@ -1,4 +1,4 @@
-﻿(function Core() {
+(function Core() {
 	const electron		= require('electron');
 	const Remote		= electron.remote;
 	const App			= electron.app;
@@ -130,11 +130,18 @@
 								Logger.info(data);
 							});**/
 							
-							const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
-								cwd: 'D:\\Software\\Steam\\',
-								detached: false
-							});
-						
+							if (OS.platform() === 'win32') {
+								const ls = Process.spawn('D:\\Software\\Steam\\Steam.exe', [ '-applaunch', 322330, '-window' ], {
+									cwd: 'D:\\Software\\Steam\\',
+									detached: false
+								});
+							}
+							if (OS.platform() === 'linux') {
+								const ls = Process.spawn('steam', [ 'steam://rungameid/322330'], {
+									cwd: OS.homedir(),
+									detached: true
+								});
+							}
 							Logger.info(ls);
 							ls.stdout.on('data', (data) => {
 								Logger.info(`stdout: ${data}`);
