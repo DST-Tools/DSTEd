@@ -112,6 +112,9 @@
 							});
 							dialog.open();
 						break;
+						case 'settings':
+							console.log('OPEN SETTINGS');
+						break;
 						case 'steam_workshop':
 							this.getScreen('SteamWorkshop').open();
 						break;
@@ -374,15 +377,15 @@
 			
 		/* Screen :: IDE */
 		this.createScreen('IDE', 800, 600, null, null, null, function onLoad() {
-			Software.createWorkspaceWatcher(function onProjectAdded(name, project) {
-				this.getScreen('IDE').send('workspace:project:add', {name: name, project: project});
-			}.bind(this), function onProjectDeleted(name) {
-				this.getScreen('IDE').send('workspace:project:remove', name);
-			}.bind(this));
-			
 			this.getScreen('IDE').send('workspace:core', global.DSTEd.core);
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
 		}.bind(this), true).setDebug(false);
+		
+		Software.createWorkspaceWatcher(function onProjectAdded(name, project) {
+			this.getScreen('IDE').send('workspace:project:add', {name: name, project: project});
+		}.bind(this), function onProjectDeleted(name) {
+			this.getScreen('IDE').send('workspace:project:remove', name);
+		}.bind(this));
 	};
 
 	this.init();
