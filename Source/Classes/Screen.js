@@ -153,7 +153,15 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		});
 		
 		IPC.on('window:init', function(event, args) {
-			_callbacks.onLoad();
+			if(typeof(_window) == 'undefined' || _window == null || typeof(_window.webContents) == 'undefined' || _window.webContents == null) {
+				return;
+			}
+			
+			if(!event.sender.isDestroyed() && _window.webContents.getId() === event.sender.getId()) {
+			/* Other usage, but not excellent: */
+			// if(_window == Window.getFocusedWindow()) {
+				_callbacks.onLoad();
+			}
 		}.bind(this));
 	};
 	
