@@ -11,13 +11,15 @@ exports = module.exports = (function LUA() {
 		console.info('[LUA] Parse Content');
 		
 		return (new function Context(content) {
-			let _content	= content;
-			let _variables	= [];
-			var _lines		= _content.replace(/\r\n/gi, '\n').split('\n');
-			let _data		= [];
-			let _position	= 0;
-			let _size		= _lines.length;
-			let _options	= options || {
+			let _content			= content;
+			let _variables			= [];
+			let _content_size		= _content.length;
+			let _lines				= _content.replace(/\r\n/gi, '\n').split('\n');
+			let _data				= [];
+			let _position			= 0;
+			let _size				= _lines.length;
+			let _has_brackets		= false;
+			let _options			= options || {
 				strings:	true,
 				comments:	true,
 				integers:	true,
@@ -52,17 +54,12 @@ exports = module.exports = (function LUA() {
 						continue;
 					}
 					
-					/* Opened Bracked */
-					/*if(parts[0].substr(0, 1) == '{') {
+					/* Ignore Opened Brackets; parse it later */
+					if([ '{', '}' ].indexOf(parts[0].substr(0, 1)) > -1) {
+						_has_brackets = true;
 						++_position;
 						continue;
-					}*/
-					
-					/* Closed Bracked */
-					/*if(parts[0].substr(0, 1) == '}') {
-						++_position;
-						continue;
-					}*/
+					}
 					
 					/* Continue empty lines */
 					if(parts[0].length == 0) {
@@ -127,17 +124,9 @@ exports = module.exports = (function LUA() {
 							++_position;
 							continue;
 						
-						/* Has Brackets */
+						/* Has Brackets; Parse it later */
 						} else if(parts[1].charAt(0) == '{') {
-							let has_end = false;
-							
-							/*
-							if(parts[1].charAt(parts[1].length - 1) == '}') {
-								has_end	= true;
-								parts[1]	= parts[1].substr(0, parts[1].length - 1);
-							}
-							
-							this._parseBrackets(parts[1].substr(1, parts[1].length), has_end);*/
+							_has_brackets = true;
 							++_position;
 							continue;
 							
@@ -156,26 +145,6 @@ exports = module.exports = (function LUA() {
 
 			this._isFloat = function _isFloat(number){
 				return /^[\d.]+$/.test(number);
-			};
-			
-			this._parseBrackets = function _parseBrackets(content, has_end) {
-				if(has_end) {
-					this._parseBracketsContent(content);
-					return;
-				}
-				
-				/* Parse the End */
-				do {
-					if(content.indexOf('}') > -1) {
-						break;
-					}
-					
-					++_position;
-				} while(_position < _size);
-			};
-			
-			this._parseBracketsContent = function _parseBracketsContent(content) {
-				
 			};
 			
 			this.getVariables = function getVariables() {
