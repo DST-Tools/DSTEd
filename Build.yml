@@ -23,7 +23,7 @@ install:
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
   - mkdir Temp-Language
-  - git clone https://github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
+  - git clone https://$($env:GITHUB_AUTH_TOKEN):x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
   - cp .\en_US.json .\Temp-Language\xx_XX.json
   - git --work-tree=.\Temp-Language add xx_XX.json
   - git --work-tree=.\Temp-Language commit -m "[AutoUpdate] Default language (xx_XX.json)"
