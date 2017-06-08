@@ -12,7 +12,7 @@ environment:
     
 # Install scripts. (runs after repo cloning)
 install:
-  - ps: echo $($env:auth_token)
+  - echo %auth_token%
   - ps: Install-Product node $env:nodejs_version 
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
