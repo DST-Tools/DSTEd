@@ -18,7 +18,7 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version
   - .\I18N.bat
-  - git config --global credential.helper store
+  - git config --global credential.helper wincred
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_AUTH_TOKEN):x-oauth-basic@github.com`n"
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
