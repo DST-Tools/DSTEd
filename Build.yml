@@ -8,7 +8,8 @@ version: 1.0.0-{build}
 environment:
   GITHUB_LANG_TOKEN:
     secure: 8hrb5tdiQ8e08hGu/8KhcwhuHUcakMkWR7HgRH+HgRWfinwNM5vzjNk2sdnDpdEO
-    
+  LANG_DIR: C:\Lang-Temp
+  
 # Branches
 branches:
   only:
@@ -22,14 +23,14 @@ install:
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_LANG_TOKEN)@github.com`n"
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
-  - mkdir Temp-Language
+  - mkdir %LANG_DIR%
   - git clone https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
-  - git --work-tree=.\Temp-Language checkout master
-  - cp .\en_US.json .\Temp-Language\xx_XX.json
-  - git --work-tree=.\Temp-Language remote set-url origin https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git
-  - git --work-tree=.\Temp-Language add xx_XX.json
-  - git --work-tree=.\Temp-Language commit -m "[AutoUpdate] Default Language (xx_XX.json)"
-  - git --work-tree=.\Temp-Language push origin HEAD:master
+  - git --work-tree=%LANG_DIR% checkout master
+  - cp .\en_US.json %LANG_DIR%\xx_XX.json
+  - git --work-tree=%LANG_DIR% remote set-url origin https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git
+  - git --work-tree=%LANG_DIR% add xx_XX.json
+  - git --work-tree=%LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
+  - git --work-tree=%LANG_DIR% push origin HEAD:master
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
