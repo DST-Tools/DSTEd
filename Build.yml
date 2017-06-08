@@ -23,7 +23,7 @@ install:
 # Push default language file
 on_success:
   - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$(auth_token):x-oauth-basic@github.com`n"
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://%auth_token%:x-oauth-basic@github.com`n"
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
   - mkdir Temp-Language
@@ -42,7 +42,7 @@ deploy:
   description: ' ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)  ## Pre-Release v1.0.0 (Preview) Builded binarys for `Windows` (`32bit` & `64bit`), `Linux` (`32bit`, `64bit` & `armv7`) and `Mac OS X` (`darwin` & `mas`, only `64bit`).'
   provider: GitHub
   auth_token:
-    secure: $(auth_token)
+    secure: %auth_token%
   artifact: 
   draft: false
   prerelease: true
