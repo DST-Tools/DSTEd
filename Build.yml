@@ -16,15 +16,7 @@ environment:
     
 # Install scripts. (runs after repo cloning)
 install:
-  - ps: Install-Product node $env:nodejs_version 
-  - npm -g install node-gyp@3.6.2
-  - npm -g install electron-packager
-  - npm -g install archiver
-  - .\Build-All.bat
-  - .\I18N.bat
-
-# Push default language file
-before_build:
+  - ps: Install-Product node $env:nodejs_version
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$env:GITHUB_AUTH_TOKEN:x-oauth-basic@github.com`n"
   - git config --global user.email "build@DSTEd.net"
@@ -35,7 +27,12 @@ before_build:
   - git --work-tree=.\Temp-Language add xx_XX.json
   - git --work-tree=.\Temp-Language commit -m "[AutoUpdate] Default language (xx_XX.json)"
   - git --work-tree=.\Temp-Language push
-    
+  - npm -g install node-gyp@3.6.2
+  - npm -g install electron-packager
+  - npm -g install archiver
+  - .\Build-All.bat
+  - .\I18N.bat
+
 # Deployment Options
 before_deploy:
   - node .\Tools\PackageBuild.js
