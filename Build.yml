@@ -22,14 +22,14 @@ install:
 # Push default language file
 on_success:
   - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:auth_token):x-oauth-basic@github.com`n"
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$env:GITHUB_AUTH_TOKEN:x-oauth-basic@github.com`n"
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
   - mkdir Temp-Language
   - git clone https://github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
   - cp .\en_US.json .\Temp-Language\xx_XX.json
   - cd .\Temp-Language; git add xx_XX.json; git commit -m "[AutoUpdate] Default language (xx_XX.json)"; git push
-  
+    
 # Deployment Options
 before_deploy:
   - node .\Tools\PackageBuild.js
@@ -50,7 +50,7 @@ matrix:
 
 clone_depth: 1
 max_jobs: 10
-  
+
 # Disable other
 build: OFF
 test: OFF
