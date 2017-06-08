@@ -17,7 +17,15 @@ install:
   - npm -g install electron-packager
   - npm -g install archiver
   - .\Build-All.bat
-      
+  - .\I18N.bat
+
+# Push default language file
+on_success:
+  - mkdir Temp-Language
+  - git clone https://github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
+  - cp .\en_US.json .\Temp-Language\xx_XX.json
+  - cd .\Temp-Language; git add xx_XX.json; git commit -m "[AutoUpdate] Default language (xx_XX.json)"; git push
+  
 # Deployment Options
 before_deploy:
   - node .\Tools\PackageBuild.js
