@@ -15,14 +15,14 @@ install:
   - .\I18N.bat
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_AUTH_TOKEN):x-oauth-basic@github.com`n"
-  - cmd: git config --global user.email "build@DSTEd.net"
-  - cmd: git config --global user.name "[DSTEd] Build Server"
-  - cmd: mkdir Temp-Language
-  - cmd: git clone https://%GITHUB_AUTH_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
-  - cmd: cp .\en_US.json .\Temp-Language\xx_XX.json
-  - cmd: git --work-tree=.\Temp-Language add xx_XX.json
-  - cmd: git --work-tree=.\Temp-Language commit -m "[AutoUpdate] Default language (xx_XX.json)"
-  - cmd: git --work-tree=.\Temp-Language push origin HEAD:master
+  - git config --global user.email "build@DSTEd.net"
+  - git config --global user.name "[DSTEd] Build Server"
+  - mkdir Temp-Language
+  - git clone https://%GITHUB_AUTH_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
+  - cp .\en_US.json .\Temp-Language\xx_XX.json
+  - git --work-tree=.\Temp-Language add xx_XX.json
+  - git --work-tree=.\Temp-Language commit -m "[AutoUpdate] Default language (xx_XX.json)"
+  - git --work-tree=.\Temp-Language push origin HEAD:master
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
