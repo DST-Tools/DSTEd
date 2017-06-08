@@ -21,28 +21,25 @@ install:
 
 # Push default language file
 on_success:
-  - ps: echo "OK"
-  
-# Deployment Options
-before_deploy:
-  - node .\Tools\PackageBuild.js
-  - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
   - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://%auth_token%:x-oauth-basic@github.com`n"
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:auth_token):x-oauth-basic@github.com`n"
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
   - mkdir Temp-Language
   - git clone https://github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
   - cp .\en_US.json .\Temp-Language\xx_XX.json
   - cd .\Temp-Language; git add xx_XX.json; git commit -m "[AutoUpdate] Default language (xx_XX.json)"; git push
+  
+# Deployment Options
+before_deploy:
+  - node .\Tools\PackageBuild.js
+  - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 deploy:
   tag: 1.0.0
   release: 'DSTEd v1.0.0 (Build: ${APPVEYOR_BUILD_NUMBER}) - Pre-Release (Preview)'
   description: ' ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)  ## Pre-Release v1.0.0 (Preview) Builded binarys for `Windows` (`32bit` & `64bit`), `Linux` (`32bit`, `64bit` & `armv7`) and `Mac OS X` (`darwin` & `mas`, only `64bit`).'
   provider: GitHub
-  auth_token:
-    secure: "%auth_token%"
   artifact: 
   draft: false
   prerelease: true
