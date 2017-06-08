@@ -27,7 +27,7 @@ install:
   - cp .\en_US.json .\Temp-Language\xx_XX.json
   - git --work-tree=.\Temp-Language add xx_XX.json
   - git --work-tree=.\Temp-Language commit -m "[AutoUpdate] Default language (xx_XX.json)"
-  - git --work-tree=.\Temp-Language push origin HEAD:master
+  - git --work-tree=.\Temp-Language push –u origin master
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
