@@ -30,7 +30,7 @@ install:
   - cp .\en_US.json %LANG_DIR%\xx_XX.json
   - git --work-tree=%LANG_DIR% add xx_XX.json
   - git --work-tree=%LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
-  - git --work-tree=%LANG_DIR% push origin HEAD:master
+  - git --work-tree=%LANG_DIR% push --force origin HEAD:master
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
