@@ -12,7 +12,7 @@ environment:
     
 # Install scripts. (runs after repo cloning)
 install:
-  - ps: echo $env:auth_token
+  - echo $env:auth_token
   - ps: Install-Product node $env:nodejs_version 
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
@@ -42,7 +42,7 @@ deploy:
   description: ' ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)  ## Pre-Release v1.0.0 (Preview) Builded binarys for `Windows` (`32bit` & `64bit`), `Linux` (`32bit`, `64bit` & `armv7`) and `Mac OS X` (`darwin` & `mas`, only `64bit`).'
   provider: GitHub
   auth_token:
-    secure: "$($env:auth_token)"
+    secure: "$env:auth_token"
   artifact: 
   draft: false
   prerelease: true
