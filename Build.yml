@@ -24,7 +24,7 @@ install:
   - .\I18N.bat
 
 # Push default language file
-on_success:
+before_build:
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$env:GITHUB_AUTH_TOKEN:x-oauth-basic@github.com`n"
   - git config --global user.email "build@DSTEd.net"
