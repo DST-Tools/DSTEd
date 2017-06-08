@@ -14,7 +14,7 @@ echo.
 echo.
 
 node %CUR_DIR%\Tools\GetLanguages.js "%CUR_DIR:"=%\%NAME_SOURCE:"=%"
-pause 
+
 goto :eof
 
 :ColorText
