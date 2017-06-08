@@ -9,6 +9,56 @@ const DSTEd			= Remote.getGlobal('DSTEd');
 		document.addEventListener('click', function onClick(event) {
 			const win = Remote.getCurrentWindow();
 				
+			if(typeof(event.target.dataset) != 'undefined' && typeof(event.target.dataset.url) != 'undefined') {
+				var content		= document.querySelector('section-content');
+				var frame		= document.createElement('iframe');
+				content.classList.add('steam');
+				frame.src		= event.target.dataset.url;
+				frame.onload	= function onLoad() {
+					var frame_document	= (frame.contentDocument) ? frame.contentDocument : frame.contentWindow.document;
+					var frame_head		= frame_document.getElementsByTagName('head')[0];
+					var frame_style		= document.createElement('link');
+					
+					frame_style.setAttribute('type',	'text/css');
+					frame_style.setAttribute('rel',		'stylesheet');
+					frame_style.setAttribute('href',	'https://DSTEd.net/SteamRemote.css?t=_' + new Date());
+					
+					frame_head.appendChild(frame_style);
+					frame.classList.add('visible');
+					
+					setTimeout(function() {
+						content.classList.add('frame');
+					}, 1000);
+					
+					setInterval(function() {
+						var frame_document	= (frame.contentDocument) ? frame.contentDocument : frame.contentWindow.document;
+						var json			= null;
+						var innerHTML		= frame_document.body.innerHTML;
+						
+						if(innerHTML && innerHTML.match(/^<pre/i)) {
+							innerHTML = frame_document.body.firstChild.firstChild.nodeValue;
+						}
+						
+						try {
+							json = JSON.parse(innerHTML);
+						
+							if(typeof(json.authenticated) != 'undefined') {
+								IPC.send('steam:auth', json);
+								win.close();
+							}
+						} catch(e) {
+							/* Do Nothing */
+						}
+					}, 500);
+				};
+				
+				content.innerHTML = '';
+				content.appendChild(frame);
+				win.setSize(420, 650);
+				win.center();
+				return;
+			}
+			
 			if(typeof(event.target.dataset) != 'undefined' && typeof(event.target.dataset.action) != 'undefined') {
 				switch(event.target.dataset.action) {
 					case 'window:close':

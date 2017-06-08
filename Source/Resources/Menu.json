@@ -136,6 +136,7 @@
 	}]
 }, {
 	"label":	"Settings",
+	"command":	"settings",
 	"disabled":	true
 }, {
 	"label":	"Help",

@@ -1,0 +1,136 @@
+section {
+	display: flex;
+    flex-direction: column;
+    height: calc(100% - 32px);	
+}
+
+section ui-tabs {
+	border-bottom: 2px solid #ED5C2D;
+    padding: 0 10px;
+	height: 22px;
+    min-height: 22px;
+    max-height: 22px;
+}
+
+section ui-tabs ui-tab {
+	padding: 4px 10px 4px 10px;
+	border-bottom: none;
+}
+
+section tab-content {
+	padding: 0;
+}
+
+section tab-content ui-title {
+	color: #ED5C2D;
+    font-weight: bold;
+    border-bottom: 1px solid #FFFFFF;
+    display: block;
+    padding: 0 0 5px 0;
+    margin: 10px;
+}
+
+section tab-content.visible {
+	display: flex;
+	flex-direction: row;
+}
+
+section tab-content tab-container {
+	display: flex;
+	flex-direction: column;
+	flex: 0 100%;
+}
+
+input, select {
+	padding: 4px 10px;
+}
+
+section tab-content tab-sidebar {
+	display: flex;
+	flex-direction: column;
+    flex: 0 0 200px;
+	background: #333337;
+	border-right: 1px solid #3e3e42;
+	overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+section tab-content tab-sidebar tab-section {
+	display: block;
+    position: relative;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-bottom: 1px solid #3e3e42;
+	cursor: pointer;
+}
+
+section tab-content tab-sidebar tab-section.active {
+	font-weight: bold;
+}
+
+subtab-container {
+	display: none;
+}
+
+subtab-container.visible {
+	display: flex;
+	flex-direction: column;
+}
+
+/* Content */
+section tab-content form-table {
+	width: 100%;
+	display: table;
+	table-layout: fixed;
+	border-collapse: collapse;	 
+}
+
+section tab-content form-entry {
+	border-bottom: 1px solid #3e3e42;
+}
+
+section tab-content form-entry form-label, section tab-content form-entry form-input {
+	vertical-align: middle;
+	width: 50%;
+}
+
+section tab-content form-entry form-label[data-header="true"] {
+	background: #333337;
+	padding: 5px 10px;
+	font-weight: bold;
+	display: block;
+	width: 100%;
+}
+
+section tab-content form-entry form-label[data-color] {
+	font-size: 10px;
+	padding: 5px 10px;
+	margin: 10px;
+	font-weight: normal;
+	text-align: center;
+}
+
+section tab-content form-entry form-label[data-color="danger"] {
+	background: #ed2d2d;
+	color: #560101;
+}
+
+section tab-content form-entry form-label[data-color="info"] {
+	background: #d9edf7;
+	color: #252575;
+}
+
+section tab-content form-entry.indent form-label {
+	padding: 10px 10px 10px 50px;
+}
+
+section tab-content form-entry form-label form-checkbox {
+	display: inline-block;
+    padding: 0;
+}
+
+section tab-content form-entry form-label label[for] {
+    display: block;
+    margin: -17px 0 0 20px;
+}

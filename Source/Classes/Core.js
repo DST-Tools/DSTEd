@@ -49,8 +49,40 @@
 					this.getScreen('Workspace').close();
 				}.bind(this));
 				
+				IPC.on('steam:auth', function(event, data) {
+					this.getScreen('IDE').send('steam:auth', data);
+				}.bind(this));
+				
 				IPC.on('menu:command', function(event, command) {
 					switch(command) {
+						case 'steam:account':
+							Steam.checkAuthentication(function onState(logged_in, data) {
+								if(logged_in) {
+									// @ToDo Open Account Window
+									return;
+								}
+								
+								var dialog = this.getScreen('Dialog');
+									dialog.setHeight(200);
+									dialog.setOnLoad(function setOnLoad() {
+										dialog.send('dialog:title', I18N.__('Authentication'));
+										dialog.send('dialog:header', {
+											title:		'Login with Steam',
+											content:	I18N.__('If you want to upload Mods on Steam-Workshop, you need to be authenticated by Steam.')
+										});
+										
+										dialog.send('dialog:content', {
+											content:	'<img style="margin: 0 auto;" src="../Resources/steam_login.png" data-url="' + data.url + '" />'
+										});
+										
+										dialog.send('dialog:buttons', [{
+											label:	I18N.__('Close'),
+											click:	'close'
+										}]);
+									});
+									dialog.setDebug(true).open();
+							}.bind(this));
+						break;
 						case 'exit':
 							Logger.info('Quit Application');
 							App.quit();
@@ -113,7 +145,7 @@
 							dialog.open();
 						break;
 						case 'settings':
-							console.log('OPEN SETTINGS');
+							this.getScreen('Settings').setDebug(true).open();
 						break;
 						case 'steam_workshop':
 							this.getScreen('SteamWorkshop').open();
@@ -361,6 +393,11 @@
 			
 		});
 		
+		/* Screen :: Settings */
+		this.createScreen('Settings', 500, 400, 640, 165, null, function onStart() {
+			
+		}, true);
+		
 		/* Screen :: SteamWorkshop */
 		this.createScreen('SteamWorkshop', 500, 400, 640, 165, function onStart() {			
 			Steam.getWorkshop(null, function(files) {
@@ -376,9 +413,17 @@
 		}.bind(this), true).setMaxWidth(950).setDebug(false);
 			
 		/* Screen :: IDE */
+		var steam_auth = null;
+		
+		Steam.checkAuthentication(function onState(logged_in, data) {
+			steam_auth = data;
+			this.getScreen('IDE').send('steam:auth', steam_auth);
+		}.bind(this));
+			
 		this.createScreen('IDE', 800, 600, null, null, null, function onLoad() {
 			this.getScreen('IDE').send('workspace:core', global.DSTEd.core);
 			this.getScreen('IDE').send('workspace:projects', global.DSTEd.projects);
+			this.getScreen('IDE').send('steam:auth', steam_auth);
 		}.bind(this), true).setDebug(false);
 		
 		Software.createWorkspaceWatcher(function onProjectAdded(name, project) {

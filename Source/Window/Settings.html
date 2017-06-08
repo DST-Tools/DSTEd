@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+	</head>
+	<body>
+		<header>
+			<ui-icon data-name="window"></ui-icon>
+			<ui-title data-lang="Settings">Settings</ui-title>
+			<ui-buttons>
+				<button data-action="window:close"></button>
+				<button data-action="window:maximize"></button>
+				<button data-action="window:minimize"></button>
+			</ui-buttons>
+		</header>
+		<section>
+			<!--
+				Global
+						Shortcuts
+							- Software
+							- Editor
+							- Menu
+							- Tools
+						Performance
+							- Memory
+							- Logfiles
+							- Enable performance logging
+							- Error reporting
+						Menu
+							- Enable/Disable entries
+						Author
+							- Basic data for ModInfo
+				Workspace
+					- Path
+					- Save path
+				Language
+					- Select language
+					- List all available Languages
+					- Downloadable Languages (from GIT)
+			-->
+			<ui-tabs>
+				<ui-tab data-tab="general" class="active" data-lang="General">General</ui-tab>
+				<ui-tab data-tab="shortcuts" data-lang="Shortcuts">Shortcuts</ui-tab>
+				<ui-tab data-tab="languages" data-lang="Languages">Languages</ui-tab>
+			</ui-tabs>
+			<tab-content id="general" class="visible">
+				<tab-sidebar>
+					<tab-section data-subtab="documents" class="active">Documents</tab-section>
+					<tab-section data-subtab="workspace">Workspace</tab-section>
+					<tab-section data-subtab="design">Design</tab-section>
+					<tab-section data-subtab="performance">Performance</tab-section>
+					<tab-section data-subtab="menu">Menu</tab-section>
+					<tab-section data-subtab="author">Author</tab-section>
+				</tab-sidebar>
+				<tab-container>
+					<subtab-container data-name="documents" class="visible">
+						<form-entry>
+							<form-label>
+								Enable autosaving
+							</form-label>
+							<form-label>
+								<form-checkbox>
+									<input type="checkbox" name="documents_autosaving" />
+								</form-checkbox>
+							</form-label>
+						</form-entry>
+						<form-entry>
+							<form-label data-lang="Interval:">
+								Interval:
+							</form-label>
+							<form-input>
+								 <input type="text" name="documents_autosaving_interval" value="" placeholder="Seconds" data-langplaceholder="Seconds" />
+							</form-input>
+						</form-entry>
+						<form-entry>
+							<form-label>
+								Enable File Backup
+							</form-label>
+							<form-label>
+								<form-checkbox>
+									<input type="checkbox" name="documents_backup" />
+								</form-checkbox>
+							</form-label>
+						</form-entry>
+					</subtab-container>
+					<subtab-container data-name="workspace">
+						<form-entry>
+							<form-label data-lang="<u>W</u>orkspace:">
+								<u>W</u>orkspace:
+							</form-label>
+							<form-input>
+								<input type="text" name="workspace" value="" placeholder="Path to Don't Starve Together..." data-langplaceholder="Path to Don't Starve Together..." />
+							</form-input>
+							<form-button>
+								<button name="select" data-lang="Browse">Browse</button>
+							</form-button>
+							<input type="file" name="chooser" webkitdirectory />
+						</form-entry>
+						<form-entry>
+							<form-label>
+								Use Workspace as default
+							</form-label>
+							<form-label data-lang="Use this as the default and do not ask again.">
+								<form-input>
+									<select name="language">
+										<option>Yes</option>
+										<option>No</option>
+									</select>
+								</form-input>
+							</form-label>
+						</form-entry>
+					</subtab-container>
+					<subtab-container data-name="design">
+						<form-entry class="indenting">
+							<form-label data-lang="Design:">
+								Design:
+							</form-label>
+							<form-input>
+								<select name="design">
+									<option>Dark (Default)</option>
+								</select>
+							</form-input>
+						</form-entry>
+						<form-entry class="indenting">
+							<form-label data-lang="Window Transparency:">
+								Window Transparency:
+							</form-label>
+							<form-input>
+								<input name="transparency" type="range" min="0" max="100" step="0.5" />
+							</form-input>
+						</form-entry>
+						<form-entry>
+							<form-label data-lang="Editor" data-header="true">
+								Editor
+							</form-label>
+						</form-entry>
+						<form-entry class="indenting">
+							<form-label data-lang="Window Transparency:">
+								Raster Size
+							</form-label>
+							<form-input>
+								<input name="raster" type="range" min="0" max="100" step="0.5" />
+							</form-input>
+						</form-entry>
+						<form-entry class="indenting">
+							<form-label data-lang="Window Transparency:">
+								Raster Color
+							</form-label>
+							<form-input>
+								
+							</form-input>
+						</form-entry>
+					</subtab-container>
+					<subtab-container data-name="performance">
+						Performance
+					</subtab-container>
+					<subtab-container data-name="menu">
+						Menu
+					</subtab-container>
+					<subtab-container data-name="author">
+						Author
+					</subtab-container>
+				</tab-container>
+			</tab-content>
+			<tab-content id="shortcuts">
+				<tab-sidebar>
+					<tab-section>General</tab-section>
+					<tab-section>Software</tab-section>
+					<tab-section>Editor</tab-section>
+					<tab-section>Menu</tab-section>
+					<tab-section>Tools</tab-section>
+				</tab-sidebar>
+				<tab-container>
+					<ui-title data-lang="Shortcuts">
+						Shortcuts
+					</ui-title>
+					<form-table>
+						<form-entry>
+							<form-label data-lang="Section A" data-header="true">
+								Section A
+							</form-label>
+						</form-entry>
+						<form-entry>
+							<form-label data-color="info" data-lang="This Section is currently under development.">
+								This Section is currently under development.
+							</form-label>
+						</form-entry>
+						<form-entry>
+							<form-label data-lang="Section B" data-header="true">
+								Section B
+							</form-label>
+						</form-entry>
+						<form-entry>
+							<form-label data-color="info" data-lang="This Section is currently under development.">
+								This Section is currently under development.
+							</form-label>
+						</form-entry>
+						<form-entry>
+							<form-label data-lang="Section C" data-header="true">
+								Section C
+							</form-label>
+						</form-entry>
+						<form-entry>
+							<form-label data-color="info" data-lang="This Section is currently under development.">
+								This Section is currently under development.
+							</form-label>
+						</form-entry>
+					</form-table>
+				</tab-container>
+			</tab-content>
+			<tab-content id="languages">
+				<tab-sidebar>
+					<tab-section>General</tab-section>
+					<tab-section>Install</tab-section>
+				</tab-sidebar>
+				<tab-container>
+					<ui-title data-lang="Languages">
+						Languages
+					</ui-title>
+					<form-table>
+						<form-entry>
+							<form-label data-lang="Available Languages" data-header="true">
+								Available Languages
+							</form-label>
+						</form-entry>
+						<form-entry>
+							<form-label data-color="info" data-lang="This Section is currently under development.">
+								This Section is currently under development.
+							</form-label>
+						</form-entry>
+					</form-table>
+				</tab-container>
+			</tab-content>
+		</section>
+		<footer></footer>
+		<script type="text/javascript">
+			var a				= require('../Classes/Application.js');
+			const Application	= new a(true);
+			Application.importCSS(
+				'../Design/UI-Global.css',
+				'../Design/UI-Window.css',
+				'../Design/UI-Forms.css',
+				'../Design/UI-Controls.css',
+				'../Design/UI-Tabs.css',
+				'../Design/UI-Dialog.css',
+				'../Design/UI-Forms.css',
+				'../Design/UI-Menu.css',
+				'../Design/Settings.css'
+			);
+			Application.importJS('Settings.js');
+		</script>
+	</body>
+</html>

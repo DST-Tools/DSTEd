@@ -73,3 +73,43 @@ section-content.scrollable label {
 	min-width: 90px;
 	margin: 0 0 0 25px;
 }
+
+section-content.steam {
+	padding: 0;
+    margin: -10px 0 0 0;
+    height: 265px;
+}
+
+section-content iframe {
+	position: relative;
+	display: flex;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+section-content.steam iframe {
+	height: 510px;
+	display: none;
+}
+
+section-content.steam:before {
+	display: block;
+    content: "";
+    position: fixed;
+    top: 90px;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+    background: #2d2d30 url(../Resources/steam_loading.gif) no-repeat 50% 50%;
+    z-index: 100;
+    background-size: 95px;
+}
+
+section-content.steam.frame:before {
+	display: none;
+}
+
+section-content.steam iframe.visible {
+	display: block;
+}

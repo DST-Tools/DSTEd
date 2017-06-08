@@ -40,6 +40,9 @@ const I18N			= require('../Classes/I18N')();
 			
 			if(typeof(event.target.dataset) != 'undefined' && typeof(event.target.dataset.action) != 'undefined') {
 				switch(event.target.dataset.action) {
+					case 'steam:account':
+						this.executeCommand('steam:account');
+					break
 					case 'window:close':
 						this.executeCommand('exit');
 					break
@@ -119,6 +122,21 @@ const I18N			= require('../Classes/I18N')();
 		
 		IPC.on('file:saved', function(event, file) {
 			this.getEditor(file).saved();
+		}.bind(this));
+		
+		IPC.on('steam:auth', function(event, data) {
+			const account	= document.querySelector('ui-menu ui-account');
+			const picture	= account.querySelector('picture');
+			const username	= account.querySelector('label');
+			
+			if(typeof(data.account) == 'undefined') {
+				picture.style.backgroundImage	= 'url(\'../Resources/account.svg\')';
+				username.innerHTML				= 'Guest';
+				return;
+			}
+			
+			picture.style.backgroundImage	= 'url(\'' + data.account.avatar + '\')';
+			username.innerHTML				= data.account.username;
 		}.bind(this));
 	};
 	
@@ -220,6 +238,15 @@ const I18N			= require('../Classes/I18N')();
 			}
 			menu.appendChild(MenuItem);
 		}.bind(this));
+		
+		this.addAccount(menu);
+	};
+	
+	this.addAccount = function addAccount(menu) {
+		var account				= document.createElement('ui-account');
+		account.innerHTML		= '<picture data-action="steam:account"></picture><label data-action="steam:account">Guest</label>';
+		account.dataset.action	= 'steam:account';
+		menu.appendChild(account);
 	};
 	
 	this.renderSubMenu = function renderSubMenu(target, items) {
@@ -295,6 +322,7 @@ const I18N			= require('../Classes/I18N')();
 	
 	this.executeCommand = function executeCommand(command) {
 		switch(command) {
+			case 'steam:account':
 			case 'dst_run':
 			case 'forum':
 			case 'steam_workshop':

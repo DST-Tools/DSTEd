@@ -23,6 +23,7 @@
     "chokidar": "~1.7.0",
     "electron-compile": "^6.4.1",
     "electron-log": "~2.2.6",
+    "electron-machine-id": "^1.0.9",
     "mime-types": "~2.1.15",
     "monaco-editor": "~0.8.3",
     "request": "~2.81.0",

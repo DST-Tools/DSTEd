@@ -54,3 +54,26 @@ textarea {
 input[type="file"] {
 	display: none;
 }
+
+/* Range Slider */
+input[type='range'] {
+  cursor: pointer;
+}
+input[type='range'],
+input[type='range']::-webkit-slider-runnable-track,
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: transparent;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 10px;
+    background: #3e3e42;
+}
+input[type='range']::-webkit-slider-thumb {
+	position: relative;
+	height: 25px;
+	width: 10px;
+	margin-top: -8px;
+	background: #ed5c2d;
+    border: 1px solid #3e3e42;
+}

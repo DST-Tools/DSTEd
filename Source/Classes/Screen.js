@@ -1,10 +1,13 @@
 const electron		= require('electron');
 const Window		= electron.BrowserWindow;
 const Remote		= electron.remote;
+const Session		= electron.session;
 const url			= require('url');
 const path			= require('path');
 const IPC			= require('electron').ipcMain;
 const OS			= require('os');
+const Logger		= require('../Classes/Logger')();
+const Steam			= require('../Classes/Steam')();
 	
 module.exports = (function Screen(name, size, callback_backend, callback_frontend) {
 	var _name			= '';
@@ -43,15 +46,18 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 	
 	this.setDebug = function setDebug(state) {
 		_debug = state;
+		return this;
 	};
 	
 	this.setResizeable = function setResizeable(state) {
 		_resizable = state;
+		return this;
 	};
 	
 	this.setSize = function setSize(width, height) {
 		_width	= width;
 		_height	= height;
+		return this;
 	};
 	
 	this.setMinSize = function setMinSize(width, height) {
@@ -65,14 +71,18 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		if(_height < _min_height) {
 			this.setHeight(_min_height);
 		}
+		
+		return this;
 	};
 	
 	this.setOnStart = function setOnStart(callback) {
 		_callbacks.onStart = callback;
+		return this;
 	};
 	
 	this.setOnLoad = function setOnLoad(callback) {
 		_callbacks.onLoad = callback;
+		return this;
 	};
 	
 	this.send = function send(name, data) {
@@ -121,13 +131,47 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 			vibrancy:			'popover',
 			icon:				'Resources/window_icon.png'
 		});
-		
+				
 		_window.loadURL(url.format({
 			pathname:	path.join(__dirname, '..', 'Window', _name + '.html'),
 			protocol:	'file:',
 			slashes:	true
 		}), {
 			userAgent:	'DSTEd v' + global.DSTEd.version + '/' + OS.platform() + ' ' + OS.release() +  ' (' + OS.arch() + ', ' + OS.type() + ')'
+		});
+		
+		Session.defaultSession.cookies.set({
+			url:	'https://api.DSTEd.net/',
+			name:	'STEAM_AUTH',
+			value:	Steam.getAuthID(),
+		}, function onCallback(error) {
+			if(error) {
+				console.error(error);
+			}
+		});
+
+		_window.webContents.session.webRequest.onBeforeSendHeaders({
+			
+		}, function onHeader(details, callback) {
+			details.requestHeaders['User-Agent'] = 'DSTEd v' + global.DSTEd.version + '/' + OS.platform() + ' ' + OS.release() +  ' (' + OS.arch() + ', ' + OS.type() + ')';
+			
+			callback({
+				cancel:			false,
+				requestHeaders:	details.requestHeaders
+			});
+		});
+		
+		_window.webContents.session.webRequest.onHeadersReceived({
+			
+		}, function onHeader(details, callback) {
+			if(details.responseHeaders['X-Frame-Options']){
+				delete details.responseHeaders['X-Frame-Options'];
+			}
+			
+			callback({
+				cancel:				false,
+				responseHeaders:	details.responseHeaders
+			});
 		});
 		
 		if(_debug) {

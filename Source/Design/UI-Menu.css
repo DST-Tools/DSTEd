@@ -5,6 +5,30 @@ ui-menu {
     z-index: 1;
 }
 
+ui-menu ui-account {
+	display: flex;
+    margin-left: auto;
+	cursor: pointer;
+}
+
+ui-menu ui-account picture {
+	background: #FFFFFF url(../Resources/account.svg) no-repeat 50% 50%;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid #ed5c2d;
+	background-size: 90% 90%;
+	cursor: pointer;
+}
+
+ui-menu ui-account  label {
+	color: #ed5c2d;
+    font-size: 12px;
+    padding: 2px 15px 2px 5px;
+    display: inline-block;
+	cursor: pointer;
+}
+
 ui-menu ui-entry {
     display: flex;	
 }

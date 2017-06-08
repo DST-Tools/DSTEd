@@ -8,9 +8,34 @@ exports = module.exports = (function Steam() {
 	const Software		= require('../Classes/Software')();
 	const fs			= require('fs');
 	const I18N			= require('../Classes/I18N')();
+	var _auth_id		= null;
+	var _auth_logged_in	= false;
 		
 	this.init = function init() {
-		
+		_auth_id   = require('electron-machine-id').machineIdSync();
+	};
+	
+	this.checkAuthentication = function checkAuthentication(callback) {
+		Request({
+			url:		'http' + (_secured ? 's' : '' ) + '://' + _domain + '/steam/auth/',
+			method:		'POST',
+			json:		true,
+			headers: {
+				'User-Agent':	'DSTEd v' + global.DSTEd.version + '/' + OS.platform() + ' ' + OS.release() +  ' (' + OS.arch() + ', ' + OS.type() + ')',
+				'Cookie':		Request.cookie('STEAM_AUTH=' + _auth_id)
+			},
+			body: {}
+		}, function onResponse(error, response, body) {
+			_auth_logged_in = body.authenticated;
+			
+			if(typeof(callback) != 'undefined') {
+				callback(_auth_logged_in, body);
+			}
+		});
+	};
+	
+	this.getAuthID = function getAuthID() {
+		return _auth_id;
 	};
 	
 	this.getWorkshop = function getWorkshop(data, callback) {
