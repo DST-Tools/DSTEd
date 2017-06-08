@@ -21,7 +21,7 @@ install:
   - git clone https://github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
   - git --work-tree=.\Temp-Language checkout master
   - cp .\en_US.json .\Temp-Language\xx_XX.json
-  - git --work-tree=.\Temp-Language remote set-url origin https://$($env:GITHUB_LANG_TOKEN)@github.com/DST-Tools/DSTEd-Languages.git
+  - git --work-tree=.\Temp-Language remote set-url origin https://%GITHUB_LANG_TOKEN%@github.com/DST-Tools/DSTEd-Languages.git
   - git --work-tree=.\Temp-Language add xx_XX.json
   - git --work-tree=.\Temp-Language commit -m "[AutoUpdate] Default Language (xx_XX.json)"
   - git --work-tree=.\Temp-Language push origin HEAD:master
