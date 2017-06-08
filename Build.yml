@@ -12,7 +12,6 @@ environment:
     
 # Install scripts. (runs after repo cloning)
 install:
-  - cmd: %auth_token%
   - ps: Install-Product node $env:nodejs_version 
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
@@ -22,6 +21,12 @@ install:
 
 # Push default language file
 on_success:
+  - ps: echo "OK"
+  
+# Deployment Options
+before_deploy:
+  - node .\Tools\PackageBuild.js
+  - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://%auth_token%:x-oauth-basic@github.com`n"
   - git config --global user.email "build@DSTEd.net"
@@ -30,11 +35,6 @@ on_success:
   - git clone https://github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
   - cp .\en_US.json .\Temp-Language\xx_XX.json
   - cd .\Temp-Language; git add xx_XX.json; git commit -m "[AutoUpdate] Default language (xx_XX.json)"; git push
-  
-# Deployment Options
-before_deploy:
-  - node .\Tools\PackageBuild.js
-  - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 deploy:
   tag: 1.0.0
