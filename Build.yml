@@ -4,6 +4,11 @@ version: 1.0.0-{build}
 #init:
 #    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
+# Fuck'd up the shit variables; Can't set on the Backend, must be set here oÔ
+environment:
+  access_token:
+    secure: 8hrb5tdiQ8e08hGu/8KhcwhuHUcakMkWR7HgRH+HgRWfinwNM5vzjNk2sdnDpdEO
+    
 # Branches
 branches:
   only:
