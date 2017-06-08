@@ -6,7 +6,7 @@ version: 1.0.0-{build}
 
 # Fuck'd up the shit variables; Can't set on the Backend, must be set here oÔ
 environment:
-  access_token:
+  GITHUB_LANG_TOKEN:
     secure: 8hrb5tdiQ8e08hGu/8KhcwhuHUcakMkWR7HgRH+HgRWfinwNM5vzjNk2sdnDpdEO
     
 # Branches
