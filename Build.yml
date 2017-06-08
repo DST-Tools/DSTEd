@@ -1,8 +1,8 @@
 version: 1.0.0-{build}
 
 # Debugging
-#init:
-#    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+init:
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # Fuck'd up the shit variables; Can't set on the Backend, must be set here oÔ
 environment:
@@ -32,6 +32,7 @@ install:
   - git --work-tree=%LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
   - git --work-tree=%LANG_DIR% pull origin master --allow-unrelated-histories
   - git --work-tree=%LANG_DIR% push origin HEAD:master
+  - ps: Start-Sleep -s 1000
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
