@@ -1,5 +1,6 @@
 version: 1.0.0-{build}
 
+# Debugging
 init:
     - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
@@ -34,7 +35,7 @@ on_success:
   - git --git-dir=.\Temp-Language\.git
   - git --git-dir=.\Temp-Language\.git add xx_XX.json
   - git --git-dir=.\Temp-Language\.git commit -m "[AutoUpdate] Default language (xx_XX.json)"
-  - git git-dir=.\Temp-Language\.git push
+  - git --git-dir=.\Temp-Language\.git push
     
 # Deployment Options
 before_deploy:
