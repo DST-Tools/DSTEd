@@ -41,6 +41,8 @@ deploy:
   description: ' ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)  ## Pre-Release v1.0.0 (Preview) Builded binarys for `Windows` (`32bit` & `64bit`), `Linux` (`32bit`, `64bit` & `armv7`) and `Mac OS X` (`darwin` & `mas`, only `64bit`).'
   provider: GitHub
   artifact: 
+  auth_token:
+    secure: $(GITHUB_AUTH_TOKEN_SECRET)
   draft: false
   prerelease: true
   force_update: true
