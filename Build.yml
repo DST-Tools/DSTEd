@@ -9,11 +9,6 @@ branches:
   only:
   - master
 
-# Set the Node Version
-environment:
-  matrix:
-    - nodejs_version: "7"
-    
 # Install scripts. (runs after repo cloning)
 install:
   - ps: Install-Product node $env:nodejs_version
