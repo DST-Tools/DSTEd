@@ -1,8 +1,8 @@
 version: 1.0.0-{build}
 
 # Debugging
-init:
-    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#init:
+#    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # Fuck'd up the shit variables; Can't set on the Backend, must be set here oÔ
 environment:
@@ -23,16 +23,15 @@ install:
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_LANG_TOKEN)@github.com`n"
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
-  - mkdir %LANG_DIR%
-  - git clone https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git .\Temp-Language
+  #- mkdir %LANG_DIR%
+  - git clone https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git %LANG_DIR%
+  - git --work-tree=%LANG_DIR% remote set-url origin https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.
   - git --work-tree=%LANG_DIR% checkout master
-  - git --work-tree=%LANG_DIR% remote set-url origin https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git
+  - git --work-tree=%LANG_DIR% pull origin master --allow-unrelated-histories
   - cp .\en_US.json %LANG_DIR%\xx_XX.json
   - git --work-tree=%LANG_DIR% add xx_XX.json
   - git --work-tree=%LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
-  - git --work-tree=%LANG_DIR% pull origin master --allow-unrelated-histories
   - git --work-tree=%LANG_DIR% push origin HEAD:master
-  - ps: Start-Sleep -s 1000
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
