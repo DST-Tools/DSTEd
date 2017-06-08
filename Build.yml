@@ -9,7 +9,7 @@ branches:
   only:
   - master
 
-# Install scripts. (runs after repo cloning)
+# Installation
 install:
   - ps: Install-Product node $env:nodejs_version
   - .\I18N.bat
