@@ -52,7 +52,7 @@ before_deploy:
   - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
     
 # Deployment
-deploy:		
+deploy:
   tag: 1.0.0		
   release: 'DSTEd v1.0.0 (Build: ${APPVEYOR_BUILD_NUMBER}) - Pre-Release (Preview)'		
   description: ' ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)  ## Pre-Release v1.0.0 (Preview) Builded binarys for `Windows` (`32bit` & `64bit`), `Linux` (`32bit`, `64bit` & `armv7`) and `Mac OS X` (`darwin` & `mas`, only `64bit`).'		
