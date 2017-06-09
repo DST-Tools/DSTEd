@@ -67,12 +67,12 @@
 									dialog.setOnLoad(function setOnLoad() {
 										dialog.send('dialog:title', I18N.__('Authentication'));
 										dialog.send('dialog:header', {
-											title:		'Login with Steam',
+											title:		I18N.__('Login with Steam'),
 											content:	I18N.__('If you want to upload Mods on Steam-Workshop, you need to be authenticated by Steam.')
 										});
 										
 										dialog.send('dialog:content', {
-											content:	'<img style="margin: 0 auto;" src="../Resources/steam_login.png" data-url="' + data.url + '" />'
+											content:	'<img style="display: block; margin: 0 auto;" src="../Resources/steam_login.png" data-url="' + data.url + '" />'
 										});
 										
 										dialog.send('dialog:buttons', [{
