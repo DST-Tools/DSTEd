@@ -21,17 +21,28 @@
 		
 		_fs.readdir(build_path, function(error, files) {
 			files.forEach(function(file) {
+				console.log('Found Build: ' + file);
 				this.createArchive(build_path, file, source_path);
 			}.bind(this));
 		}.bind(this));
 	};
 	
 	this.createArchive = function createArchive(build_path, file, source_path) {
+		console.log('[' + file + '] create Archive');
 		_output		= _fs.createWriteStream(build_path + _path.sep + file + '.zip');
+		
+		_output.on('error', function onError(error) {
+			console.log('[ERROR] ' + file + ' - FileStream: ', error);
+		});
+		
 		_archive	= _archiver('zip', {
 			zlib: {
 				level: 9
 			}
+		});
+		
+		_output.on('error', function onError() {
+			console.log('[ERROR] ' + file + ' - Archive:', arguments);
 		});
 		
 		_output.on('close', function onClose() {
