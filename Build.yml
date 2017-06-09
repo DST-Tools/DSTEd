@@ -35,7 +35,8 @@ install:
   - git -C %LANG_DIR% checkout master
   - cp .\en_US.json %LANG_DIR%\xx_XX.json
   - git -C %LANG_DIR% add xx_XX.json
-  - if git diff-index %LANG_DIR% --name-status --exit-code HEAD; then echo "No Changes; Continue" else git -C %LANG_DIR% push origin master --force --quiet; git -C %LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
+  - git -C %LANG_DIR% push origin master --exit-code --force --quiet
+  - git -C %LANG_DIR% commit --exit-code -m "[AutoUpdate] Default Language (xx_XX.json)"
   
   # Install Depencies
   - npm -g install node-gyp@3.6.2
