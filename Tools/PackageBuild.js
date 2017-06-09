@@ -3,7 +3,6 @@
 	var _path			= require('path');
 	var _fs				= require('fs');
 	var _archiver		= null;
-	var _output			= null;
 	
 	this.init = function init() {
 		_archiver	= this.requireGlobal('archiver');
@@ -29,7 +28,7 @@
 	
 	this.createArchive = function createArchive(build_path, file, source_path) {
 		console.log('[' + file + '] create Archive');
-		_output		= _fs.createWriteStream(build_path + _path.sep + file + '.zip');
+		var _output		= _fs.createWriteStream(build_path + _path.sep + file + '.zip');
 		
 		_output.on('error', function onError(error) {
 			console.log('[ERROR] ' + file + ' - FileStream: ', error);
