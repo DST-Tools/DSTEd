@@ -32,7 +32,7 @@ install:
   - git -C %LANG_DIR% remote set-url origin https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git
   - git -C %LANG_DIR% checkout master
   - cp .\en_US.json %LANG_DIR%\xx_XX.json
-  #- git -C %LANG_DIR% add xx_XX.json
+  - git -C %LANG_DIR% add xx_XX.json
   - git -C %LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
   - git -C %LANG_DIR% push origin master --force
   
