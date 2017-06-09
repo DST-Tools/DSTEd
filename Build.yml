@@ -6,6 +6,8 @@ version: 1.0.0-{build}
 
 # Fuck'd up the shit variables; Can't set on the Backend, must be set here oÔ
 environment:
+  GITHUB_AUTH_TOKEN_SECRET:
+    secure: V9hufIe4lJghIoqzu0XMfsay/OP+rXjO6CgNoQ1m9mc2oinsCgz+Y5UK0/6y0GLa
   GITHUB_LANG_TOKEN:
     secure: 8hrb5tdiQ8e08hGu/8KhcwhuHUcakMkWR7HgRH+HgRWfinwNM5vzjNk2sdnDpdEO
   LANG_DIR: C:\Lang-Temp
@@ -49,6 +51,18 @@ before_deploy:
   - node .\Tools\PackageBuild.js
   - ps: Get-ChildItem .\Build\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
     
+# Deployment
+deploy:		
+  tag: 1.0.0		
+  release: 'DSTEd v1.0.0 (Build: ${APPVEYOR_BUILD_NUMBER}) - Pre-Release (Preview)'		
+  description: ' ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)  ## Pre-Release v1.0.0 (Preview) Builded binarys for `Windows` (`32bit` & `64bit`), `Linux` (`32bit`, `64bit` & `armv7`) and `Mac OS X` (`darwin` & `mas`, only `64bit`).'		
+  provider: GitHub		
+  artifact: 		
+  auth_token: $(GITHUB_AUTH_TOKEN_SECRET)
+  draft: false
+  prerelease: true
+  force_update: true
+ 
 matrix:
   fast_finish: true
 
