@@ -310,9 +310,12 @@
 			});
 
 			App.on('activate', function onActivate() { 
-				//if(windows.splash === null) {
-					// createWindow();
-				//}
+				/*
+					-- For OS X
+					if(windows.splash === null) {
+						createWindow();
+					}
+				*/
 			});
 			
 			return;
