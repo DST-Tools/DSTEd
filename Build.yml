@@ -17,22 +17,31 @@ branches:
 
 # Installation
 install:
+  # Update Node.js
   - ps: Install-Product node $env:nodejs_version
+  
+  # Generate Language-Strings
   - .\I18N.bat
+  
+  # Language Deployment
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_LANG_TOKEN)@github.com`n"
   - git config --global user.email "build@DSTEd.net"
   - git config --global user.name "[DSTEd] Build Server"
   - git clone -q --depth=1 --branch=master https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git %LANG_DIR%
-  - git --work-tree=%LANG_DIR% remote set-url origin https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git
-  - git --work-tree=%LANG_DIR% checkout master
+  - git -C %LANG_DIR% remote set-url origin https://%GITHUB_LANG_TOKEN%:x-oauth-basic@github.com/DST-Tools/DSTEd-Languages.git
+  - git -C %LANG_DIR% checkout master
   - cp .\en_US.json %LANG_DIR%\xx_XX.json
-  #- git --work-tree=%LANG_DIR% add xx_XX.json
-  - git --work-tree=%LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
-  - git --work-tree=%LANG_DIR% push origin master --force
+  #- git -C %LANG_DIR% add xx_XX.json
+  - git -C %LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
+  - git -C %LANG_DIR% push origin master --force
+  
+  # Install Depencies
   - npm -g install node-gyp@3.6.2
   - npm -g install electron-packager
   - npm -g install archiver
+  
+  # Start Build
   - .\Build-All.bat
 
 # Deployment Options
