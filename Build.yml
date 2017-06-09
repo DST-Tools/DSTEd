@@ -38,10 +38,10 @@ install:
         git -C %LANG_DIR% add xx_XX.json
         git -C %LANG_DIR% commit -m "[AutoUpdate] Default Language (xx_XX.json)"
         
-        if git -C %LANG_DIR% diff --quiet; then
-            echo "No changes to the output on this push; exiting."
-        else
+        if [ git -C %LANG_DIR% diff --quiet ]; then
             git -C %LANG_DIR% push origin master --force --quiet
+        else
+            echo "No changes to the output on this push; exiting."
         fi
   
   # Install Depencies
