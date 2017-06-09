@@ -37,7 +37,7 @@ install:
         cp .\en_US.json %LANG_DIR%\xx_XX.json
         git -C %LANG_DIR% add xx_XX.json
         
-        if git -C %LANG_DIR% diff --quiet; then
+        if "git -C %LANG_DIR% diff --quiet"; then
             echo "No changes to the output on this push; exiting."
         else
             git -C %LANG_DIR% push origin master --force --quiet
