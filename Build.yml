@@ -6,6 +6,8 @@ version: 1.0.0-{build}
 
 # Fuck'd up the shit variables; Can't set on the Backend, must be set here oÔ
 environment:
+  matrix:
+    - nodejs_version: "7"
   GITHUB_AUTH_TOKEN_SECRET:
     secure: V9hufIe4lJghIoqzu0XMfsay/OP+rXjO6CgNoQ1m9mc2oinsCgz+Y5UK0/6y0GLa
   GITHUB_LANG_TOKEN:
