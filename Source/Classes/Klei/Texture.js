@@ -1,3 +1,5 @@
+const Logger = require('../Classes/Logger')();
+
 module.exports = (function Texture() {
 	const Platform = {
 		PC:			12,
@@ -36,9 +38,9 @@ module.exports = (function Texture() {
 		
 		var signature = buffer.toString('utf8', 0, 4);
 		
-		console.log('Signature', signature);
+		Logger.debug('Signature', signature);
 		
-		console.log('Parse Header');
+		Logger.debug('Parse Header');
 		_platform		= header & 15;
 		_pixel_format	= (header >> 4)  & 31;
 		_texture_type	= (header >> 9)  & 15;
@@ -143,13 +145,13 @@ module.exports = (function Texture() {
 			};
 		}
 		
-		console.log(entries);
+		Logger.debug(entries);
 		
 		for(var index = 0; index < _num_mips; index++) {
 			entries[index].datta = content.read(entries[index].size);
 		}
 		
-		console.log(entries);
+		Logger.debug(entries);
 		return entries;
 	};
 });

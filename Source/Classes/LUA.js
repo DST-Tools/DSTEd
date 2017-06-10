@@ -1,14 +1,16 @@
+const Logger		= require('../Classes/Logger')();
+
 exports = module.exports = (function LUA() {
 	const _file_system = require('fs');
 	
 	this.parseFile = function parseFile(file, options) {
-		console.info('[LUA] Parse File: ', file);
+		Logger.info('[LUA]', 'Parse File: ', file);
 		
 		return this.parseContent(_file_system.readFileSync(file, 'utf8'), options);
 	};
 	
 	this.parseContent = function parseContent(content, options) {
-		console.info('[LUA] Parse Content');
+		Logger.info('[LUA]', 'Parse Content');
 		
 		return (new function Context(content) {
 			let _content			= content;
