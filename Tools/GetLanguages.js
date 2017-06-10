@@ -31,7 +31,7 @@ const path	= require('path');
 		var items = require(path.resolve(_source, 'Resources', 'Menu.json'));
 		var count = 0;
 		
-		_table.push('/* MENU */');
+		// _table.push('/* MENU */');
 		
 		items.forEach(function(item) {
 			if(typeof(item.label) != 'undefined') {
@@ -118,7 +118,7 @@ const path	= require('path');
 		var comment = 0;
 		_table.forEach(function(entrie) {
 			if(entrie.substr(0, 2) == '/*') {
-				json['__comment_' + ++comment] = entrie;
+				// json['__comment_' + ++comment] = entrie;
 				return;
 			}
 			
@@ -136,7 +136,7 @@ const path	= require('path');
 	};
 	
 	this.handleContent = function handleContent(file, content) {
-		_table.push('/* ' + file.replace(_source, '') + ' */');
+		// _table.push('/* ' + file.replace(_source, '') + ' */');
 		var found = this.fetchFunction(file, content);
 		
 		found += this.fetchAttributes(file, content, 'lang');
@@ -182,12 +182,22 @@ const path	= require('path');
 			}
 			
 			if(_table.indexOf(m[1]) == -1) {
-				_table.push(m[1]);
+				if(this.isString(m[1])) {
+					_table.push(m[1]);
+				}
 				++found;
 			}
 		}
 		
 		return found;
+	};
+	
+	this.isString = function isString(input) {
+		if(input.charAt(0) == '\'') {
+			return false;
+		}
+		
+		return true;
 	};
 	
 	this.init();
