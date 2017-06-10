@@ -56,28 +56,34 @@
 }, {
 	"label": "Edit",
 	"submenu": [{
+		"label":		"Undo",
 		"role":			"undo",
 		"accelerator":	"CMD + Z",
-			"disabled":	true
+		"disabled":		true
 	}, {
+		"label":		"Redo",
 		"role":			"redo",
 		"accelerator":	"CMD + Y",
-			"disabled":	true
+		"disabled":		true
 	}, {
 		"type": "separator"
 	}, {
+		"label":		"Cut",
 		"role":			"cut",
 		"accelerator":	"CMD + X",
-			"disabled":	true
+		"disabled":		true
 	}, {
+		"label":		"Copy",
 		"role":			"copy",
 		"accelerator":	"CMD + C",
 			"disabled":	true
 	}, {
+		"label":		"Paste",
 		"role":			"paste",
 		"accelerator":	"CMD + V",
 			"disabled":	true
 	}, {
+		"label":		"Select All",
 		"role":			"selectall",
 		"accelerator":	"CMD + A",
 			"disabled":	true
@@ -136,8 +142,7 @@
 	}]
 }, {
 	"label":	"Settings",
-	"command":	"settings",
-	"disabled":	true
+	"command":	"settings"
 }, {
 	"label":	"Help",
 	"submenu": [{
