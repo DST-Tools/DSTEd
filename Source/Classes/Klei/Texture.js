@@ -1,4 +1,4 @@
-const Logger = require('../Classes/Logger')();
+const Logger = require('../Logger')();
 
 module.exports = (function Texture() {
 	const Platform = {

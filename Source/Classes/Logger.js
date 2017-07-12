@@ -6,49 +6,59 @@ exports = module.exports = (function Logger() {
 	const _logger		= require('electron-log');
 	
 	this.init = function init() {
-		var directory = path.dirname(App.getPath('exe'));
+		var directory = '';
+		
+		try {
+			path = path.dirname(App.getPath('exe'));
+		} catch(e) {
+			/* Do Nothing */
+		}
 		
 		if(new RegExp('node_modules', 'gi').test(directory)) {
 			directory = App.getAppPath();
 		}
 		
-		_logger.transports.file.file	= directory + '/Output.log';
-		_logger.transports.file.level	= 'debug';
-		_logger.transports.console		= function Console(event) {
-			var message = '';
-			
-			[].forEach.call(event.data, function(a) {
-				[].forEach.call(a, function(b) {
-					message += b;
-					message += ' ';
+		try {
+			_logger.transports.file.file	= directory + '/Output.log';
+			_logger.transports.file.level	= 'debug';
+			_logger.transports.console		= function Console(event) {
+				var message = '';
+				
+				[].forEach.call(event.data, function(a) {
+					[].forEach.call(a, function(b) {
+						message += b;
+						message += ' ';
+					});
 				});
-			});
+				
+				if(event.level == 'debug') {
+					message += '\n';
+					message += this.getStrackTrace();
+				}
+				
+				console.log('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
+			}.bind(this);
 			
-			if(event.level == 'debug') {
-				message += '\n';
-				message += this.getStrackTrace();
-			}
-			
-			console.log('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
-		}.bind(this);
-		
-		_logger.transports.file.format		= function Console(event) {
-			var message = '';
-			
-			[].forEach.call(event.data, function(a) {
-				[].forEach.call(a, function(b) {
-					message += b;
-					message += ' ';
+			_logger.transports.file.format		= function Console(event) {
+				var message = '';
+				
+				[].forEach.call(event.data, function(a) {
+					[].forEach.call(a, function(b) {
+						message += b;
+						message += ' ';
+					});
 				});
-			});
-			
-			if(event.level == 'debug') {
-				message += '\n';
-				message += this.getStrackTrace();
-			}
-			
-			return ('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
-		}.bind(this);
+				
+				if(event.level == 'debug') {
+					message += '\n';
+					message += this.getStrackTrace();
+				}
+				
+				return ('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
+			}.bind(this);
+		} catch(e) {
+			/* Do Nothing */
+		}
 	};
 	
 	this.getStrackTrace = function getStrackTrace() {
