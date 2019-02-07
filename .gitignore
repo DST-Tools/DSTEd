@@ -1,13 +1,19 @@
 Bin/
 Build/
+build/
 Temp/
 Languages/
 Temp-Language/
 Backup/
+/Debug
+/Release
+/Source/build
 Source/node_modules
 Source/config.json
 Source/npm-debug*
 Source/Output.log
+Source/myaddon
+
 Source/Classes/Core - Kopie.js
 Source/Classes/Core - Kopie (2).js
 Source/Classes/Steam OLD.js
