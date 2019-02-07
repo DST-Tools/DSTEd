@@ -124,11 +124,11 @@
 		"disabled":	true,
 		"submenu": [{
 			"label":	"Start",
-			"command":	"server_start",
+			"command":	"SVLaunchDll_CALL",
 			"disabled":	true
 		}, {
 			"label":	"Stop",
-			"command":	"server_stop",
+			"command":	"SVLaunchDLL_Terminte",
 			"disabled":	true
 		}, {
 			"label":	"Restart",
