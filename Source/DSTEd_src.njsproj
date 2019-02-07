@@ -18,12 +18,11 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="binding.gyp" />
-    <Content Include="build\config.gypi" />
-    <Content Include="build\SVLaunchDLL.vcxproj" />
-    <Content Include="build\SVLaunchDLL.vcxproj.filters" />
     <Content Include="cpp-addon\addon.cc" />
-    <Content Include="cpp-addon\svlaunchdll.cc" />
+    <Content Include="cpp-addon\SVlaunchDLL.cpp" />
     <Content Include="cpp-addon\SVlaunchDLL.hpp" />
+    <Content Include="cpp-addon\svlaunchdll_jswrap.cc" />
+    <Content Include="Library\win64\SVLaunchDLL.node" />
     <Content Include="steam_appid.txt" />
     <Content Include="example.config.json" />
     <Content Include="package.json" />

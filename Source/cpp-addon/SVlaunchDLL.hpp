@@ -2,14 +2,9 @@
 //CodePage:936(GBK)
 //字符串全是wstring/wchar_t注意一下
 
-#pragma once
-#if SVLAUNCHDLL_EXPORTS
-#define SVLAUNCHERDLL_API __declspec(dllexport)
-#else
-#define SVLAUNCHERDLL_API __declspec(dllimport)
-#endif
 
-//#define SVLAUNCHERDLL_API __declspec()
+//#define __declspec()
+#pragma once
 
 #include <vector>
 #include <iostream>
@@ -19,7 +14,7 @@
 
 
 
-namespace SVLaunchDLL 
+namespace SVLaunch_CPP 
 {
 	//类型
 	struct SVPARAM
@@ -41,31 +36,31 @@ namespace SVLaunchDLL
 	{
 	public:
 		//Advanced
-		SVLAUNCHERDLL_API BOOL StartSV(
+		BOOL StartSV(
 			const SVPARAM param,
 			const wchar_t* SvDir,
 			PROCESS_INFORMATION * p_piSv,
 			STARTUPINFOW * p_siSv);
 		//Advanced
-		SVLAUNCHERDLL_API BOOL StartSV(
+		BOOL StartSV(
 			const SVPARAM param,
 			const wchar_t* SvDir);
 		//Common
-		SVLAUNCHERDLL_API BOOL StartSV();
-		SVLAUNCHERDLL_API void setparam(SVPARAM src) noexcept;
+		BOOL StartSV();
+		void setparam(SVPARAM src) noexcept;
 		//WINAPI, startupinfo
-		SVLAUNCHERDLL_API void setSI(STARTUPINFOW src) noexcept;
+		void setSI(STARTUPINFOW src) noexcept;
 		//sv Diretory
-		SVLAUNCHERDLL_API void setDIR(wchar_t* src) noexcept;
+		void setDIR(wchar_t* src) noexcept;
 		//WINAPI, ProcessInformation
-		SVLAUNCHERDLL_API PROCESS_INFORMATION getPI() noexcept;
-		SVLAUNCHERDLL_API void setcluster(std::wstring src)
+		PROCESS_INFORMATION getPI() noexcept;
+		void setcluster(std::wstring src)
 		{
 			this->SVParam.cluster = src;
 		}
-		SVLAUNCHERDLL_API SV();
-		SVLAUNCHERDLL_API SV(SVPARAM param);
-		SVLAUNCHERDLL_API ~SV();
+		SV();
+		SV(SVPARAM param);
+		~SV();
 	private:
 		const wchar_t* svDIR;
 		SVPARAM SVParam;
@@ -74,5 +69,5 @@ namespace SVLaunchDLL
 	};
 
 	//函数
-	unsigned short BuildArg(const SVLaunchDLL::SVPARAM &a,wchar_t* target);
+	unsigned short BuildArg(const SVLaunch_CPP::SVPARAM &a,wchar_t* target);
 };
