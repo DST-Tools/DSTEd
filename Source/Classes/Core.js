@@ -157,7 +157,7 @@
 								Logger.info(error)
 								Logger.info(data);
 							});
-							
+							//can we try Registry way to get Steam path
 							Process.execFile('D:\\Software\\Steam\\Steam.exe', ['-applaunch', 322330, '-window'], {
 								cwd: 'D:\\Software\\Steam\\'
 							}, function(error, data) {  
@@ -172,15 +172,27 @@
 							switch(OS.platform()) {
 								case 'linux':
 									spawn_path		= 'steam'; // @ToDo get from Software.getSteamPath()
-									spawn_arguments = [ 'steam://rungameid/322330']; // @ToDo don't run via steam://-Protocol, because the process cant't be tracked
+                                    spawn_arguments = ['steam://rungameid/322330'];//this also works on windows.
+                                    // @ToDo don't run via steam://-Protocol, because the process cant't be tracked
 									spawn_cwd		= OS.homedir(); // @ToDo get from Software.getSteamPath()
-								break;
-								default:
-									spawn_path		= 'D:\\Software\\Steam\\Steam.exe'; // @ToDo get from Software.getSteamPath()
+                                    break;
+                                
+								case 'win32':
+                                    spawn_path = 'D:\\Software\\Steam\\Steam.exe'; // @ToDo get from Software.getSteamPath()
+
+                                    //Don't Strave Together game path stores in Registry Key:
+                                    //  HKEY_CURRENT_USER\System\GameConfigStore\Children\
+                                    //  2c1ae850-e27e-4f10-a985-2dd951d15ba4\
+                                    //  Name is:MatchedExeFullPath
+                                    //  Type is REG_SZ
+
 									spawn_arguments	= [ '-applaunch', 322330, '-window' ];
-									spawn_cwd		= 'D:\\Software\\Steam\\'; // @ToDo get from Software.getSteamPath()
+                                    spawn_cwd = 'D:\\Software\\Steam\\'; // @ToDo get from Software.getSteamPath()
+                                    //C++ Native WINAPI CreateProcessW() returns process information in struct PROCESS_INFORMATION
+                                    //which included process Handle,PID
 								break;
-							}
+                            }
+                           
 							
 							const ls = Process.spawn(spawn_path, spawn_arguments, {
 								cwd:		spawn_cwd,

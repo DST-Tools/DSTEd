@@ -34,11 +34,10 @@
     "winreg": "~1.2.3"
   },
   "devDependencies": {
-    "node-gyp": "^3.8.0",
     "binding": "^3.0.3",
-    "electron": "~1.6.2",
-    "electron-rebuild": "^1.5.11",
-    "nan": "^2.12.1"
+    "electron": "^4.0.4",
+    "nan": "^2.12.1",
+    "node-gyp": "^3.8.0"
   },
   "bugs": {
     "url": "https://github.com/DST-Tools/DSTEd/issues"
