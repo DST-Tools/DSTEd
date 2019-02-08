@@ -5,16 +5,16 @@ $tempdir = "$cd\Temp"
 
 #echo "Build requires NPM"
 echo "Cleaning"
-#del -Recurse "$tempdir\*"
-#del -Recurse "$builddir\*"
-#md -Confirm $builddir
-#md -Confirm $tempdir
+del -Recurse "$tempdir\*"
+del -Recurse "$builddir\*"
+md -Confirm $builddir
+md -Confirm $tempdir
 echo "copy items to temp"
-#Copy-Item -Recurse  "$sourcedir\*" "$tempdir\"
+Copy-Item -Recurse  "$sourcedir\*" "$tempdir\"
 
 cd $tempdir
 echo "install necessary javascript modules"
-#npm install
+npm install
 copy "$tempdir\build\Release\*.node" "$tempdir\Library\win64"
 echo "Build Start"
 $temp = """$tempdir"""
@@ -26,6 +26,6 @@ cd $cd
 #    del -Confirm "$builddir\$file"
 #}
 echo "delete temp files"
-#del "$tempdir\*"
+del "$tempdir\*"
 pause
-#cls
+cls
