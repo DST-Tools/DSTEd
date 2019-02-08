@@ -36,6 +36,7 @@
   "devDependencies": {
     "binding": "^3.0.3",
     "electron": "^4.0.4",
+    "electron-rebuild": "^1.8.4",
     "nan": "^2.12.1",
     "node-gyp": "^3.8.0"
   },

@@ -201,7 +201,8 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 				return;
 			}
 			
-			if(!event.sender.isDestroyed() && _window.webContents.getId() === event.sender.getId()) {
+            if (!event.sender.isDestroyed() && (_window.webContents.id === event.sender.id))
+            {
 			/* Other usage, but not excellent: */
 			// if(_window == Window.getFocusedWindow()) {
 				_callbacks.onLoad();

@@ -112,7 +112,8 @@
 		"command":	"dst_run"
 	}]
 }, {
-	"label":	"Tools",
+  "label": "Tools",
+  "disabled": true,
 	"submenu": [{
 		"label":	"Steam",
 		"submenu": [{
@@ -121,14 +122,14 @@
 		}]
 	}, {
 		"label":	"Server",
-		"disabled":	true,
+		"disabled":	false,
 		"submenu": [{
 			"label":	"Start",
-			"command":	"SVLaunchDll_CALL",
-			"disabled":	true
+			"command":	"sv_call",
+			"disabled":	false
 		}, {
 			"label":	"Stop",
-			"command":	"SVLaunchDLL_Terminte",
+			"command":	"sv_delete",
 			"disabled":	true
 		}, {
 			"label":	"Restart",

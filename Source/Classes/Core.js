@@ -11,10 +11,13 @@
 	const path			= require('path');
 	const OS			= require('os');
 	const fs 			= require('fs');
-	const UnZIP			= require('unzip');
+	const unzip			= require('unzip');
 	const I18N			= require('../Classes/I18N')();
-	const Logger		= require('../Classes/Logger')();
-	const Process		= require('child_process');
+    const Logger = require('../Classes/Logger')();
+    const sv_x64_win = require('../Classes/DSTSV_win64');
+    const Process = require('child_process');
+    const reg = require('winreg');
+    
 	
 	this.init = function init() {
 		if(typeof(global.DSTEd) == 'undefined') {
@@ -177,19 +180,24 @@
 									spawn_cwd		= OS.homedir(); // @ToDo get from Software.getSteamPath()
                                     break;
                                 
-								case 'win32':
-                                    spawn_path = 'D:\\Software\\Steam\\Steam.exe'; // @ToDo get from Software.getSteamPath()
+                                case 'win32':
+                                    //spawn_path = 'D:\\Software\\Steam\\Steam.exe'; // @ToDo get from Software.getSteamPath()
 
-                                    //Don't Strave Together game path stores in Registry Key:
+                                    //Don't Strave Together game path stores in this Registry Key:
                                     //  HKEY_CURRENT_USER\System\GameConfigStore\Children\
                                     //  2c1ae850-e27e-4f10-a985-2dd951d15ba4\
                                     //  Name is:MatchedExeFullPath
-                                    //  Type is REG_SZ
-
-									spawn_arguments	= [ '-applaunch', 322330, '-window' ];
-                                    spawn_cwd = 'D:\\Software\\Steam\\'; // @ToDo get from Software.getSteamPath()
-                                    //C++ Native WINAPI CreateProcessW() returns process information in struct PROCESS_INFORMATION
-                                    //which included process Handle,PID
+                                    //  Type is REG_SZ (reg string_ends_zero)
+                                    let DST_key = new reg(
+                                        {
+                                            hive: reg.HKCU,
+                                            key: '\\System\\GameConfigStore\\Children\\2c1ae850-e27e-4f10-a985-2dd951d15ba4'
+                                        }
+                                    );
+                                    let gamepath = DST_key.get('MatchedExeFullPath');
+                                    spawn_path = gamepath;
+									spawn_arguments	= [ '-steam' ];
+                                    spawn_cwd = gamepath; // @ToDo get from Software.getSteamPath()
 								break;
                             }
                            
@@ -243,7 +251,7 @@
 							value:	value
 						});
 					}.bind(this), function onEnd(file, path) {
-						fs.createReadStream(file).pipe(UnZIP.Extract({
+						fs.createReadStream(file).pipe(unzip.Extract({
 							path: path
 						}).on('finish', function Finish() {
 							fs.unlink(file, function onSuccess() {
