@@ -21,5 +21,12 @@
 				"/property:LanguageStandard=stdcpp17"
 			]
 		}
-	]
+	],
+	#'VCCLCompilerTool':
+	#{
+	#	'AdditionalOptions':
+	#	{
+	#		'-std:c++17',
+	#	}
+	#}
 }

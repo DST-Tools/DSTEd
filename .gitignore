@@ -24,3 +24,5 @@ en_US.json
 /node_modules
 /Source/myaddon
 /obj/Release
+/Source/binding.gyp.txt
+/Source/echo

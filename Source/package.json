@@ -1,29 +1,14 @@
 {
   "name": "DSTEd",
-  "version": "1.0.0",
-  "description": "IDE for Don't Starve Together",
   "author": "Adrian Preuß",
-  "main": "Classes/Core.js",
-  "private": true,
-  "gypfile": "true",
-  "scripts": {
-    "start": "electron ."
+  "bugs": {
+    "url": "https://github.com/DST-Tools/DSTEd/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/DST-Tools/DSTEd.git"
-  },
-  "keywords": [
-    "Dont't Starve Together",
-    "IDE",
-    "DSTEd",
-    "DST"
-  ],
-  "license": "MIT",
+  "packager": "electron-packager ./app HelloWorld --all --out ./OutApp --version 1.4.0 --overwrite --icon=./app/img/icon/icon.ico",
   "dependencies": {
     "chokidar": "~1.7.0",
     "electron-compile": "^6.4.1",
-    "electron-log": "~2.2.6",
+    "electron-log": "^3.0.1",
     "electron-machine-id": "^1.0.9",
     "mime-types": "~2.1.15",
     "monaco-editor": "~0.8.3",
@@ -33,14 +18,32 @@
     "unzip": "~0.1.11",
     "winreg": "~1.2.3"
   },
+  "description": "IDE for Don't Starve Together",
   "devDependencies": {
     "binding": "^3.0.3",
     "electron": "^4.0.4",
+    "electron-packager": "^13.0.1",
     "electron-rebuild": "^1.8.4",
     "nan": "^2.12.1",
     "node-gyp": "^3.8.0"
   },
-  "bugs": {
-    "url": "https://github.com/DST-Tools/DSTEd/issues"
-  }
+  "electronVersion": "4.0.2",
+  "gypfile": "true",
+  "keywords": [
+    "Dont't Starve Together",
+    "IDE",
+    "DSTEd",
+    "DST"
+  ],
+  "license": "MIT",
+  "main": "Classes/Core.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DST-Tools/DSTEd.git"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "version": "1.0.0"
 }

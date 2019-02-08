@@ -27,10 +27,7 @@
     <Content Include="Build.bat" />
     <Content Include="Build.sh" />
     <Content Include="Build.yml" />
-    <Content Include="build\config.gypi" />
-    <Content Include="build\SVLaunchDLL.vcxproj" />
-    <Content Include="build\SVLaunchDLL.vcxproj.filters" />
-    <Content Include="build\SVLaunchDLL.vcxproj.user" />
+    <Content Include="build_windows.ps1" />
     <Content Include="I18N.bat" />
     <Content Include="LICENSE" />
     <Content Include="package-lock.json" />

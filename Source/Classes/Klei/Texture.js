@@ -1,5 +1,5 @@
 const Logger = require('../Logger')();
-
+//use Native squish to decode it
 module.exports = (function Texture() {
 	const Platform = {
 		PC:			12,
