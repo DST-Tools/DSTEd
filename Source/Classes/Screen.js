@@ -197,11 +197,11 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		});
 		
 		IPC.on('window:init', function(event, args) {
-			if(typeof(_window) == 'undefined' || _window == null || typeof(_window.webContents) == 'undefined' || _window.webContents == null) {
+			if(typeof(_window) == 'undefined' || _window == null) {
 				return;
 			}
 			
-			if(!event.sender.isDestroyed() && _window.webContents.getId() === event.sender.getId()) {
+			if(!event.sender.isDestroyed() && _window.id === event.sender.id) {
 			/* Other usage, but not excellent: */
 			// if(_window == Window.getFocusedWindow()) {
 				_callbacks.onLoad();
