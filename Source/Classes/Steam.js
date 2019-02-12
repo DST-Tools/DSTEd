@@ -12,7 +12,7 @@ exports = module.exports = (function Steam() {
 	var _auth_logged_in	= false;
 		
 	this.init = function init() {
-		_auth_id   = require('electron-machine-id').machineIdSync();
+		_auth_id   = require('node-machine-id').machineIdSync({original: true});
 	};
 	
 	this.checkAuthentication = function checkAuthentication(callback) {
@@ -26,6 +26,10 @@ exports = module.exports = (function Steam() {
 			},
 			body: {}
 		}, function onResponse(error, response, body) {
+			if(typeof(body) === 'undefined' || typeof(body.authenticated) === 'undefined') {
+				return;
+			}
+			
 			_auth_logged_in = body.authenticated;
 			
 			if(typeof(callback) != 'undefined') {
