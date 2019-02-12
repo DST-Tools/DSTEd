@@ -1,6 +1,6 @@
 exports = module.exports = (function Steam() {
 	const Logger		= require('../Classes/Logger')();
-	const _domain		= 'api.DSTEd.net';
+	const _domain		= 'api.DSTEd.org';
 	const _secured		= true;
 	const Request		= require('request');
 	const OS			= require('os');
