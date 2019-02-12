@@ -24,9 +24,10 @@
     <Content Include="cpp-addon\svlaunchdll_jswrap.cc" />
     <Content Include="cpp-addon\svlaunchdll_jswrap.h" />
     <Content Include="Library\win64\SVLaunchDLL.node" />
+    <Content Include="package.json" />
     <Content Include="steam_appid.txt" />
     <Content Include="example.config.json" />
-    <Content Include="package.json" />
+    <Content Include="package_Akarinnnnn.json" />
     <Content Include="Classes\Application.js" />
     <Content Include="Classes\ContextMenu.js" />
     <Content Include="Classes\Core.js" />
