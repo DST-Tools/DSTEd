@@ -9,7 +9,7 @@ environment:
   matrix:
     - nodejs_version: "7"
   GITHUB_AUTH_TOKEN_SECRET:
-    secure: e71a568f546132cf63853fd3cfa7fd0fd08a621b 
+    secure: +hQ3dXqlACVh9ITYULpeRcTaro3L9gHt9fiLlNbhmI0hwKfSY1SNNAaBe0JRCh2U 
   GITHUB_LANG_TOKEN:
     secure: +hQ3dXqlACVh9ITYULpeRcTaro3L9gHt9fiLlNbhmI0hwKfSY1SNNAaBe0JRCh2U
   LANG_DIR: C:\Lang-Temp
