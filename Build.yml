@@ -9,9 +9,9 @@ environment:
   matrix:
     - nodejs_version: "7"
   GITHUB_AUTH_TOKEN_SECRET:
-    secure: V9hufIe4lJghIoqzu0XMfsay/OP+rXjO6CgNoQ1m9mc2oinsCgz+Y5UK0/6y0GLa
+    secure: dqBwYryI2f5BWOayUPxNdlB8hz2AnSmAqZ1k0EDCJ9U/lYlZoYXpgewoms17G8nh
   GITHUB_LANG_TOKEN:
-    secure: 8hrb5tdiQ8e08hGu/8KhcwhuHUcakMkWR7HgRH+HgRWfinwNM5vzjNk2sdnDpdEO
+    secure: 4tVKZ4D24aLJmpzX/uhckkFPu64knGJ/dJbkyMCp0Vs=
   LANG_DIR: C:\Lang-Temp
   
 # Branches
