@@ -24,6 +24,7 @@ exports = module.exports = (function Logger() {
 			_logger.transports.console		= function Console(event) {
 				var message = '';
 				
+				console.log(event);
 				[].forEach.call(event.data, function(a) {
 					[].forEach.call(a, function(b) {
 						message += b;
@@ -36,7 +37,7 @@ exports = module.exports = (function Logger() {
 					message += this.getStrackTrace();
 				}
 				
-				console.log('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
+				console.log('[' + event.date + '] [' + event.level + '] ' + message);
 			}.bind(this);
 			
 			_logger.transports.file.format		= function Console(event) {
@@ -54,7 +55,7 @@ exports = module.exports = (function Logger() {
 					message += this.getStrackTrace();
 				}
 				
-				return ('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
+				return ('[' + event.date + '] [' + event.level + '] ' + message);
 			}.bind(this);
 		} catch(e) {
 			/* Do Nothing */
