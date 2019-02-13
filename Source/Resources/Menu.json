@@ -121,24 +121,29 @@
 		}]
 	}, {
 		"label":	"Server",
-		"disabled":	true,
-		"submenu": [{
-			"label":	"Start",
-			"command":	"SVLaunchDll_CALL",
-			"disabled":	true
-		}, {
-			"label":	"Stop",
-			"command":	"SVLaunchDLL_Terminte",
-			"disabled":	true
-		}, {
-			"label":	"Restart",
-			"command":	"server_restart",
-			"disabled":	true
-		}, {
-			"label":	"Configuration",
-			"command":	"server_config",
-			"disabled":	true
-		}]
+		"disabled":	false,
+    "submenu": [
+      {
+        "label": "Start",
+        "command": "server_call",
+        "disabled": false
+      },
+      {
+        "label": "Stop",
+        "command": "server_stop",
+        "disabled": false
+      },
+      {
+        "label": "Restart",
+        "command": "server_restart",
+        "disabled": true
+      },
+      {
+        "label": "Configuration",
+        "command": "server_config",
+        "disabled": true
+      }
+    ]
 	}]
 }, {
 	"label":	"Settings",

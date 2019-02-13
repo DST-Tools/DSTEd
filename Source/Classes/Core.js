@@ -14,8 +14,11 @@
 	const UnZIP			= require('unzip');
 	const I18N			= require('../Classes/I18N')();
 	const Logger		= require('../Classes/Logger')();
-	const Process		= require('child_process');
-	
+    const Process       = require('child_process');
+
+    const sv_win64 = require('../Classes/DSTSV_win64')
+
+
 	this.init = function init() {
 		if(typeof(global.DSTEd) == 'undefined') {
 			global.DSTEd = {
@@ -207,7 +210,22 @@
 							ls.on('message', (code) => {
 								Logger.info(`child process exited with code ${code}`);
 							});
-						break;
+                            break;
+                        case 'server_call':
+                            var thesv = new sv_win64;
+                            //@ToDo: Get Server Informations, Include server path
+                            //I didn't write server start arguments parser so far.
+
+                            //thesv.setdir(server path,like "K:\SteamLibrary\steamapps\common\Don't Strave Together\bin")
+                            //thesv.startsv();
+                            break;
+                        case 'server_stop':
+                            thesv.termintesv();
+                            break;
+                        case 'server_restart':
+                            thesv.termintesv();
+                            thesv.startsv();
+                            break;
 					}
 				}.bind(this));
 				
