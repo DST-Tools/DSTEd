@@ -1,7 +1,7 @@
 # DSTEd
 ## IDE for Don't Starve Together
 
-[![Build status](https://ci.appveyor.com/api/projects/status/pntgndsm8ytwul3g?svg=true&passingText=DSTEd%20successfully%20Builded&pendingText=DSTEd%20will%20currently%20builded...&failingText=DSTEd%20cant%20Builded)](https://ci.appveyor.com/project/Bizarrus/dsted-539e1)  [![Support with Donation](https://pledgie.com/campaigns/33863.png?skin_name=chrome)](https://pledgie.com/campaigns/33863) 
+[![Build status](https://ci.appveyor.com/api/projects/status/pntgndsm8ytwul3g?svg=true&passingText=DSTEd%20successfully%20Builded&pendingText=DSTEd%20will%20currently%20builded...&failingText=DSTEd%20cant%20Builded)](https://ci.appveyor.com/project/Bizarrus/dsted-539e1)
 ![Preview](https://github.com/DST-Tools/DSTEd/raw/master/Screenshots/preview.png)
 
 
