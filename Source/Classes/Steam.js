@@ -26,14 +26,14 @@ exports = module.exports = (function Steam() {
 			},
 			body: {}
 		}, function onResponse(error, response, body) {
-			if(typeof(body) === 'undefined' || typeof(body.authenticated) === 'undefined') {
-				return;
-			}
-			
-			_auth_logged_in = body.authenticated;
-			
-			if(typeof(callback) != 'undefined') {
-				callback(_auth_logged_in, body);
+			try {
+				_auth_logged_in = body.authenticated;
+				
+				if(typeof(callback) != 'undefined') {
+					callback(_auth_logged_in, body);
+				}
+			} catch(e) {
+				console.error(e);
 			}
 		});
 	};
