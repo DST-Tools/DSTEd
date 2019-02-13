@@ -14,3 +14,6 @@ Source/Classes/Steam OLD.js
 Source/Classes/Steam - Kopie.js
 package-lock.json
 en_US.json
+/.vs
+/node_modules
+/Source/myaddon
