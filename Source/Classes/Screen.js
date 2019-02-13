@@ -141,7 +141,7 @@ module.exports = (function Screen(name, size, callback_backend, callback_fronten
 		});
 		
 		Session.defaultSession.cookies.set({
-			url:	'https://api.DSTEd.net/',
+			url:	'https://api.DSTEd.org/',
 			name:	'STEAM_AUTH',
 			value:	Steam.getAuthID(),
 		}, function onCallback(error) {
