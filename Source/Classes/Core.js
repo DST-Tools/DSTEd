@@ -13,10 +13,12 @@
 	const fs 			= require('fs');
 	const UnZIP			= require('unzip');
 	const I18N			= require('../Classes/I18N')();
+	
 	const Logger		= require('../Classes/Logger')();
-    const Process       = require('child_process');
+  const Process       = require('child_process');
 
-    const sv_win64 = require('../Classes/DSTSV_win64')
+  const sv_win64 = require('../Classes/DSTSV_win64')
+
 
 
 	this.init = function init() {
@@ -177,14 +179,20 @@
 									spawn_path		= 'steam'; // @ToDo get from Software.getSteamPath()
 									spawn_arguments = [ 'steam://rungameid/322330']; // @ToDo don't run via steam://-Protocol, because the process cant't be tracked
 									spawn_cwd		= OS.homedir(); // @ToDo get from Software.getSteamPath()
-								break;
-								default:
+                                    break;
+                                case 'win32':
+                                    spawn_path = Software.GetGameBinPath_win32();//This is the real game binary file path
+                                    spawn_arguments = ['-steam']//usually this, "+connect IP" paramitter can connect to a specified server.
+                                    spawn_cwd = path.win32.resolve(spawn_path + '\\..\\');//for win32.
+                                    break;
+                                default:
+                                    //shall we edit this?
 									spawn_path		= 'D:\\Software\\Steam\\Steam.exe'; // @ToDo get from Software.getSteamPath()
 									spawn_arguments	= [ '-applaunch', 322330, '-window' ];
 									spawn_cwd		= 'D:\\Software\\Steam\\'; // @ToDo get from Software.getSteamPath()
 								break;
 							}
-							
+							//nodejs v8.8.0, module child_process: .execFile(file,args[, options][, callback])
 							const ls = Process.spawn(spawn_path, spawn_arguments, {
 								cwd:		spawn_cwd,
 								detached:	false
