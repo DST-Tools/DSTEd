@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <SchemaVersion>2.0</SchemaVersion>
+        <ProjectGuid>{cef30fd4-2fc4-4503-9b50-5868ba4ea9ab}</ProjectGuid>
+        <ProjectHome>.</ProjectHome>
+        <ProjectView>ShowAllFiles</ProjectView>
+        <StartupFile />
+        <WorkingDirectory>.</WorkingDirectory>
+        <OutputPath>.</OutputPath>
+        <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+    <ItemGroup>
+        <Content Include="package-lock.json" />
+        <Content Include="package.json" />
+        <Content Include="README.md" />
+        <Content Include="Screenshots\IDE.PNG" />
+        <Content Include="Screenshots\Loading.PNG" />
+        <Content Include="Screenshots\Menu.png" />
+        <Content Include="Screenshots\preview.png" />
+        <Content Include="Screenshots\Tabs.PNG" />
+        <Content Include="Screenshots\Workspace.PNG" />
+        <Content Include="Source\steam_appid.txt" />
+        <Content Include="Source\example.config.json" />
+        <Content Include="Source\package-lock.json" />
+        <Content Include="Source\package.json" />
+        <Content Include="Temp\binding.gyp.txt" />
+        <Content Include="Temp\steam_appid.txt" />
+        <Content Include="Temp\config.json" />
+        <Content Include="Temp\example.config.json" />
+        <Content Include="Temp\package-lock.json" />
+        <Content Include="Temp\package.json" />
+        <Content Include="Tests\ModInfoTest.js" />
+        <Content Include="Tools\GetLanguages.js" />
+        <Content Include="Tools\PackageBuild.js" />
+        <Content Include="Source\Classes\Application.js" />
+        <Content Include="Source\Classes\ContextMenu.js" />
+        <Content Include="Source\Classes\Core.js" />
+        <Content Include="Source\Classes\Editor.js" />
+        <Content Include="Source\Classes\I18N.js" />
+        <Content Include="Source\Classes\Logger.js" />
+        <Content Include="Source\Classes\LUA.js" />
+        <Content Include="Source\Classes\Menu.js" />
+        <Content Include="Source\Classes\Monaco.js" />
+        <Content Include="Source\Classes\Pagination.js" />
+        <Content Include="Source\Classes\Screen.js" />
+        <Content Include="Source\Classes\Software.js" />
+        <Content Include="Source\Classes\Steam.js" />
+        <Content Include="Source\Design\IDE.css" />
+        <Content Include="Source\Design\Settings.css" />
+        <Content Include="Source\Design\Splash.css" />
+        <Content Include="Source\Design\SteamWorkshop.css" />
+        <Content Include="Source\Design\SteamWorkshopDetails.css" />
+        <Content Include="Source\Design\UI-Alert.css" />
+        <Content Include="Source\Design\UI-ContextMenu.css" />
+        <Content Include="Source\Design\UI-Controls.css" />
+        <Content Include="Source\Design\UI-Dialog.css" />
+        <Content Include="Source\Design\UI-Forms.css" />
+        <Content Include="Source\Design\UI-Global.css" />
+        <Content Include="Source\Design\UI-Menu.css" />
+        <Content Include="Source\Design\UI-Tabs.css" />
+        <Content Include="Source\Design\UI-Window.css" />
+        <Content Include="Source\Design\Workspace.css" />
+        <Content Include="Source\Resources\raster.png" />
+        <Content Include="Source\Resources\steam_login.png" />
+        <Content Include="Source\Resources\welcome.png" />
+        <Content Include="Source\Resources\window_icon.png" />
+        <Content Include="Source\Resources\workshop_header.png" />
+        <Content Include="Source\Resources\steam_loading.gif" />
+        <Content Include="Source\Resources\window_icon.ico" />
+        <Content Include="Source\Resources\account.svg" />
+        <Content Include="Source\Resources\arrow_collapsed.svg" />
+        <Content Include="Source\Resources\arrow_down.svg" />
+        <Content Include="Source\Resources\arrow_down_hover.svg" />
+        <Content Include="Source\Resources\arrow_expanded.svg" />
+        <Content Include="Source\Resources\arrow_left.svg" />
+        <Content Include="Source\Resources\arrow_left_hover.svg" />
+        <Content Include="Source\Resources\arrow_right.svg" />
+        <Content Include="Source\Resources\arrow_right_hover.svg" />
+        <Content Include="Source\Resources\arrow_up.svg" />
+        <Content Include="Source\Resources\arrow_up_hover.svg" />
+        <Content Include="Source\Resources\folder.svg" />
+        <Content Include="Source\Resources\folder_open.svg" />
+        <Content Include="Source\Resources\loading.svg" />
+        <Content Include="Source\Resources\star.svg" />
+        <Content Include="Source\Resources\steam.svg" />
+        <Content Include="Source\Resources\steam_failure.svg" />
+        <Content Include="Source\Resources\window_close.svg" />
+        <Content Include="Source\Resources\window_maximize.svg" />
+        <Content Include="Source\Resources\window_minimize.svg" />
+        <Content Include="Source\Resources\window_restore.svg" />
+        <Content Include="Source\Resources\DST-API.json" />
+        <Content Include="Source\Resources\Menu.json" />
+        <Content Include="Source\Window\Dialog.html" />
+        <Content Include="Source\Window\IDE.html" />
+        <Content Include="Source\Window\Settings.html" />
+        <Content Include="Source\Window\Splash.html" />
+        <Content Include="Source\Window\SteamWorkshop.html" />
+        <Content Include="Source\Window\SteamWorkshopDetails.html" />
+        <Content Include="Source\Window\Workspace.html" />
+        <Content Include="Source\Window\Dialog.js" />
+        <Content Include="Source\Window\IDE.js" />
+        <Content Include="Source\Window\Settings.js" />
+        <Content Include="Source\Window\Splash.js" />
+        <Content Include="Source\Window\SteamWorkshop.js" />
+        <Content Include="Source\Window\SteamWorkshopDetails.js" />
+        <Content Include="Source\Window\Workspace.js" />
+        <Content Include="Source\build\Debug\obj\steamlib64wrap\steamlib64wrap.nativecodeanalysis.xml" />
+        <Content Include="Source\build\Debug\obj\steamlib64wrap\vc.nativecodeanalysis.all.xml" />
+        <Content Include="Source\Classes\Klei\ModInfo.js" />
+        <Content Include="Source\Classes\Klei\Texture.js" />
+        <Content Include="Temp\Classes\Application.js" />
+        <Content Include="Temp\Classes\ContextMenu.js" />
+        <Content Include="Temp\Classes\Core.js" />
+        <Content Include="Temp\Classes\DSTSV_win64.js" />
+        <Content Include="Temp\Classes\Editor.js" />
+        <Content Include="Temp\Classes\I18N.js" />
+        <Content Include="Temp\Classes\Logger.js" />
+        <Content Include="Temp\Classes\LUA.js" />
+        <Content Include="Temp\Classes\Menu.js" />
+        <Content Include="Temp\Classes\Monaco.js" />
+        <Content Include="Temp\Classes\Pagination.js" />
+        <Content Include="Temp\Classes\Screen.js" />
+        <Content Include="Temp\Classes\Software.js" />
+        <Content Include="Temp\Classes\Steam.js" />
+        <Content Include="Temp\Design\IDE.css" />
+        <Content Include="Temp\Design\Settings.css" />
+        <Content Include="Temp\Design\Splash.css" />
+        <Content Include="Temp\Design\SteamWorkshop.css" />
+        <Content Include="Temp\Design\SteamWorkshopDetails.css" />
+        <Content Include="Temp\Design\UI-Alert.css" />
+        <Content Include="Temp\Design\UI-ContextMenu.css" />
+        <Content Include="Temp\Design\UI-Controls.css" />
+        <Content Include="Temp\Design\UI-Dialog.css" />
+        <Content Include="Temp\Design\UI-Forms.css" />
+        <Content Include="Temp\Design\UI-Global.css" />
+        <Content Include="Temp\Design\UI-Menu.css" />
+        <Content Include="Temp\Design\UI-Tabs.css" />
+        <Content Include="Temp\Design\UI-Window.css" />
+        <Content Include="Temp\Design\Workspace.css" />
+        <Content Include="Temp\DSTEd-win32-x64\LICENSES.chromium.html" />
+        <Content Include="Temp\DSTEd-win32-x64\config.json" />
+        <Content Include="Temp\myaddon\package.json" />
+        <Content Include="Temp\Resources\raster.png" />
+        <Content Include="Temp\Resources\steam_login.png" />
+        <Content Include="Temp\Resources\welcome.png" />
+        <Content Include="Temp\Resources\window_icon.png" />
+        <Content Include="Temp\Resources\workshop_header.png" />
+        <Content Include="Temp\Resources\steam_loading.gif" />
+        <Content Include="Temp\Resources\window_icon.ico" />
+        <Content Include="Temp\Resources\account.svg" />
+        <Content Include="Temp\Resources\arrow_collapsed.svg" />
+        <Content Include="Temp\Resources\arrow_down.svg" />
+        <Content Include="Temp\Resources\arrow_down_hover.svg" />
+        <Content Include="Temp\Resources\arrow_expanded.svg" />
+        <Content Include="Temp\Resources\arrow_left.svg" />
+        <Content Include="Temp\Resources\arrow_left_hover.svg" />
+        <Content Include="Temp\Resources\arrow_right.svg" />
+        <Content Include="Temp\Resources\arrow_right_hover.svg" />
+        <Content Include="Temp\Resources\arrow_up.svg" />
+        <Content Include="Temp\Resources\arrow_up_hover.svg" />
+        <Content Include="Temp\Resources\folder.svg" />
+        <Content Include="Temp\Resources\folder_open.svg" />
+        <Content Include="Temp\Resources\loading.svg" />
+        <Content Include="Temp\Resources\star.svg" />
+        <Content Include="Temp\Resources\steam.svg" />
+        <Content Include="Temp\Resources\steam_failure.svg" />
+        <Content Include="Temp\Resources\window_close.svg" />
+        <Content Include="Temp\Resources\window_maximize.svg" />
+        <Content Include="Temp\Resources\window_minimize.svg" />
+        <Content Include="Temp\Resources\window_restore.svg" />
+        <Content Include="Temp\Resources\DST-API.json" />
+        <Content Include="Temp\Resources\Menu.json" />
+        <Content Include="Temp\Window\Dialog.html" />
+        <Content Include="Temp\Window\IDE.html" />
+        <Content Include="Temp\Window\Settings.html" />
+        <Content Include="Temp\Window\Splash.html" />
+        <Content Include="Temp\Window\SteamWorkshop.html" />
+        <Content Include="Temp\Window\SteamWorkshopDetails.html" />
+        <Content Include="Temp\Window\Workspace.html" />
+        <Content Include="Temp\Window\Dialog.js" />
+        <Content Include="Temp\Window\IDE.js" />
+        <Content Include="Temp\Window\Settings.js" />
+        <Content Include="Temp\Window\Splash.js" />
+        <Content Include="Temp\Window\SteamWorkshop.js" />
+        <Content Include="Temp\Window\SteamWorkshopDetails.js" />
+        <Content Include="Temp\Window\Workspace.js" />
+        <Content Include="Temp\Classes\Klei\ModInfo.js" />
+        <Content Include="Temp\Classes\Klei\Texture.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="bin" />
+        <Folder Include="build" />
+        <Folder Include="DSTEd" />
+        <Folder Include="NodejsApp1" />
+        <Folder Include="Release" />
+        <Folder Include="Screenshots" />
+        <Folder Include="Source" />
+        <Folder Include="Source\bin" />
+        <Folder Include="Source\bin\win32-x64-69" />
+        <Folder Include="Source\build" />
+        <Folder Include="Source\build\Debug" />
+        <Folder Include="Source\build\Debug\obj" />
+        <Folder Include="Source\build\Debug\obj\steamlib64wrap" />
+        <Folder Include="Source\build\Debug\obj\steamlib64wrap\steamlib64wrap.tlog" />
+        <Folder Include="Source\build\Release" />
+        <Folder Include="Source\build\Release\obj" />
+        <Folder Include="Source\build\Release\obj\steamlib64wrap" />
+        <Folder Include="Source\build\Release\obj\steamlib64wrap\steamlib64wrap.tlog" />
+        <Folder Include="Source\build\Release\obj\SVLaunchDLL" />
+        <Folder Include="Source\build\Release\obj\SVLaunchDLL\SVLaunchDLL.tlog" />
+        <Folder Include="Source\Classes" />
+        <Folder Include="Source\Classes\Klei" />
+        <Folder Include="Source\cpp-addon" />
+        <Folder Include="Source\cpp-addon\steam" />
+        <Folder Include="Source\cpp-addon\steam\lib" />
+        <Folder Include="Source\cpp-addon\steam\lib\linux32" />
+        <Folder Include="Source\cpp-addon\steam\lib\linux64" />
+        <Folder Include="Source\cpp-addon\steam\lib\osx32" />
+        <Folder Include="Source\cpp-addon\steam\lib\win32" />
+        <Folder Include="Source\cpp-addon\steam\lib\win64" />
+        <Folder Include="Source\Design" />
+        <Folder Include="Source\Library" />
+        <Folder Include="Source\Library\linux32" />
+        <Folder Include="Source\Library\linux64" />
+        <Folder Include="Source\Library\osx32" />
+        <Folder Include="Source\Library\osx64" />
+        <Folder Include="Source\Library\win32" />
+        <Folder Include="Source\Library\win64" />
+        <Folder Include="Source\Resources" />
+        <Folder Include="Source\Window" />
+        <Folder Include="Temp" />
+        <Folder Include="Temp\bin" />
+        <Folder Include="Temp\bin\win32-x64-69" />
+        <Folder Include="Temp\build" />
+        <Folder Include="Temp\build\Release" />
+        <Folder Include="Temp\build\Release\obj" />
+        <Folder Include="Temp\build\Release\obj\SVLaunchDLL" />
+        <Folder Include="Temp\build\Release\obj\SVLaunchDLL\SVLaunchDLL.tlog" />
+        <Folder Include="Temp\Classes" />
+        <Folder Include="Temp\Classes\Klei" />
+        <Folder Include="Temp\cpp-addon" />
+        <Folder Include="Temp\Design" />
+        <Folder Include="Temp\DSTEd-win32-x64" />
+        <Folder Include="Temp\DSTEd-win32-x64\locales" />
+        <Folder Include="Temp\DSTEd-win32-x64\resources" />
+        <Folder Include="Temp\DSTEd-win32-x64\swiftshader" />
+        <Folder Include="Temp\Library" />
+        <Folder Include="Temp\Library\linux32" />
+        <Folder Include="Temp\Library\linux64" />
+        <Folder Include="Temp\Library\osx32" />
+        <Folder Include="Temp\Library\osx64" />
+        <Folder Include="Temp\Library\win32" />
+        <Folder Include="Temp\Library\win64" />
+        <Folder Include="Temp\myaddon" />
+        <Folder Include="Temp\prebuilds" />
+        <Folder Include="Temp\Resources" />
+        <Folder Include="Temp\Window" />
+        <Folder Include="Tests" />
+        <Folder Include="Tools" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+    <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+    <ProjectExtensions>
+        <VisualStudio>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+            <WebProjectProperties>
+              <UseIIS>False</UseIIS>
+              <AutoAssignPort>True</AutoAssignPort>
+              <DevelopmentServerPort>0</DevelopmentServerPort>
+              <DevelopmentServerVPath>/</DevelopmentServerVPath>
+              <IISUrl>http://localhost:48022/</IISUrl>
+              <NTLMAuthentication>False</NTLMAuthentication>
+              <UseCustomServer>True</UseCustomServer>
+              <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+              <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+            </WebProjectProperties>
+          </FlavorProperties>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+            <WebProjectProperties>
+              <StartPageUrl>
+              </StartPageUrl>
+              <StartAction>CurrentPage</StartAction>
+              <AspNetDebugging>True</AspNetDebugging>
+              <SilverlightDebugging>False</SilverlightDebugging>
+              <NativeDebugging>False</NativeDebugging>
+              <SQLDebugging>False</SQLDebugging>
+              <ExternalProgram>
+              </ExternalProgram>
+              <StartExternalURL>
+              </StartExternalURL>
+              <StartCmdLineArguments>
+              </StartCmdLineArguments>
+              <StartWorkingDirectory>
+              </StartWorkingDirectory>
+              <EnableENC>False</EnableENC>
+              <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+            </WebProjectProperties>
+          </FlavorProperties>
+        </VisualStudio>
+    </ProjectExtensions>
+</Project>
