@@ -43,7 +43,9 @@ exports = module.exports = (function Steam() {
 	};
 	
 	this.getWorkshop = function getWorkshop(data, callback) {
-		var language	= 'English'; // I18N.getLanguage()
+        //var language = 'English'; // I18N.getLanguage()
+        var language = 'en-us';
+        //en-us, Microsoft like, not English.
 		var query		= '';
 		var page		= 1;
 		

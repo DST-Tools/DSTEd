@@ -2,16 +2,16 @@ version: 1.0.0-{build}
 
 # Debugging
 #init:
-#    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # Fuck'd up the shit variables; Can't set on the Backend, must be set here oÔ
 environment:
   matrix:
     - nodejs_version: "7"
   GITHUB_AUTH_TOKEN_SECRET:
-    secure: V9hufIe4lJghIoqzu0XMfsay/OP+rXjO6CgNoQ1m9mc2oinsCgz+Y5UK0/6y0GLa
+    secure: +hQ3dXqlACVh9ITYULpeRcTaro3L9gHt9fiLlNbhmI0hwKfSY1SNNAaBe0JRCh2U 
   GITHUB_LANG_TOKEN:
-    secure: 8hrb5tdiQ8e08hGu/8KhcwhuHUcakMkWR7HgRH+HgRWfinwNM5vzjNk2sdnDpdEO
+    secure: +hQ3dXqlACVh9ITYULpeRcTaro3L9gHt9fiLlNbhmI0hwKfSY1SNNAaBe0JRCh2U
   LANG_DIR: C:\Lang-Temp
   
 # Branches
