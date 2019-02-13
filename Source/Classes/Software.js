@@ -75,7 +75,62 @@ exports = module.exports = (function Software() {
 	
 	this.getDSTPath = function getDSTPath() {
 		return global.DSTEd.workspace + path.sep;
-	};
+    };
+
+    this.GetGameBinPath_win32 = function ()//Registry way
+    {
+        let thevalue = null;
+        let thekey = new Registry(
+            {
+                hive: Registry.HKCU,
+                key: 'System\\GameConfigStore\\Children\\2c1ae850-e27e-4f10-a985-2dd951d15ba4'
+            }
+        );
+        thekey.get('MatchedExeFullPath',
+            function (err, result)
+            {
+                if (err == null)
+                {
+                    return false;
+                }
+                thevalue = result.value;
+            }
+        );
+        if (thevalue == null)
+        {
+            return false;
+        }
+        return path.win32.resolve(thevalue);
+    };
+
+    this.getSteamPath = function ()
+    {
+        const OS = require('os');
+        if (OS.arch() == 'win32')//REGISTRY
+        {
+            const reg = require('winreg');
+            let thekey = new reg(
+                {
+                    hive: HKCU,
+                    key:'Software\Valve\Steam',
+                }
+            )
+            var SteamBinPath = null;
+            thekey.get('SteamExe', function (err, result)
+            {
+                if (err != null)
+                {
+                    return;
+                }
+                SteamBinPath = (result.value);
+            }
+            )
+            return SteamBinPath;
+        }
+        if (OS.arch() == 'linux') {
+            //@TODO: POSIX way
+        }
+    }
 	
 	this.saveConfig = function saveConfig() {
 		var config = {
@@ -99,12 +154,12 @@ exports = module.exports = (function Software() {
 	};
 	
 	this.loadSteamPath = function loadSteamPath() {
-		var steam		= new Registry({
+		var reg_steampath		= new Registry({
 			hive:	Registry.HKCU,
 			key:	'\\Software\\Valve\\Steam'
 		});
 		
-		steam.get('SteamPath', function(error, item) {
+		reg_steampath.get('SteamPath', function(error, item) {
 			global.DSTEd.steam = path.normalize(item.value);
 			
 			if(process.platform === 'darwin') {
