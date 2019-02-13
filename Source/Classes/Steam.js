@@ -1,6 +1,6 @@
 exports = module.exports = (function Steam() {
 	const Logger		= require('../Classes/Logger')();
-	const _domain		= 'api.DSTEd.net';
+	const _domain		= 'api.DSTEd.org';
 	const _secured		= true;
 	const Request		= require('request');
 	const OS			= require('os');
@@ -12,7 +12,7 @@ exports = module.exports = (function Steam() {
 	var _auth_logged_in	= false;
 		
 	this.init = function init() {
-		_auth_id   = require('electron-machine-id').machineIdSync();
+		_auth_id   = require('node-machine-id').machineIdSync({original: true});
 	};
 	
 	this.checkAuthentication = function checkAuthentication(callback) {
@@ -26,10 +26,14 @@ exports = module.exports = (function Steam() {
 			},
 			body: {}
 		}, function onResponse(error, response, body) {
-			_auth_logged_in = body.authenticated;
-			
-			if(typeof(callback) != 'undefined') {
-				callback(_auth_logged_in, body);
+			try {
+				_auth_logged_in = body.authenticated;
+				
+				if(typeof(callback) != 'undefined') {
+					callback(_auth_logged_in, body);
+				}
+			} catch(e) {
+				console.error(e);
 			}
 		});
 	};
@@ -39,7 +43,9 @@ exports = module.exports = (function Steam() {
 	};
 	
 	this.getWorkshop = function getWorkshop(data, callback) {
-		var language	= 'English'; // I18N.getLanguage()
+        //var language = 'English'; // I18N.getLanguage()
+        var language = 'en-us';
+        //en-us, Microsoft like, not English.
 		var query		= '';
 		var page		= 1;
 		

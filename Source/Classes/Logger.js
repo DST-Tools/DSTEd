@@ -24,10 +24,11 @@ exports = module.exports = (function Logger() {
 			_logger.transports.console		= function Console(event) {
 				var message = '';
 				
+				console.log(event);
 				[].forEach.call(event.data, function(a) {
 					[].forEach.call(a, function(b) {
 						message += b;
-						message += ' ';
+						//message += ' ';
 					});
 				});
 				
@@ -36,7 +37,7 @@ exports = module.exports = (function Logger() {
 					message += this.getStrackTrace();
 				}
 				
-				console.log('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
+				console.log('[' + event.date + '] [' + event.level + '] ' + message);
 			}.bind(this);
 			
 			_logger.transports.file.format		= function Console(event) {
@@ -54,7 +55,7 @@ exports = module.exports = (function Logger() {
 					message += this.getStrackTrace();
 				}
 				
-				return ('[' + event.date.toLocaleTimeString() + '] [' + event.level + '] ' + message);
+				return ('[' + event.date + '] [' + event.level + '] ' + message);
 			}.bind(this);
 		} catch(e) {
 			/* Do Nothing */
@@ -89,27 +90,27 @@ exports = module.exports = (function Logger() {
 	};
 	
 	this.info = function info() {
-		_logger.info(arguments);
+		_logger.info.apply(this, arguments);
 	};
 	
 	this.error = function error() {
-		_logger.error(arguments);
+		_logger.error.apply(this, arguments);
 	};
 	
 	this.warn = function warn() {
-		_logger.warn(arguments);
+		_logger.warn.apply(this, arguments);
 	};
 	
 	this.verbose = function verbose() {
-		_logger.verbose(arguments);
+		_logger.verbose.apply(this, arguments);
 	};
 	
 	this.debug = function debug() {
-		_logger.debug(arguments);
+		_logger.debug.apply(this, arguments);
 	};
 	
 	this.silly = function silly() {
-		_logger.silly(arguments);
+		_logger.silly.apply(this, arguments);
 	};
 	
 	this.init();

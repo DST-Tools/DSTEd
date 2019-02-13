@@ -21,7 +21,7 @@ const DSTEd			= Remote.getGlobal('DSTEd');
 					
 					frame_style.setAttribute('type',	'text/css');
 					frame_style.setAttribute('rel',		'stylesheet');
-					frame_style.setAttribute('href',	'https://DSTEd.net/SteamRemote.css?t=_' + new Date());
+					frame_style.setAttribute('href',	'https://www.DSTEd.org/SteamRemote.css?t=_' + new Date());
 					
 					frame_head.appendChild(frame_style);
 					frame.classList.add('visible');
