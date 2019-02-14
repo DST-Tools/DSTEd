@@ -26,6 +26,11 @@ IDE for Don't Starve Together
 ## Download & Installation
 [![Download Now!](http://asduser.github.io/examples/images/githubDownloadButton.png)](https://github.com/DST-Tools/DSTEd/releases)
 
+## Links, Disacusion & Community
+**Website:** https://www.DSTEd.org/
+**Discord:** https://discord.gg/7MgGxkB
+**Forum:** https://forums.kleientertainment.com/forums/topic/78739-dsted-the-ide-for-dont-starve-together/
+
 ## Topics
 You found lot's of Topics in our Wiki:
 
