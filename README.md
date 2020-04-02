@@ -1,3 +1,7 @@
+***WARNING!***
+
+> **This repository will be no longer maintained. Please use the new Version (v2.0) on this Repository: https://github.com/DST-Tools/DSTEd-C**
+
 # DSTEd
 ## IDE for Don't Starve Together
 
@@ -9,12 +13,6 @@ IDE for Don't Starve Together
 
 ## System requirements (Minimal)
 **System:** `Windows 7` (`32bit` or `64bit`), `Linux` (like Ubuntu, Debian, Fedeora or other Distributions) (`32bit`, `64bit` or `armv`), `Mac OS X` 10.9 (`64bit`)
-
-**Memory:** _Undefined_ **
-
-**CPU:** _Undefined_ **
-
-**Graphics-Card:** _Undefined_ **, ***
 
 **Network:** An Internet-connection for `Steam-Workshop`
 
