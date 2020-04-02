@@ -1,7 +1,19 @@
 ***WARNING!***
 
+![DEPRECATED](https://raw.githubusercontent.com/DST-Tools/DSTEd/master/dep.png)
 > **This repository will be no longer maintained. Please use the new Version (v2.0) on this Repository: https://github.com/DST-Tools/DSTEd-C**
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 # DSTEd
 ## IDE for Don't Starve Together
 
